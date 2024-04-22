@@ -20,10 +20,10 @@ Level progression: defined by config.txt
 
 In the folder containing the game there are 7 files besides the README:
 
-1. the main game loop can be found in the Tetris_fMRI.psyexp file as Tetris_Instance()!
+1. the main game loop can be found in the Tetris_Psychopy.psyexp file as Tetris_Instance()!
 
 2. config.txt: contains adjustable parameters of the game:
-- Score keeping after Game over
+- Score keeping after "Game Over"
 - Start speed, start level
 - toggling Visual Control
 --> for more info check descriptions in config.txt
