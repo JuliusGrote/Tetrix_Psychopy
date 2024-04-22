@@ -1,0 +1,32 @@
+##config file for important game parameters
+#make sure file can be executed as a python script!
+#accessed by game.py where all important game mechanics are stored and processed
+
+Keep_score = True
+
+#determines whether game starts in Fullscreen or not
+Start_Fullscreen = False
+
+#determines whether game starts paused or not
+Start_Pause = True
+
+#setting for visual control purposes, blocks get deleted when reaching the bottom of the grid, no stacking. Blocks move in a random pattern simulation actual gameplay. Without input options except for "key_p" (Pause)
+Visual_control = False
+
+#determines how many lines need to be cleared in order to reach the next level
+Lines_for_levelup = 3
+#determine at which level to start
+Start_level = 4
+ 
+##Speed in "ms/line": time that a block needs to move down one cell on the grid, correlates to game diificulty 
+##Speed per level described by this formula in "ms": self.speed = round((Start_speed/1250 - ((level - 1) * speed_slope)) ** (level - 1) * 1000) mimicking the original Tetris progression
+
+#Start_speed determines game speed at level 1 and also how fast game difficulty progresses. Default = 1000 
+Start_speed = 1000
+
+#Speed_slope also determines how fast the game progresses... Default = 0.007
+Speed_slope = 0.007 
+
+
+
+
