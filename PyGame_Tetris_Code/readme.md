@@ -4,9 +4,9 @@ https://github.com/educ8s/Python-Tetris-Game-Pygame
 
 Important to check before playing:
 
--the game only works on windows!
--only works with Python installed (download from: https://www.python.org/downloads/)
--needs "Pygame" package installed (in windows command type: pip install pygame)
+- the game only works on windows!
+- only works with Python installed (download from: https://www.python.org/downloads/)
+- needs "Pygame" package installed (in windows command type: pip install pygame)
 
 Score system: 
 down_key = 1 Score Point
@@ -17,14 +17,14 @@ down_key = 1 Score Point
 
 Level progression: defined by config.txt
 
-In the folder containing the game there are 7 files besides the Readme
+In the folder containing the game there are 7 files besides the README:
 
 1. the main game loop can be found in the Tetris_fMRI.psyexp file as Tetris_Instance()!
 
 2. config.txt: contains adjustable parameters of the game:
--Score keeping after Game over
--Start speed, start level
--toggling Visual Control
+- Score keeping after Game over
+- Start speed, start level
+- toggling Visual Control
 --> for more info check descriptions in config.txt
 
 3. game.py contains the game mechnanics such as moving the blocks, score, difficulty, game reset...; Code from config.txt is executed here 
