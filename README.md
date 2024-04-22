@@ -5,7 +5,7 @@
 **Getting Started**:
 
 -Make sure you downloaded at least Version: "Psychopy 2024.1.0" or higher
- (download from (https://www.psychopy.org/download.html))
+ (download from https://www.psychopy.org/download.html)
 
 -Open the Tetris_Psychopy.psyexp file
 
