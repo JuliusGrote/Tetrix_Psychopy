@@ -6,9 +6,9 @@
 
 -Make sure you downloaded at least Version: "Psychopy 2024.1.0" or higher
 
+-Open the Tetris_fMRI.psyexp file
+
 -Check whether pynput is installed (tools --> plugin/package manager --> plugins --> search "pynput" and install if necessary)
-
-
 
 -To start, press "run"/green startbutton and enter the current subject id
 
