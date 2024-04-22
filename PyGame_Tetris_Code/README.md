@@ -9,11 +9,12 @@ Important to check before playing:
 - needs "Pygame" package installed (in windows command type: pip install pygame)
 
 Score system: 
-down_key = 1 Score Point
-1 line cleared = 100 Score Points * level
-2 lines cleared = 300 Score Points * level
-3 lines cleared = 500 Score Points * level
-4 lines cleared = 800 Score Points * level
+down_key = 
+- 1 Score Point
+- 1 line cleared = 100 Score Points * level
+- 2 lines cleared = 300 Score Points * level
+- 3 lines cleared = 500 Score Points * level
+- 4 lines cleared = 800 Score Points * level
 
 Level progression: defined by config.txt
 
