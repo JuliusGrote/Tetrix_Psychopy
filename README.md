@@ -100,7 +100,7 @@ psychopy.useVersion('2024.1.0')
 - - - 
 **Compatibility**:
 
-The Experiment is constructed for PsychoPy 2024.1.x. You can set which Psychopy Version to use by the Experiment settings ("gear-symbol"). By default, this is not enabled due to a bug in PsychoPy 2024.1.1 marking any Experiment using this set version as incompatible with Python 3.8 (this issue seems to be fixed for Psychopy 2024.1.2).  
+The Experiment is constructed for PsychoPy 2024.1.x. You can set which Psychopy Version to use in the experiment settings ("gear-symbol"). By default, this is not enabled due to a bug in PsychoPy 2024.1.1 marking any experiment using this set version as incompatible with Python 3.8 (this issue seems to be fixed in Psychopy 2024.1.2).  
 
 
 
