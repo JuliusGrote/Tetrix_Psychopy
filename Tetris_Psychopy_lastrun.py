@@ -1,8 +1,8 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2024.1.0),
-    on April 19, 2024, at 20:05
+This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
+    on April 23, 2024, at 10:18
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -10,10 +10,6 @@ If you publish work using this script the most relevant publication is:
         https://doi.org/10.3758/s13428-018-01193-y
 
 """
-
-import psychopy
-psychopy.useVersion('2024.1.0')
-
 
 # --- Import packages ---
 from psychopy import locale_setup
@@ -242,7 +238,7 @@ deviceManager = hardware.DeviceManager()
 # ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
-psychopyVersion = '2024.1.0'
+psychopyVersion = '2024.1.1'
 expName = 'Tetris_fMRI'  # from the Builder filename that created this script
 # information about this experiment
 expInfo = {
@@ -330,7 +326,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='G:\\Meine Ablage\\Studium\\Bachelorarbeit\\Code\\Tetris_Psychopy\\Tetris_in_fMRI_lastrun.py',
+        originPath='G:\\Meine Ablage\\Studium\\Github\\Tetris_Psychopy\\Tetris_Psychopy_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='priority'
     )
@@ -999,7 +995,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='controller_example', 
         image='Images/controller.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0), size=(0.3, 0.3),
+        ori=0.0, pos=(-0.65, 0), size=(0.2, 0.2),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
@@ -1183,7 +1179,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-1.0);
     
     # --- Initialize components for Routine "End" ---
-    End_Font = visual.TextStim(win=win, name='End_Font',
+    end_font = visual.TextStim(win=win, name='end_font',
         text='Thank you for your Participation!',
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
@@ -4864,7 +4860,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # keep track of which components have finished
-    EndComponents = [End_Font]
+    EndComponents = [end_font]
     for thisComponent in EndComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -4887,35 +4883,35 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *End_Font* updates
+        # *end_font* updates
         
-        # if End_Font is starting this frame...
-        if End_Font.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # if end_font is starting this frame...
+        if end_font.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            End_Font.frameNStart = frameN  # exact frame index
-            End_Font.tStart = t  # local t and not account for scr refresh
-            End_Font.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(End_Font, 'tStartRefresh')  # time at next scr refresh
+            end_font.frameNStart = frameN  # exact frame index
+            end_font.tStart = t  # local t and not account for scr refresh
+            end_font.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(end_font, 'tStartRefresh')  # time at next scr refresh
             # update status
-            End_Font.status = STARTED
-            End_Font.setAutoDraw(True)
+            end_font.status = STARTED
+            end_font.setAutoDraw(True)
         
-        # if End_Font is active this frame...
-        if End_Font.status == STARTED:
+        # if end_font is active this frame...
+        if end_font.status == STARTED:
             # update params
             pass
         
-        # if End_Font is stopping this frame...
-        if End_Font.status == STARTED:
+        # if end_font is stopping this frame...
+        if end_font.status == STARTED:
             # is it time to stop? (based on local clock)
             if tThisFlip > 3-frameTolerance:
                 # keep track of stop time/frame for later
-                End_Font.tStop = t  # not accounting for scr refresh
-                End_Font.tStopRefresh = tThisFlipGlobal  # on global time
-                End_Font.frameNStop = frameN  # exact frame index
+                end_font.tStop = t  # not accounting for scr refresh
+                end_font.tStopRefresh = tThisFlipGlobal  # on global time
+                end_font.frameNStop = frameN  # exact frame index
                 # update status
-                End_Font.status = FINISHED
-                End_Font.setAutoDraw(False)
+                end_font.status = FINISHED
+                end_font.setAutoDraw(False)
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
