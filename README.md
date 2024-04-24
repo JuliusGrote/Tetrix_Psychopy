@@ -48,7 +48,7 @@
 
 *Conditions*:
 
-1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from Agren et al. 2021)
+1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021] (https://link.springer.com/article/10.1007/s12144-021-02081-z))
 
 2. watch_Tetris: Control condition to account for basic visual processing not important for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subject participate in the game subconsciously.
 
@@ -67,7 +67,7 @@
 - - - 
 **Game Code**:
 
-For further information on game code read the README.txt file in the "PyGame_Tetris_Code" folder
+For further information on game code read the README.md file in the "PyGame_Tetris_Code" folder
 
 - - -
 **Log Files** are collected in the "data" folder as a csv file containing the trigger signal time stemps, on- and offsets of each condition, game scores and levels, etc...
