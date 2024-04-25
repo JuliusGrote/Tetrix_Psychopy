@@ -1,10 +1,10 @@
-**Tetris Experiment for Psychopy 2024.x**:
+**Tetris Experiment for Psychopy 2024.1.1**:
 
 - - -  
 
 **Getting Started**:
 
-- Make sure you downloaded at least Version: "Psychopy 2024.1.0" or higher
+- Make sure you downloaded at least Version: "Psychopy 2024.1.1" or higher
  (download from https://www.psychopy.org/download.html)
 
 - Open the Tetris_Psychopy.psyexp file
@@ -73,13 +73,16 @@ For further information on game code read the README.md file in the "PyGame_Tetr
 **Log Files** are collected in the "data" folder as a csv file containing the trigger signal time stemps, on- and offsets of each condition, game scores and levels, etc...
 
 - - -
+**Version Compatibility**:
+
+The Experiment is constructed for PsychoPy 2024.1.1. You can set which Psychopy Version to use in the "Basic" tab of the experiment settings (gear-symbol). By default, this is not enabled due to a bug in the PsychoPy 2024.1.1 builder marking any experiment using this set version as incompatible with Python 3.8 (this issue seems to be fixed in Psychopy 2024.1.2).
 **.py File**:
 
 
 The experiment is available as python script as well. Make sure to install the correct "psychopy --version" in cmd and add the additional packages "pygame" and "pynput". 
 
 
-
+- - - 
 *potential errors*:
 
 if this message occurs: 
@@ -95,15 +98,16 @@ remove this line from the code:
 
 
 
-psychopy.useVersion('2024.1.0')
+psychopy.useVersion('your version') 
 
-- - - 
-**Compatibility**:
+- - -
+**Eye Tracking**:
 
-The Experiment is constructed for PsychoPy 2024.1.x. You can set which Psychopy Version to use in the experiment settings ("gear-symbol"). By default, this is not enabled due to a bug in PsychoPy 2024.1.1 marking any experiment using this set version as incompatible with Python 3.8 (this issue seems to be fixed in Psychopy 2024.1.2).  
+*currently under development*
 
+Eyetracking can be activated in "config_paradigm_psychopy.txt"
 
-
+In order to set which eye tracker to use go to: Setting (gear symbol) --> go to the "Eyetracking" tab --> select your "Eyetracking Device" 
 
 
 

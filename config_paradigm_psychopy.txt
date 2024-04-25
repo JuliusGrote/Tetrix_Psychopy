@@ -44,3 +44,7 @@ flip_horizontally = False
 
 ##toggle rhythmic cross during motor_control, frequency based on game.speed
 show_motor_rhythm = True
+
+
+##toggle eye tracking
+eye_tracking = False

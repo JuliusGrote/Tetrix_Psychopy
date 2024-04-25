@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 25, 2024, at 01:53
+    on April 25, 2024, at 01:20
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -326,7 +326,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='G:\\Meine Ablage\\Studium\\Github\\Tetris_Psychopy\\Tetris_Psychopy_lastrun.py',
+        originPath='G:\\Meine Ablage\\Studium\\Github\\Tetris_Psychopy\\Tetris_fMRI.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='priority'
     )
@@ -1200,7 +1200,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
+        depth=0.0);
     Stop_eyetracker = hardware.eyetracker.EyetrackerControl(
         tracker=eyetracker,
         actionType='Stop Only'
@@ -2352,28 +2352,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     thisExp.nextEntry()
     # the Routine "check_response_box" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset()
-    # define target for calibration_eyertracker
-    calibration_eyertrackerTarget = visual.TargetStim(win, 
-        name='calibration_eyertrackerTarget',
-        radius=0.1, fillColor=[0.9216, 0.9216, 0.7255], borderColor='black', lineWidth=2.0,
-        innerRadius=0.05, innerFillColor='green', innerBorderColor='black', innerLineWidth=2.0,
-        colorSpace='rgb', units=None
-    )
-    # define parameters for calibration_eyertracker
-    calibration_eyertracker = hardware.eyetracker.EyetrackerCalibration(win, 
-        eyetracker, calibration_eyertrackerTarget,
-        units=None, colorSpace='rgb',
-        progressMode='time', targetDur=1.5, expandScale=3.0,
-        targetLayout='THIRTEEN_POINTS', randomisePos=True, textColor='white',
-        movementAnimation=True, targetDelay=1.0
-    )
-    # run calibration
-    calibration_eyertracker.run()
-    # clear any keypresses from during calibration_eyertracker so they don't interfere with the experiment
-    defaultKeyboard.clearEvents()
-    thisExp.nextEntry()
-    # the Routine "calibration_eyertracker" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
     # --- Prepare to start Routine "pretrial_intro" ---
@@ -4456,7 +4434,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1.0, method='sequential', 
+    trials = data.TrialHandler(nReps=2.0, method='sequential', 
         extraInfo=expInfo, originPath=-1,
         trialList=data.importConditions('loop_template.xlsx'),
         seed=None, name='trials')
@@ -4827,7 +4805,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-    # completed 1.0 repeats of 'trials'
+    # completed 2.0 repeats of 'trials'
     
     
     # --- Prepare to start Routine "wait_10sec_for_Trigger" ---
@@ -4835,7 +4813,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # update component parameters for each repeat
     # Run 'Begin Routine' code from wait_10sec_for_trigger_code
     #creates coutdown
-    timer_wait_for_trigger = core.CountdownTimer(10)
+    timer = core.CountdownTimer(10)
     # keep track of which components have finished
     wait_10sec_for_TriggerComponents = [wait_10sec_for_trigger_text]
     for thisComponent in wait_10sec_for_TriggerComponents:
@@ -4861,11 +4839,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from wait_10sec_for_trigger_code
         # Use a while loop to do nothing until the time runs out but can be interuptes by trigger (trigger signal determined by "config_paradigm_psychopy.txt")
-        if timer_wait_for_trigger.getTime() <= 0:
+        if timer.getTime() <= 0:
             continueRoutine = False # Exit the loop  
         #reset timer
         elif defaultKeyboard.getKeys(keyList=["t"]):
-           timer_wait_for_trigger.reset()
+           timer.reset()
         
         # *wait_10sec_for_trigger_text* updates
         
@@ -4883,7 +4861,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if wait_10sec_for_trigger_text is active this frame...
         if wait_10sec_for_trigger_text.status == STARTED:
             # update params
-            wait_10sec_for_trigger_text.setText(f'Wait for remaining triggers...\n\n{round(timer_wait_for_trigger.getTime())}', log=False)
+            wait_10sec_for_trigger_text.setText(f'Wait for remaining triggers...\n\n{round(timer.getTime())}', log=False)
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -4917,9 +4895,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Prepare to start Routine "End" ---
     continueRoutine = True
     # update component parameters for each repeat
-    # Run 'Begin Routine' code from wait_3sec_to_end
-    #creates coutdown
-    timer_wait_3_sec = core.CountdownTimer(3)
     # keep track of which components have finished
     EndComponents = [end_font, Stop_eyetracker]
     for thisComponent in EndComponents:
@@ -4943,13 +4918,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
-        # Run 'Each Frame' code from wait_3sec_to_end
-        # Use a while loop to do nothing until the time runs out but can be interuptes by trigger (trigger signal determined by "config_paradigm_psychopy.txt")
-        if timer_wait_3_sec.getTime() <= 0:
-            continueRoutine = False # Exit the loop  
-        #reset timer
-        elif defaultKeyboard.getKeys(keyList=["t"]):
-           timer_wait_3_sec.reset()
         
         # *end_font* updates
         
@@ -4968,6 +4936,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if end_font.status == STARTED:
             # update params
             pass
+        
+        # if end_font is stopping this frame...
+        if end_font.status == STARTED:
+            # is it time to stop? (based on local clock)
+            if tThisFlip > 3-frameTolerance:
+                # keep track of stop time/frame for later
+                end_font.tStop = t  # not accounting for scr refresh
+                end_font.tStopRefresh = tThisFlipGlobal  # on global time
+                end_font.frameNStop = frameN  # exact frame index
+                # update status
+                end_font.status = FINISHED
+                end_font.setAutoDraw(False)
         # *Stop_eyetracker* updates
         
         # if Stop_eyetracker is stopping this frame...
