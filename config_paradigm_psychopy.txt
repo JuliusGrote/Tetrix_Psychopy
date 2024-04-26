@@ -1,27 +1,41 @@
-###config for overarching paradigm settings
+#config for overarching paradigm settings
 
-##Keys
 
-#determine whether to use a test keyset in pygame or not 
+## trials settings
+
+### duration for all conditions in sec.
+targeted_duration = 3
+
+### how often should each control condition occur 
+### each trial consists of play_Tetris followed by a randomly chosen control condition!
+### e.g. n_repeats = 10, 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
+n_repeats = 1
+
+### toggle rhythmic cross during motor_control, frequency based on game.speed
+show_motor_rhythm = True
+
+## Keys
+
+### determine whether to use a test keyset in pygame or not 
 test_keys = True
 
-#define which keys to use in pygame
+### define which keys to use in pygame
 if test_keys == True:
-	#test keys
-	pygame_key_1 = pygame.K_DOWN #move Tetris Block down
-	pygame_key_2 = pygame.K_LEFT #move Tetris Block left 
-	pygame_key_3 = pygame.K_UP #rotate Tetris Block
-	pygame_key_4 = pygame.K_RIGHT #move Tetris Block right
-	pygame_key_5 = pygame.K_0 #spare key
+	# test keys
+	pygame_key_1 = pygame.K_DOWN # move Tetris Block down
+	pygame_key_2 = pygame.K_LEFT # move Tetris Block left 
+	pygame_key_3 = pygame.K_UP # rotate Tetris Block
+	pygame_key_4 = pygame.K_RIGHT # move Tetris Block right
+	pygame_key_5 = pygame.K_0 # spare key
 else:
-	#keys to use in the actual experiment
-	pygame_key_1 = pygame.K_6 #move Tetris Block down
-	pygame_key_2 = pygame.K_7 #move Tetris Block left 
-	pygame_key_3 = pygame.K_8 #rotate Tetris Block
-	pygame_key_4 = pygame.K_9 #move Tetris Block right
-	pygame_key_5 = pygame.K_0 #spare key
+	# keys to use in the actual experiment
+	pygame_key_1 = pygame.K_6 # move Tetris Block down
+	pygame_key_2 = pygame.K_7 # move Tetris Block left 
+	pygame_key_3 = pygame.K_8 # rotate Tetris Block
+	pygame_key_4 = pygame.K_9 # move Tetris Block right
+	pygame_key_5 = pygame.K_0 # spare key
 
-#define which keys to use in Psychopy to 'continue', should be according to the keys used above
+###define which keys to use in Psychopy to 'continue', should be according to the keys used above
 psychopy_key_1 = '6'
 psychopy_key_2 = '7'
 psychopy_key_3 = '8'
@@ -29,22 +43,18 @@ psychopy_key_4 = '9'
 psychopy_key_5 = '0'
 
 
-##define trigger signal
+## define trigger signal
 trigger = 't'
 
-##toggle display flip (mirroring)
+## toggle display flip (mirroring)
 
-#left --> <-- right
+### left --> <-- right
 flip_vertically = False
 
-# up | ^
-#    v | down
+### up | ^
+###    v | down
 flip_horizontally = False
 
 
-##toggle rhythmic cross during motor_control, frequency based on game.speed
-show_motor_rhythm = True
-
-
-##toggle eye tracking
+## toggle eye tracking
 eye_tracking = False

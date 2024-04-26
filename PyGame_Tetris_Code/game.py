@@ -89,10 +89,11 @@ class Game:
 		self.update_level()
 	
 	def update_level(self):
-		lines_for_levelup = Lines_for_levelup 
-		if self.total_lines_cleared >= lines_for_levelup:
-			self.level.value += 1
-			self.total_lines_cleared = 0
+		if level_progression_main == True or self.pretrial == True:
+			lines_for_levelup = Lines_for_levelup 
+			if self.total_lines_cleared >= lines_for_levelup:
+				self.level.value += 1
+				self.total_lines_cleared = 0
 
 			
 	def get_random_block(self):
