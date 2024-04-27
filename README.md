@@ -49,7 +49,7 @@
 
 1. Config of the general experiment: [config_paradigm_psychopy](config_paradigm_psychopy.txt)
 
-2. Config of game specifics: [config_tetris_game](PyGame_Tetris_Code/config_tetris_game.txt)
+2. Config of game specifics: [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)
 
 - - - 
 ## Game Code:
