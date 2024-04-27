@@ -21,7 +21,7 @@ Defined by [config_tetris_game](config_tetris_game.txt)
 
 ## In the folder containing the game there are 7 files besides the README:
 
-1. the main game loop can be found in the Tetris_Psychopy.psyexp file as Tetris_Instance()!
+1. the main game loop can be found in the [Tetris_Psychopy.psyexp](../Tetris_Psychopy.psyexp) file as Tetris_Instance()!
 
 2. [config_tetris_game](config_tetris_game.txt): contains adjustable parameters of the game:
 	- Score keeping after "Game Over"
