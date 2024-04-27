@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 26, 2024, at 18:24
+    on April 27, 2024, at 18:28
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -91,10 +91,20 @@ def Tetris_Instance(
     score_surface = title_font.render("Score", True, Colors.white)
     next_surface = title_font.render("Next", True, Colors.white)
     game_over_surface = title_font.render("GAME OVER", True, Colors.white)
+    if game.three_next_blocks == False:
+        y_position_game_over = 450
+    else:
+        y_position_game_over = 540
+        
     level_surface = title_font.render("Level", True, Colors.white )
     
     score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)
-    next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 180  * game.grid.scale.scale_factor)
+    if game.three_next_blocks == False:
+       next_rect_height = 180 
+    else:
+       next_rect_height = 285
+       
+    next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)
        
     while True:
         for event in pygame.event.get():
@@ -135,8 +145,9 @@ def Tetris_Instance(
                     game.move_down()
                   
                 if event.type == GAME_UPDATE and game.game_over == True:
-                    game.game_over = False
-                    game.reset()
+                    if event.type == pygame.KEYDOWN or game.automatic_restart == True:
+                        game.game_over = False
+                        game.reset()
                
              
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
@@ -156,7 +167,7 @@ def Tetris_Instance(
         screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         #displays game over message
         if game.game_over == True:
-            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 450 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
+            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, y_position_game_over * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
                
         pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
         screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))
@@ -1180,7 +1191,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "condition_ended" ---
     condition_ended_text = visual.TextStim(win=win, name='condition_ended_text',
-        text='block ended',
+        text='Block ended!',
         font='Open Sans',
         pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1215,7 +1226,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=0.0);
     
-    # --- Initialize components for Routine "control_condition" ---
+    # --- Initialize components for Routine "random_control_condition" ---
     press_cross = visual.ShapeStim(
         win=win, name='press_cross', vertices='cross',
         size=(0.075, 0.075),
@@ -1232,7 +1243,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "condition_ended" ---
     condition_ended_text = visual.TextStim(win=win, name='condition_ended_text',
-        text='block ended',
+        text='Block ended!',
         font='Open Sans',
         pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -3044,7 +3055,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from Tetris_pretrial
-        if game.game_over_counter.value == 3:
+        if game.game_over_counter.value == game.pretrial_rounds:
             continueRoutine = False
         
         # *fix_2* updates
@@ -3119,6 +3130,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     #resets absolut score
     game.score.value = 0
     thisExp.addData('pretrial_level_avg', game.level_for_main.value)
+    
     #sets new start level for main game
     game.level.value = round(game.level_for_main.value * 0.75)
     
@@ -4501,7 +4513,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     main_trials = data.TrialHandler(nReps=n_repeats, method='fullRandom', 
         extraInfo=expInfo, originPath=-1,
         trialList=data.importConditions('loop_template.xlsx'),
-        seed=None, name='main_trials')
+        seed=main_trials_seed, name='main_trials')
     thisExp.addLoop(main_trials)  # add the loop to the experiment
     thisMain_trial = main_trials.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisMain_trial.rgb)
@@ -5173,7 +5185,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         else:
             routineTimer.addTime(-1.000000)
         
-        # --- Prepare to start Routine "control_condition" ---
+        # --- Prepare to start Routine "random_control_condition" ---
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from execute_codition
@@ -5195,8 +5207,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         
         press_cross.setOpacity(0.0)
         # keep track of which components have finished
-        control_conditionComponents = [press_cross, duration_and_fix]
-        for thisComponent in control_conditionComponents:
+        random_control_conditionComponents = [press_cross, duration_and_fix]
+        for thisComponent in random_control_conditionComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -5208,7 +5220,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "control_condition" ---
+        # --- Run Routine "random_control_condition" ---
         routineForceEnded = not continueRoutine
         while continueRoutine:
             # get current time
@@ -5298,7 +5310,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in control_conditionComponents:
+            for thisComponent in random_control_conditionComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -5307,8 +5319,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "control_condition" ---
-        for thisComponent in control_conditionComponents:
+        # --- Ending Routine "random_control_condition" ---
+        for thisComponent in random_control_conditionComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from execute_codition
@@ -5324,7 +5336,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         Get_on_top("PsychoPy")
         
         
-        # the Routine "control_condition" was not non-slip safe, so reset the non-slip timer
+        # the Routine "random_control_condition" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
         # --- Prepare to start Routine "condition_ended" ---

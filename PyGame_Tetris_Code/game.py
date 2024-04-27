@@ -12,6 +12,12 @@ with open("PyGame_Tetris_Code/config_tetris_game.txt", "r") as c_tetris:
 	config_tetris = c_tetris.read()
 	exec(config_tetris)
 
+#apply seeds for random.choice() function defined in config_tetris_game.txt
+random.seed(visual_seed)
+visual_rand = random.Random()
+random.seed(block_seed)
+block_rand = random.Random()
+
 class Game:
 	
 	def __init__(self):
@@ -21,10 +27,14 @@ class Game:
 		self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
 		self.current_block = self.get_random_block()
 		self.next_block = self.get_random_block()
+		self.next_next_block = self.get_random_block()
+		self.next_next_next_block = self.get_random_block()
 		
-				#define game machnism variables
+				#define game mechanism variables
 		self.game_over = False
-		self.pretrial = True
+		self.pretrial = config_pretrial
+		self.pretrial_rounds = config_pretrial_rounds
+		self.three_next_blocks = toggle_three_next_blocks
 		self.game_over_counter = Value('i', 0)
 		self.toggle_pretrial = Value('b', Start_Pause)
 		self.toggle_play = Value('b', Start_Pause)
@@ -37,6 +47,7 @@ class Game:
 		self.level_for_main = Value('f', 0)
 		self.level = Value('i', Start_level)
 		self.score = Value('i', 0)
+		self.automatic_restart = restart_automatically
 		self.speed = Start_speed
 		self.total_lines_cleared = 0
 
@@ -50,9 +61,8 @@ class Game:
 			self.score.value = 0
 
 	def exe_visual_control(self):
-		self.grid.reset()
 		possible_moves = [1, 2, 3, 4, 5, 6, 7]
-		move = random.choices(possible_moves, weights = ([15, 4, 4, 13 - self.level.value, 5, 3, 3])) [0]
+		move = visual_rand.choices(possible_moves, weights = ([15, 4, 4, 13 - self.level.value, 5, 3, 3])) [0]
 		if move == 1:
 			pass
 		elif move == 2:
@@ -99,7 +109,7 @@ class Game:
 	def get_random_block(self):
 		if len(self.blocks) == 0:
 			self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
-		block = random.choice(self.blocks)
+		block = block_rand.choice(self.blocks)
 		self.blocks.remove(block)
 		return block
 	
@@ -125,8 +135,17 @@ class Game:
 		tiles = self.current_block.get_cell_positions()
 		for position in tiles:
 			self.grid.grid[position.row][position.column] = self.current_block.id
-		self.current_block = self.next_block
-		self.next_block = self.get_random_block()
+		if self.visual_control == True:
+				self.grid.reset()
+		if self.three_next_blocks == False:
+			self.current_block = self.next_block
+			self.next_block = self.get_random_block()
+		else:
+			self.current_block = self.next_block
+			self.next_block = self.next_next_block
+			self.next_next_block = self.next_next_next_block
+			self.next_next_next_block = self.get_random_block()
+			
 		rows_cleared = self.grid.clear_full_rows()
 		if rows_cleared > 0:
 			self.update_score(rows_cleared, 0)
@@ -138,9 +157,11 @@ class Game:
 		self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
 		self.current_block = self.get_random_block()
 		self.next_block = self.get_random_block()
+		self.next_next_block = self.get_random_block()
+		self.next_next_next_block = self.get_random_block()		
 		self.check_for_Keep_score()
 		if self.pretrial == True:
-			self.level_for_main.value += 1/3 * self.level.value
+			self.level_for_main.value += 1/self.pretrial_rounds * self.level.value
 			self.game_over_counter.value += 1
 			self.level.value = Start_level
 		elif self.pretrial == False: 
@@ -166,15 +187,39 @@ class Game:
 		return True
 
 	def draw(self, screen):
+		three_next_blocks_y_shift = 90
 		self.grid.draw(screen)
 		self.current_block.draw(screen, 22 * self.grid.scale.scale_factor + self.grid.scale.x_displacement,  20 * self.grid.scale.scale_factor )
-		if self.next_block.id == 3:
-			self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 305 * self.grid.scale.scale_factor)
-		elif self.next_block.id == 4:
-			self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 288 * self.grid.scale.scale_factor)
+		if self.three_next_blocks == False:
+			if self.next_block.id == 3:
+				self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 305 * self.grid.scale.scale_factor)
+			elif self.next_block.id == 4:
+				self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 288 * self.grid.scale.scale_factor)
+			else:
+				self.next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 288 * self.grid.scale.scale_factor)
 		else:
-			self.next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 288 * self.grid.scale.scale_factor)
-
+			if self.next_block.id == 3:
+				self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 270 * self.grid.scale.scale_factor)
+			elif self.next_block.id == 4:
+				self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 253 * self.grid.scale.scale_factor)
+			else:
+				self.next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 253 * self.grid.scale.scale_factor)
+			if self.next_next_block.id == 3:
+			    self.next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (270 + three_next_blocks_y_shift) * self.grid.scale.scale_factor)
+			elif self.next_next_block.id == 4:
+				self.next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift) * self.grid.scale.scale_factor)
+			else:
+				self.next_next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift) * self.grid.scale.scale_factor)
+			if self.next_next_next_block.id == 3:
+			    self.next_next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (270 + three_next_blocks_y_shift* 2) * self.grid.scale.scale_factor)
+			elif self.next_next_next_block.id == 4:
+				self.next_next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift * 2) * self.grid.scale.scale_factor)
+			else:
+				self.next_next_next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift * 2) * self.grid.scale.scale_factor)
+			
+			
+			
+		
 
 
 		

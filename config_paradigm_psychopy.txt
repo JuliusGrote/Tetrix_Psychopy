@@ -1,41 +1,50 @@
-#config for overarching paradigm settings
+#Config for overarching paradigm settings
 
 
-## trials settings
+## Trials settings
 
-### duration for all conditions in sec.
-targeted_duration = 3
+### How many pretrial rounds should be played?
+### --> see "config_tetris_game.txt"
 
-### how often should each control condition occur 
-### each trial consists of play_Tetris followed by a randomly chosen control condition!
-### e.g. n_repeats = 10, 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
-n_repeats = 1
+### Do you want to use a random seed for the main trials so that the random choice of control conditions is the same for each participant/each time running the experiment? 
+### Default: None; if you want to use that function set "main_trials_seed" to any number.
+main_trials_seed = None
 
-### toggle rhythmic cross during motor_control, frequency based on game.speed
+### Duration for all conditions in sec.
+### Default and strongly recommended: 20
+targeted_duration = 20
+
+### How often should each control condition occur 
+### Each trial consists of play_Tetris followed by a randomly chosen control condition!
+### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
+n_repeats = 10
+
+### Toggle rhythmic cross during motor_control, frequency based on game.speed
 show_motor_rhythm = True
+
 
 ## Keys
 
-### determine whether to use a test keyset in pygame or not 
+### Determine whether to use a test keyset for pygame (Tetris gameplay) or not 
 test_keys = True
 
-### define which keys to use in pygame
+### Define which keys to use in pygame
 if test_keys == True:
-	# test keys
-	pygame_key_1 = pygame.K_DOWN # move Tetris Block down
-	pygame_key_2 = pygame.K_LEFT # move Tetris Block left 
-	pygame_key_3 = pygame.K_UP # rotate Tetris Block
-	pygame_key_4 = pygame.K_RIGHT # move Tetris Block right
-	pygame_key_5 = pygame.K_0 # spare key
+	### Test keys
+	pygame_key_1 = pygame.K_DOWN # Move Tetris Block down
+	pygame_key_2 = pygame.K_LEFT # Move Tetris Block left 
+	pygame_key_3 = pygame.K_UP # Rotate Tetris Block
+	pygame_key_4 = pygame.K_RIGHT # Move Tetris Block right
+	pygame_key_5 = pygame.K_0 # Spare key
 else:
-	# keys to use in the actual experiment
-	pygame_key_1 = pygame.K_6 # move Tetris Block down
-	pygame_key_2 = pygame.K_7 # move Tetris Block left 
-	pygame_key_3 = pygame.K_8 # rotate Tetris Block
-	pygame_key_4 = pygame.K_9 # move Tetris Block right
-	pygame_key_5 = pygame.K_0 # spare key
+	### Keys to use in the actual experiment
+	pygame_key_1 = pygame.K_6 # Move Tetris Block down
+	pygame_key_2 = pygame.K_7 # Move Tetris Block left 
+	pygame_key_3 = pygame.K_8 # Rotate Tetris Block
+	pygame_key_4 = pygame.K_9 # Move Tetris Block right
+	pygame_key_5 = pygame.K_0 # Spare key
 
-###define which keys to use in Psychopy to 'continue', should be according to the keys used above
+### Define which keys to use in Psychopy to 'continue', should be according to the keys used above
 psychopy_key_1 = '6'
 psychopy_key_2 = '7'
 psychopy_key_3 = '8'
@@ -43,18 +52,19 @@ psychopy_key_4 = '9'
 psychopy_key_5 = '0'
 
 
-## define trigger signal
+## Define trigger signal
+## This only works if your Trigger signal can be converted to a char/letter, i.e. via an according responsebox
 trigger = 't'
 
-## toggle display flip (mirroring)
+## Toggle display flip (mirroring)
 
-### left --> <-- right
+### Left --> <-- Right
 flip_vertically = False
 
-### up | ^
-###    v | down
+### Up | ^
+###    v | Down
 flip_horizontally = False
 
 
-## toggle eye tracking
+## Toggle eye tracking
 eye_tracking = False
