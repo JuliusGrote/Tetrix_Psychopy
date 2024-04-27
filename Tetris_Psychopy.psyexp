@@ -2930,7 +2930,7 @@
     <LoopInitiator loopType="TrialHandler" name="main_trials">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="[{'control_condition': 'motor_control', 'Images_next_cond': 'Images/hand.png'}, {'control_condition': 'watch_Tetris', 'Images_next_cond': 'Images/eye.png'}, {'control_condition': 'fixation_cross', 'Images_next_cond': 'Images/crosshair.png'}]" valType="str"/>
-      <Param name="conditionsFile" updates="None" val="loop_template.xlsx" valType="file"/>
+      <Param name="conditionsFile" updates="None" val="main_trials_template.xlsx" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="loopType" updates="None" val="fullRandom" valType="str"/>

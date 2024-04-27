@@ -42,7 +42,7 @@ Start_Pause = True
 Visual_control = False
 
 ### Should there be three "next" blocks instead of one on the screen?
-### with reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" blocks and in the "campaign levels" there is only one "next" block.
+### With reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" blocks and in the "level mode" there is only one "next" block.
 toggle_three_next_blocks = True
 
 ## Level Design

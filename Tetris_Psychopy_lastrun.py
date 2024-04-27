@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 27, 2024, at 18:28
+    on April 27, 2024, at 23:19
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -4512,7 +4512,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # set up handler to look after randomisation of conditions etc
     main_trials = data.TrialHandler(nReps=n_repeats, method='fullRandom', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('loop_template.xlsx'),
+        trialList=data.importConditions('main_trials_template.xlsx'),
         seed=main_trials_seed, name='main_trials')
     thisExp.addLoop(main_trials)  # add the loop to the experiment
     thisMain_trial = main_trials.trialList[0]  # so we can initialise stimuli with some values
