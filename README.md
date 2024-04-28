@@ -58,8 +58,23 @@ For further information on game code read the [README.md](PyGame_Tetris_Code/REA
 
 - - -
 ## Log Files:
-Are collected in the "data" folder as a **csv** file (e.g.  containing the trigger signal time stemps, on- and offsets of each condition, game scores and levels, etc...
+Are collected in the [data](./data/) folder as a **csv** (not the .log file!) file named "subeject_{subjectnumber}_Tetris_Psychopy.csv".
 
+### Structure:
+- By default, Psychopy adds the predefined "Exp.info" as columns to the Data Logfile containing information such as subject_id, date and time stamps as well as trial information, etc. 
+- For analysis purposes, the file contains following data:
+	- "trigger.t": Time stamps for each arriving MRI trigger.
+	- "thisRow.t": Onset for each trial.
+	- "Condition.started": Onset of each condition block.
+	- "Condition.stopped": Offset of each condition block.
+	- "Condition.duration": Duration of each condition block.
+	- "Condition.info": Serves as pointer to indicate the specific and important information of each condition.
+	- "game.score" : Score obtained after each "play_Tetris" condition.
+	- "play_pretrial.started" : Onset of "pre_Trials".
+	- "play_pretrial.stopped" : Offset of "pre_Trials".
+	- "pretrial_score": Score obtained in the "pre_Trials".
+	- "pretrial_level_avg": Mean level reached in the "pre_Trials".
+ 
 - - -
 ## Version Compatibility:
 

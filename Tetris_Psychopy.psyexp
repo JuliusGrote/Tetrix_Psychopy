@@ -1024,7 +1024,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="#adds the achieved level and score to the data file&amp;#10;thisExp.addData('pretrial_score', game.score.value)&amp;#10;#resets absolut score&amp;#10;game.score.value = 0&amp;#10;thisExp.addData('pretrial_level_avg', game.level_for_main.value)&amp;#10;&amp;#10;#sets new start level for main game&amp;#10;game.level.value = round(game.level_for_main.value * 0.75)&amp;#10;&amp;#10;#ends pretrial pygame&amp;#10;pretrial_Tetris.terminate()&amp;#10;pretrial_Tetris.join()&amp;#10;&amp;#10;Get_on_top(&quot;PsychoPy&quot;)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="#adds the achieved level and score to the data file&amp;#10;thisExp.addData('pretrial_score', game.score.value)&amp;#10;thisExp.addData('pretrial_level_avg', game.level_for_main.value)&amp;#10;thisExp.addData('Condition.info', 'info_preTrial')&amp;#10;#resets absolut score&amp;#10;game.score.value = 0&amp;#10;#sets new start level for main game&amp;#10;game.level.value = round(game.level_for_main.value * 0.75)&amp;#10;&amp;#10;#ends pretrial pygame&amp;#10;pretrial_Tetris.terminate()&amp;#10;pretrial_Tetris.join()&amp;#10;&amp;#10;Get_on_top(&quot;PsychoPy&quot;)" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="Tetris_pretrial" valType="code" updates="None" name="name"/>
       </CodeComponent>

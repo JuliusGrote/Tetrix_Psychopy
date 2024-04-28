@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 27, 2024, at 23:19
+    on April 28, 2024, at 14:00
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -3127,10 +3127,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Run 'End Routine' code from Tetris_pretrial
     #adds the achieved level and score to the data file
     thisExp.addData('pretrial_score', game.score.value)
+    thisExp.addData('pretrial_level_avg', game.level_for_main.value)
+    thisExp.addData('Condition.info', 'info_preTrial')
     #resets absolut score
     game.score.value = 0
-    thisExp.addData('pretrial_level_avg', game.level_for_main.value)
-    
     #sets new start level for main game
     game.level.value = round(game.level_for_main.value * 0.75)
     
