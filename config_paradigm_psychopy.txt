@@ -67,5 +67,5 @@ flip_horizontally = False
 
 
 ## Toggle eye tracking
-## feature not fully developed yet
+## Feature not fully developed yet!
 eye_tracking = False
