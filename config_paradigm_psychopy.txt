@@ -15,7 +15,7 @@ main_trials_seed = None
 targeted_duration = 20
 
 ### How often should each control condition occur 
-### Each trial consists of play_Tetris followed by a randomly chosen control condition!
+### Each trial consists of "play_Tetris" followed by a randomly chosen control condition!
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
 n_repeats = 10
 
@@ -53,7 +53,7 @@ psychopy_key_5 = '0'
 
 
 ## Define trigger signal
-## This only works if your Trigger signal can be converted to a char/letter, i.e. via an according responsebox
+## This only works if your Trigger signal can be converted to a char/letter, i.e. via an according responsebox.
 trigger = 't'
 
 ## Toggle display flip (mirroring)
@@ -67,4 +67,5 @@ flip_horizontally = False
 
 
 ## Toggle eye tracking
+## feature not fully developed yet
 eye_tracking = False
