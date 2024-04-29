@@ -60,7 +60,7 @@
 
 
 
-&rarr; Note that this refers to the instructions for participants only to edit information go to [instructions.py](instructions.py)
+&rarr; Note that this refers to the instructions for participants only, to edit information go to [instructions.py](instructions.py)
 
 
 
