@@ -84,6 +84,8 @@ Are collected in the [data](./data/) folder as a **csv** (not the .log) file nam
 	- "Condition.duration": Duration of each condition block.
 	- "Condition.info": Serves as pointer to indicate the specific and important information of each condition.
 	- "game.score" : Score obtained after each "play_Tetris" condition.
+    - "game.level" : Level of the finished "play_Tetris" condition.
+    - "game.speed" : Speed of the falling Blocks, similar to "game.level" but correlated linearly to game difficulty (for more info see[config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt))
 	- "play_pretrial.started" : Onset of "pre_Trials".
 	- "play_pretrial.stopped" : Offset of "pre_Trials".
 	- "pretrial_score": Score obtained in the "pre_Trials".
