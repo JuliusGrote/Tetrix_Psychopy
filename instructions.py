@@ -2,7 +2,7 @@
 # Is executed as a python script, so it if necessary alter the instruction texts inside the '...' but not the structure of the code!
 
 class Instructions:
-	## Checks what is given in the config files and set instuctions accordingly.
+	## Check what is given in the config files and set instuctions accordingly.
 	def set_instructions(self, language):
 		if language == 'german':
 			self.font_check_response = 'Bitte pressen Sie jede Taste der Responsebox zwei mal!'
