@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 28, 2024, at 14:00
+    on April 29, 2024, at 03:36
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -44,7 +44,7 @@ from psychopy.visual.windowwarp import Warper
 sys.path.append('PyGame_Tetris_Code')
 from game import Game
 from colors import Colors
-
+from instructions import Instructions
 #Initialize Pygame and Game
 pygame.init()
 game = Game()
@@ -53,6 +53,10 @@ game = Game()
 with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
     config_paradigm = c_paradigm.read()
     exec(config_paradigm)
+
+#determine the instruction language
+Inst = Instructions()
+Inst.set_instructions(language)
 
 #define Tetris game as a global function 
 def Tetris_Instance(
@@ -792,14 +796,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     x_5_5 =  "-"
     all_checked = False
     text_check_response = visual.TextStim(win=win, name='text_check_response',
-        text='Please press each button on the responsebox twice!',
+        text=Inst.font_check_response,
         font='Open Sans',
         pos=(0, 0.2), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     text_check_response_2 = visual.TextStim(win=win, name='text_check_response_2',
-        text='Responses checked successfully!',
+        text=Inst.font_check_response_2,
         font='Open Sans',
         pos=(0, -0.2), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -844,14 +848,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "pretrial_intro" ---
     Intro_2 = visual.TextStim(win=win, name='Intro_2',
-        text='Welcome to the Tetris experiment',
+        text=Inst.font_Intro_2,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     Text_continue_1 = visual.TextStim(win=win, name='Text_continue_1',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -861,14 +865,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "explain_pretrial" ---
     explanation_pretrial = visual.TextStim(win=win, name='explanation_pretrial',
-        text='During this first part of the experiment, you will play Tetris and get used to the setup!\n\nHow to play:',
+        text=Inst.font_explanation_pretrial,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=1.5, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     Text_continue_2 = visual.TextStim(win=win, name='Text_continue_2',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -880,13 +884,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     explain_game_mechanics = visual.ImageStim(
         win=win,
         name='explain_game_mechanics', 
-        image='Images/explain_game_mechanics.png', mask=None, anchor='center',
+        image=Inst.img_explain_game_mechanics, mask=None, anchor='center',
         ori=0.0, pos=(0, 0.05), size=(1.75, 0.9),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     Text_continue_3 = visual.TextStim(win=win, name='Text_continue_3',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -898,20 +902,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     explain_controls = visual.ImageStim(
         win=win,
         name='explain_controls', 
-        image='Images/Tetris_explains.png', mask=None, anchor='center',
+        image=Inst.img_explain_controls, mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1.04, 0.8),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     Controls = visual.TextStim(win=win, name='Controls',
-        text='This is how you move the Tetris-Blocks:',
+        text=Inst.font_Controls,
         font='Open Sans',
         pos=(0, 0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_4 = visual.TextStim(win=win, name='Text_continue_4',
-        text='Press any button to start the first TETRIS-GAME!',
+        text=Inst.font_start_pretrial,
         font='Open Sans',
         pos=(0.0, -0.45), height=0.05, wrapWidth=2.0, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -952,14 +956,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "intro_main" ---
     intro_main_text = visual.TextStim(win=win, name='intro_main_text',
-        text='Now the main part of the experiment begins!',
+        text=Inst.font_intro_main,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     text_continue_5 = visual.TextStim(win=win, name='text_continue_5',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -969,7 +973,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "explanation_basic_structure" ---
     Announcement = visual.TextStim(win=win, name='Announcement',
-        text='During the Experiment you will encounter 4 different symbols:',
+        text=Inst.font_Announcement,
         font='Open Sans',
         pos=(0, 0.2), height=0.1, wrapWidth=1.8, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1009,7 +1013,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         texRes=128.0, interpolate=True, depth=-4.0)
     press_continue_6 = keyboard.Keyboard(deviceName='press_continue_6')
     Text_continue_6 = visual.TextStim(win=win, name='Text_continue_6',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1026,14 +1030,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     play_Tetris_text = visual.TextStim(win=win, name='play_Tetris_text',
-        text='Controller: Play the game! Try to focus on MENTALLY ROTATING the blocks when playing! The starting level is adjusted based on the level you reached in the earlier rounds!',
+        text=Inst.font_play_Tetris,
         font='Open Sans',
         pos=(0.2, 0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_7 = visual.TextStim(win=win, name='Text_continue_7',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1051,14 +1055,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     text_motor = visual.TextStim(win=win, name='text_motor',
-        text='Hand: Press the Buttons ALTERNATELY (one after another) to the rhythm displayed on the screen!',
+        text=Inst.font_motor,
         font='Open Sans',
         pos=(0.2, 0.0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_8 = visual.TextStim(win=win, name='Text_continue_8',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1076,14 +1080,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     text_watch = visual.TextStim(win=win, name='text_watch',
-        text='Eye: Watch Tetris! Just look at the screen while a game recording is played for you. Do not press any buttons!',
+        text=Inst.font_watch,
         font='Open Sans',
         pos=(0.2, 0.0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_9 = visual.TextStim(win=win, name='Text_continue_9',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1101,14 +1105,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     text_cross = visual.TextStim(win=win, name='text_cross',
-        text='Fixation Cross: just look at the cross in the middle of the screen and do nothing else!',
+        text=Inst.font_cross,
         font='Open Sans',
         pos=(0.2, 0.0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_10 = visual.TextStim(win=win, name='Text_continue_10',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1118,14 +1122,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "start_experiment" ---
     Start = visual.TextStim(win=win, name='Start',
-        text='Now, the experiment starts!',
+        text=Inst.font_start,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     Text_continue_11 = visual.TextStim(win=win, name='Text_continue_11',
-        text='Press any button to start!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1191,7 +1195,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "condition_ended" ---
     condition_ended_text = visual.TextStim(win=win, name='condition_ended_text',
-        text='Block ended!',
+        text=Inst.font_condition_ended,
         font='Open Sans',
         pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1243,7 +1247,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "condition_ended" ---
     condition_ended_text = visual.TextStim(win=win, name='condition_ended_text',
-        text='Block ended!',
+        text=Inst.font_condition_ended,
         font='Open Sans',
         pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1269,8 +1273,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-1.0);
     
     # --- Initialize components for Routine "End" ---
-    end_font = visual.TextStim(win=win, name='end_font',
-        text='Thank you for your Participation!',
+    end_text = visual.TextStim(win=win, name='end_text',
+        text=Inst.font_end,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -5621,7 +5625,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     #creates coutdown
     timer_wait_3_sec = core.CountdownTimer(3)
     # keep track of which components have finished
-    EndComponents = [end_font, Stop_eyetracker]
+    EndComponents = [end_text, Stop_eyetracker]
     for thisComponent in EndComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -5650,21 +5654,21 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             continueRoutine = False # Exit the loop and the routine --> paradigm ends
             
         
-        # *end_font* updates
+        # *end_text* updates
         
-        # if end_font is starting this frame...
-        if end_font.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # if end_text is starting this frame...
+        if end_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            end_font.frameNStart = frameN  # exact frame index
-            end_font.tStart = t  # local t and not account for scr refresh
-            end_font.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(end_font, 'tStartRefresh')  # time at next scr refresh
+            end_text.frameNStart = frameN  # exact frame index
+            end_text.tStart = t  # local t and not account for scr refresh
+            end_text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(end_text, 'tStartRefresh')  # time at next scr refresh
             # update status
-            end_font.status = STARTED
-            end_font.setAutoDraw(True)
+            end_text.status = STARTED
+            end_text.setAutoDraw(True)
         
-        # if end_font is active this frame...
-        if end_font.status == STARTED:
+        # if end_text is active this frame...
+        if end_text.status == STARTED:
             # update params
             pass
         # *Stop_eyetracker* updates

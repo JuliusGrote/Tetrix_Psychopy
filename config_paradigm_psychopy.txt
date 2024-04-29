@@ -1,5 +1,8 @@
 #Config for overarching paradigm settings
 
+## Instruction language
+## Choose either "german" or "english"!
+language = "german"
 
 ## Trials settings
 

@@ -9,7 +9,7 @@
 ### Default: True
 config_pretrial = True
 
-### How many rounds of pretrial should be played? This is not overwritten in "Tetris_Psychopy" and important for your Tetris experiment design
+### How many rounds of pretrial should be played? This is not overwritten in "Tetris_Psychopy" and important for your experimental design.
 ### Default and recommended: 3
 config_pretrial_rounds = 3
 
@@ -51,7 +51,7 @@ toggle_three_next_blocks = True
 Lines_for_levelup = 3
 
 ### determine at which level to start
-Start_level = 4
+Start_level = 1
 
 ### do you want to keep the level progression for the "Main Trials"?
 level_progression_main = False

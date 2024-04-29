@@ -156,7 +156,7 @@
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="wait_3sec_to_end" valType="code" updates="None" name="name"/>
       </CodeComponent>
-      <TextComponent name="end_font" plugin="None">
+      <TextComponent name="end_text" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
         <Param val="1" valType="num" updates="constant" name="contrast"/>
@@ -166,7 +166,7 @@
         <Param val="Open Sans" valType="str" updates="constant" name="font"/>
         <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
         <Param val="0.1" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="end_font" valType="code" updates="None" name="name"/>
+        <Param val="end_text" valType="code" updates="None" name="name"/>
         <Param val="" valType="num" updates="constant" name="opacity"/>
         <Param val="0" valType="num" updates="constant" name="ori"/>
         <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
@@ -177,7 +177,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Thank you for your Participation!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_end" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -304,7 +304,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Controller: Play the game! Try to focus on MENTALLY ROTATING the blocks when playing! The starting level is adjusted based on the level you reached in the earlier rounds!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_play_Tetris" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="1.25" valType="num" updates="constant" name="wrapWidth"/>
@@ -330,7 +330,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -393,7 +393,7 @@
         <Param val="time (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Now, the experiment starts!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_start" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -419,7 +419,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to start!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -811,7 +811,7 @@
         <Param val="time (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Welcome to the Tetris experiment" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_Intro_2" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -837,7 +837,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -900,7 +900,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="During this first part of the experiment, you will play Tetris and get used to the setup!&amp;#10;&amp;#10;How to play:" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_explanation_pretrial" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="1.5" valType="num" updates="constant" name="wrapWidth"/>
@@ -926,7 +926,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -1251,7 +1251,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Now the main part of the experiment begins!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_intro_main" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -1277,7 +1277,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -1320,7 +1320,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <CodeComponent name="create_processes" plugin="None">
-        <Param val="#import necessary packages for Tetris and load them&amp;#10;import ctypes&amp;#10;import pygame&amp;#10;from pynput import keyboard as pynput_keyboard&amp;#10;from multiprocessing import Process, Value&amp;#10;from psychopy.visual.windowwarp import Warper&amp;#10;#ensure that all classes can be imported from this folder&amp;#10;sys.path.append('PyGame_Tetris_Code')&amp;#10;from game import Game&amp;#10;from colors import Colors&amp;#10;&amp;#10;#Initialize Pygame and Game&amp;#10;pygame.init()&amp;#10;game = Game()&amp;#10;&amp;#10;#get config information&amp;#10;with open(&quot;config_paradigm_psychopy.txt&quot;, &quot;r&quot;) as c_paradigm:&amp;#10;    config_paradigm = c_paradigm.read()&amp;#10;    exec(config_paradigm)&amp;#10;&amp;#10;#define Tetris game as a global function &amp;#10;def Tetris_Instance(&amp;#10;            window_name,&amp;#10;            is_control,&amp;#10;            pretrial,&amp;#10;            pause_state,&amp;#10;            game_over_counter,&amp;#10;            score,&amp;#10;            level,&amp;#10;            level_for_main&amp;#10;    ):&amp;#10;        &amp;#10;    #transfer game parameters from parent to child process&amp;#10;    game.visual_control = is_control&amp;#10;    game.pretrial = pretrial&amp;#10;    game.game_over_counter = game_over_counter&amp;#10;    game.score = score&amp;#10;    game.level = level&amp;#10;    game.level_for_main = level_for_main&amp;#10;    &amp;#10;    #set gamespeed&amp;#10;    clock = pygame.time.Clock()&amp;#10;    game.calculate_speed()&amp;#10;    GAME_UPDATE = pygame.USEREVENT&amp;#10;    VISUAL_CONTROL_CAP = pygame.USEREVENT + 1&amp;#10;    previous_level = game.level.value&amp;#10;    &amp;#10;    #name and initialize GUI&amp;#10;    screen = pygame.display.set_mode((game.grid.scale.screen_w, game.grid.scale.screen_h), pygame.FULLSCREEN | pygame.SCALED)&amp;#10;    pygame.display.set_caption(window_name)&amp;#10;    ctypes.windll.user32.ShowCursor(False)&amp;#10;    &amp;#10;    #create graphic object for the game&amp;#10;    title_font = pygame.font.Font(None, game.grid.scale.scale_font)&amp;#10;    score_surface = title_font.render(&quot;Score&quot;, True, Colors.white)&amp;#10;    next_surface = title_font.render(&quot;Next&quot;, True, Colors.white)&amp;#10;    game_over_surface = title_font.render(&quot;GAME OVER&quot;, True, Colors.white)&amp;#10;    if game.three_next_blocks == False:&amp;#10;        y_position_game_over = 450&amp;#10;    else:&amp;#10;        y_position_game_over = 540&amp;#10;        &amp;#10;    level_surface = title_font.render(&quot;Level&quot;, True, Colors.white )&amp;#10;    &amp;#10;    score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)&amp;#10;    if game.three_next_blocks == False:&amp;#10;       next_rect_height = 180 &amp;#10;    else:&amp;#10;       next_rect_height = 285&amp;#10;       &amp;#10;    next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)&amp;#10;       &amp;#10;    while True:&amp;#10;        for event in pygame.event.get():&amp;#10;        #changes pausing state according to is_paused()&amp;#10;            game.pause = pause_state.value&amp;#10;      &amp;#10;        #defines how to quit the game using ESCAPE&amp;#10;            if event.type == pygame.KEYDOWN:&amp;#10;                if event.key == pygame.K_ESCAPE: &amp;#10;                    pygame.quit()&amp;#10;                    sys.exit()&amp;#10;            &amp;#10;            if game.pause == False:  &amp;#10;                #execute visual control mode&amp;#10;                if game.visual_control == True:&amp;#10;                    if event.type == GAME_UPDATE and game.level.value &lt;= 6: &amp;#10;                        game.exe_visual_control()&amp;#10;                    if  event.type == VISUAL_CONTROL_CAP and game.level.value &gt; 6:&amp;#10;                        game.exe_visual_control()&amp;#10;                   &amp;#10;                  #checks forKeyboard input to play the game&amp;#10;                if event.type == pygame.KEYDOWN and game.visual_control == False:&amp;#10;                    if game.game_over == True:&amp;#10;                        game.game_over = False&amp;#10;                        game.reset()&amp;#10;                    if event.key == pygame_key_2 and game.game_over == False:&amp;#10;                        game.move_left()&amp;#10;                    if event.key == pygame_key_4 and game.game_over == False:&amp;#10;                        game.move_right()&amp;#10;                    if event.key == pygame_key_1 and game.game_over == False:&amp;#10;                        game.move_down()&amp;#10;                        game.update_score(0, 1)&amp;#10;                    if event.key == pygame_key_3 and game.game_over == False:&amp;#10;                        game.rotate()&amp;#10;                    &amp;#10;                 #checks whether its game over or not&amp;#10;                if event.type == GAME_UPDATE and game.game_over == False:&amp;#10;                    game.move_down()&amp;#10;                  &amp;#10;                if event.type == GAME_UPDATE and game.game_over == True:&amp;#10;                    if event.type == pygame.KEYDOWN or game.automatic_restart == True:&amp;#10;                        game.game_over = False&amp;#10;                        game.reset()&amp;#10;               &amp;#10;             &amp;#10;        score_value_surface = title_font.render(str(game.score.value), True, Colors.white)&amp;#10;        level_value_surface = title_font.render(str(game.level.value), True, Colors.white)&amp;#10;                &amp;#10;        #checks whether level changed and adjusts speed accordingly&amp;#10;        if previous_level != game.level.value:&amp;#10;            game.calculate_speed()&amp;#10;            previous_level = game.level.value&amp;#10;             &amp;#10;        #creates  GUI for changeable objects&amp;#10;            &amp;#10;        screen.fill(Colors.dark_blue)&amp;#10;        screen.blit(score_surface, (386 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 40 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))&amp;#10;        screen.blit(next_surface, (398 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 200 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))&amp;#10;        screen.blit(level_surface, (426 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))&amp;#10;        screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))&amp;#10;        #displays game over message&amp;#10;        if game.game_over == True:&amp;#10;            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, y_position_game_over * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))&amp;#10;               &amp;#10;        pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)&amp;#10;        screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))&amp;#10;        pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)&amp;#10;        #pygamefunction do execute screen instructions&amp;#10;             &amp;#10;        game.draw(screen)&amp;#10;        #if the disply needs to be flipped vertically thus function does it&amp;#10;        if flip_vertically == True or flip_horizontally == True:&amp;#10;            original_surf = pygame.display.get_surface()&amp;#10;            flipped_surface = pygame.transform.flip(original_surf, flip_vertically, flip_horizontally)&amp;#10;            screen.blit(flipped_surface, dest=(0, 0))&amp;#10;            &amp;#10;         #updates screen in clock.tick(x) per second&amp;#10;        pygame.display.update()&amp;#10;        clock.tick(60)&amp;#10;#checks whether a specific window is created&amp;#10;def is_window_open(window_title):        &amp;#10;    hwnd = ctypes.windll.user32.FindWindowW(None, window_title)&amp;#10;    if hwnd == 0: # Window not found&amp;#10;        return False  &amp;#10;    else:&amp;#10;        return True &amp;#10;&amp;#10;# define function to bring the window with a specific title to the foreground&amp;#10;def Get_on_top(window_title):&amp;#10;    active_window = None&amp;#10;    HWND_TOPMOST = -1&amp;#10;    SWP_NOMOVE = 0x0002&amp;#10;    SWP_NOSIZE = 0x0001&amp;#10;    hwnd = ctypes.windll.user32.FindWindowW(None, window_title)&amp;#10;    if hwnd != 0:&amp;#10;        active_window = ctypes.windll.user32.SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)&amp;#10;        # Simulate left mouse button press and release to make window active(only once)&amp;#10;        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down&amp;#10;        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up&amp;#10;        ctypes.windll.user32.ShowCursor(False)&amp;#10;        &amp;#10;# Create a countdown timer with a &quot;x&quot;-second duration or speficific for a condition&amp;#10;def condition_or_wait_timer(name_or_duration): &amp;#10;    if name_or_duration == &quot;wait&quot;:&amp;#10;        t = 1&amp;#10;    elif name_or_duration == &quot;Tetris&quot;:&amp;#10;        t = 30&amp;#10;    else:&amp;#10;        t = float(name_or_duration)&amp;#10;    timer = core.CountdownTimer(t)&amp;#10;    # Use a while loop to do nothing until the time runs out&amp;#10;    while timer.getTime() &gt; 0:&amp;#10;        pass&amp;#10;        &amp;#10;#define Pause method for each specific process&amp;#10;def is_paused(process):&amp;#10;    if str(process) == &quot;play_Tetris&quot;:&amp;#10;        game.toggle_play.value = not game.toggle_play.value     &amp;#10;    elif str(process) == &quot;watch_Tetris&quot;:&amp;#10;        game.toggle_watch.value = not game.toggle_watch.value&amp;#10;    elif str(process) == &quot;pretrial_Tetris&quot;:&amp;#10;        game.toggle_pretrial.value = not game.toggle_pretrial.value" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="#import necessary packages for Tetris and load them&amp;#10;import ctypes&amp;#10;import pygame&amp;#10;from pynput import keyboard as pynput_keyboard&amp;#10;from multiprocessing import Process, Value&amp;#10;from psychopy.visual.windowwarp import Warper&amp;#10;#ensure that all classes can be imported from this folder&amp;#10;sys.path.append('PyGame_Tetris_Code')&amp;#10;from game import Game&amp;#10;from colors import Colors&amp;#10;from instructions import Instructions&amp;#10;#Initialize Pygame and Game&amp;#10;pygame.init()&amp;#10;game = Game()&amp;#10;&amp;#10;#get config information&amp;#10;with open(&quot;config_paradigm_psychopy.txt&quot;, &quot;r&quot;) as c_paradigm:&amp;#10;    config_paradigm = c_paradigm.read()&amp;#10;    exec(config_paradigm)&amp;#10;&amp;#10;#determine the instruction language&amp;#10;Inst = Instructions()&amp;#10;Inst.set_instructions(language)&amp;#10;&amp;#10;#define Tetris game as a global function &amp;#10;def Tetris_Instance(&amp;#10;            window_name,&amp;#10;            is_control,&amp;#10;            pretrial,&amp;#10;            pause_state,&amp;#10;            game_over_counter,&amp;#10;            score,&amp;#10;            level,&amp;#10;            level_for_main&amp;#10;    ):&amp;#10;        &amp;#10;    #transfer game parameters from parent to child process&amp;#10;    game.visual_control = is_control&amp;#10;    game.pretrial = pretrial&amp;#10;    game.game_over_counter = game_over_counter&amp;#10;    game.score = score&amp;#10;    game.level = level&amp;#10;    game.level_for_main = level_for_main&amp;#10;    &amp;#10;    #set gamespeed&amp;#10;    clock = pygame.time.Clock()&amp;#10;    game.calculate_speed()&amp;#10;    GAME_UPDATE = pygame.USEREVENT&amp;#10;    VISUAL_CONTROL_CAP = pygame.USEREVENT + 1&amp;#10;    previous_level = game.level.value&amp;#10;    &amp;#10;    #name and initialize GUI&amp;#10;    screen = pygame.display.set_mode((game.grid.scale.screen_w, game.grid.scale.screen_h), pygame.FULLSCREEN | pygame.SCALED)&amp;#10;    pygame.display.set_caption(window_name)&amp;#10;    ctypes.windll.user32.ShowCursor(False)&amp;#10;    &amp;#10;    #create graphic object for the game&amp;#10;    title_font = pygame.font.Font(None, game.grid.scale.scale_font)&amp;#10;    score_surface = title_font.render(&quot;Score&quot;, True, Colors.white)&amp;#10;    next_surface = title_font.render(&quot;Next&quot;, True, Colors.white)&amp;#10;    game_over_surface = title_font.render(&quot;GAME OVER&quot;, True, Colors.white)&amp;#10;    if game.three_next_blocks == False:&amp;#10;        y_position_game_over = 450&amp;#10;    else:&amp;#10;        y_position_game_over = 540&amp;#10;        &amp;#10;    level_surface = title_font.render(&quot;Level&quot;, True, Colors.white )&amp;#10;    &amp;#10;    score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)&amp;#10;    if game.three_next_blocks == False:&amp;#10;       next_rect_height = 180 &amp;#10;    else:&amp;#10;       next_rect_height = 285&amp;#10;       &amp;#10;    next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)&amp;#10;       &amp;#10;    while True:&amp;#10;        for event in pygame.event.get():&amp;#10;        #changes pausing state according to is_paused()&amp;#10;            game.pause = pause_state.value&amp;#10;      &amp;#10;        #defines how to quit the game using ESCAPE&amp;#10;            if event.type == pygame.KEYDOWN:&amp;#10;                if event.key == pygame.K_ESCAPE: &amp;#10;                    pygame.quit()&amp;#10;                    sys.exit()&amp;#10;            &amp;#10;            if game.pause == False:  &amp;#10;                #execute visual control mode&amp;#10;                if game.visual_control == True:&amp;#10;                    if event.type == GAME_UPDATE and game.level.value &lt;= 6: &amp;#10;                        game.exe_visual_control()&amp;#10;                    if  event.type == VISUAL_CONTROL_CAP and game.level.value &gt; 6:&amp;#10;                        game.exe_visual_control()&amp;#10;                   &amp;#10;                  #checks forKeyboard input to play the game&amp;#10;                if event.type == pygame.KEYDOWN and game.visual_control == False:&amp;#10;                    if game.game_over == True:&amp;#10;                        game.game_over = False&amp;#10;                        game.reset()&amp;#10;                    if event.key == pygame_key_2 and game.game_over == False:&amp;#10;                        game.move_left()&amp;#10;                    if event.key == pygame_key_4 and game.game_over == False:&amp;#10;                        game.move_right()&amp;#10;                    if event.key == pygame_key_1 and game.game_over == False:&amp;#10;                        game.move_down()&amp;#10;                        game.update_score(0, 1)&amp;#10;                    if event.key == pygame_key_3 and game.game_over == False:&amp;#10;                        game.rotate()&amp;#10;                    &amp;#10;                 #checks whether its game over or not&amp;#10;                if event.type == GAME_UPDATE and game.game_over == False:&amp;#10;                    game.move_down()&amp;#10;                  &amp;#10;                if event.type == GAME_UPDATE and game.game_over == True:&amp;#10;                    if event.type == pygame.KEYDOWN or game.automatic_restart == True:&amp;#10;                        game.game_over = False&amp;#10;                        game.reset()&amp;#10;               &amp;#10;             &amp;#10;        score_value_surface = title_font.render(str(game.score.value), True, Colors.white)&amp;#10;        level_value_surface = title_font.render(str(game.level.value), True, Colors.white)&amp;#10;                &amp;#10;        #checks whether level changed and adjusts speed accordingly&amp;#10;        if previous_level != game.level.value:&amp;#10;            game.calculate_speed()&amp;#10;            previous_level = game.level.value&amp;#10;             &amp;#10;        #creates  GUI for changeable objects&amp;#10;            &amp;#10;        screen.fill(Colors.dark_blue)&amp;#10;        screen.blit(score_surface, (386 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 40 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))&amp;#10;        screen.blit(next_surface, (398 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 200 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))&amp;#10;        screen.blit(level_surface, (426 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))&amp;#10;        screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))&amp;#10;        #displays game over message&amp;#10;        if game.game_over == True:&amp;#10;            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, y_position_game_over * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))&amp;#10;               &amp;#10;        pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)&amp;#10;        screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))&amp;#10;        pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)&amp;#10;        #pygamefunction do execute screen instructions&amp;#10;             &amp;#10;        game.draw(screen)&amp;#10;        #if the disply needs to be flipped vertically thus function does it&amp;#10;        if flip_vertically == True or flip_horizontally == True:&amp;#10;            original_surf = pygame.display.get_surface()&amp;#10;            flipped_surface = pygame.transform.flip(original_surf, flip_vertically, flip_horizontally)&amp;#10;            screen.blit(flipped_surface, dest=(0, 0))&amp;#10;            &amp;#10;         #updates screen in clock.tick(x) per second&amp;#10;        pygame.display.update()&amp;#10;        clock.tick(60)&amp;#10;#checks whether a specific window is created&amp;#10;def is_window_open(window_title):        &amp;#10;    hwnd = ctypes.windll.user32.FindWindowW(None, window_title)&amp;#10;    if hwnd == 0: # Window not found&amp;#10;        return False  &amp;#10;    else:&amp;#10;        return True &amp;#10;&amp;#10;# define function to bring the window with a specific title to the foreground&amp;#10;def Get_on_top(window_title):&amp;#10;    active_window = None&amp;#10;    HWND_TOPMOST = -1&amp;#10;    SWP_NOMOVE = 0x0002&amp;#10;    SWP_NOSIZE = 0x0001&amp;#10;    hwnd = ctypes.windll.user32.FindWindowW(None, window_title)&amp;#10;    if hwnd != 0:&amp;#10;        active_window = ctypes.windll.user32.SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)&amp;#10;        # Simulate left mouse button press and release to make window active(only once)&amp;#10;        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down&amp;#10;        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up&amp;#10;        ctypes.windll.user32.ShowCursor(False)&amp;#10;        &amp;#10;# Create a countdown timer with a &quot;x&quot;-second duration or speficific for a condition&amp;#10;def condition_or_wait_timer(name_or_duration): &amp;#10;    if name_or_duration == &quot;wait&quot;:&amp;#10;        t = 1&amp;#10;    elif name_or_duration == &quot;Tetris&quot;:&amp;#10;        t = 30&amp;#10;    else:&amp;#10;        t = float(name_or_duration)&amp;#10;    timer = core.CountdownTimer(t)&amp;#10;    # Use a while loop to do nothing until the time runs out&amp;#10;    while timer.getTime() &gt; 0:&amp;#10;        pass&amp;#10;        &amp;#10;#define Pause method for each specific process&amp;#10;def is_paused(process):&amp;#10;    if str(process) == &quot;play_Tetris&quot;:&amp;#10;        game.toggle_play.value = not game.toggle_play.value     &amp;#10;    elif str(process) == &quot;watch_Tetris&quot;:&amp;#10;        game.toggle_watch.value = not game.toggle_watch.value&amp;#10;    elif str(process) == &quot;pretrial_Tetris&quot;:&amp;#10;        game.toggle_pretrial.value = not game.toggle_pretrial.value" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="pretrial_Tetris = new Process({&quot;target&quot;: Tetris_Instance, &quot;args&quot;: [&quot;pretrial_Tetris&quot;, false, true, game.toggle_pretrial, game.toggle_fullpretrial, game.game_over_counter, game.score, game.level]});&amp;#10;pretrial_Tetris.start();&amp;#10;new ctypes.windll.user32.ShowCursor(false);&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
         <Param val="#checks whether display orientation is altered (defined in &quot;config_paradigm_psychopy.txt&quot;)&amp;#10;if flip_vertically == True or flip_horizontally == True:&amp;#10;    &amp;#10;    #warping function provided by psychopy.visual.windowwarper&amp;#10;    warper = Warper(win)&amp;#10;    &amp;#10;    #even if warping function is set warper needs to be updated before changes apply to the display&amp;#10;    #Psychopy uses switched arguments for a vertical and horizontal mirroring compared to &quot;config_paradigm_psychopy.txt&quot;&amp;#10;    warper.changeProjection(None, flipHorizontal = flip_vertically, flipVertical = flip_horizontally)&amp;#10;&amp;#10;#create a keyboard listener that collets Trigger by the MR&amp;#10;#cannot be defined before the experiment due to globalCLock being defined in run(...)&amp;#10;def check_for_trigger(key):&amp;#10;    try:&amp;#10;        if key.char =='q':&amp;#10;            return False&amp;#10;        if key.char == trigger:&amp;#10;            thisExp.addData('trigger.t', globalClock.getTime(format='float'))&amp;#10;            thisExp.nextEntry()&amp;#10;    except AttributeError: &amp;#10;        pass&amp;#10;        " valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
@@ -1497,7 +1497,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Please press each button on the responsebox twice!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_check_response" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -1523,7 +1523,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Responses checked successfully!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_check_response_2" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -1807,7 +1807,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
         <Param val="False" valType="bool" updates="constant" name="flipVert"/>
-        <Param val="Images/explain_game_mechanics.png" valType="file" updates="constant" name="image"/>
+        <Param val="$Inst.img_explain_game_mechanics" valType="file" updates="constant" name="image"/>
         <Param val="linear" valType="str" updates="constant" name="interpolate"/>
         <Param val="" valType="str" updates="constant" name="mask"/>
         <Param val="explain_game_mechanics" valType="code" updates="None" name="name"/>
@@ -1847,7 +1847,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -1898,7 +1898,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
         <Param val="False" valType="bool" updates="constant" name="flipVert"/>
-        <Param val="Images/Tetris_explains.png" valType="file" updates="constant" name="image"/>
+        <Param val="$Inst.img_explain_controls" valType="file" updates="constant" name="image"/>
         <Param val="linear" valType="str" updates="constant" name="interpolate"/>
         <Param val="" valType="str" updates="constant" name="mask"/>
         <Param val="explain_controls" valType="code" updates="None" name="name"/>
@@ -1938,7 +1938,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="This is how you move the Tetris-Blocks:" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_Controls" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -1964,7 +1964,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to start the first TETRIS-GAME!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_start_pretrial" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="2" valType="num" updates="constant" name="wrapWidth"/>
@@ -2027,7 +2027,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="During the Experiment you will encounter 4 different symbols:" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_Announcement" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="1.8" valType="num" updates="constant" name="wrapWidth"/>
@@ -2185,7 +2185,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -2256,7 +2256,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Eye: Watch Tetris! Just look at the screen while a game recording is played for you. Do not press any buttons!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_watch" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="1.25" valType="num" updates="constant" name="wrapWidth"/>
@@ -2282,7 +2282,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -2373,7 +2373,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Fixation Cross: just look at the cross in the middle of the screen and do nothing else!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_cross" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="1.25" valType="num" updates="constant" name="wrapWidth"/>
@@ -2399,7 +2399,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -2490,7 +2490,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Hand: Press the Buttons ALTERNATELY (one after another) to the rhythm displayed on the screen!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_motor" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="1.25" valType="num" updates="constant" name="wrapWidth"/>
@@ -2516,7 +2516,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press any button to continue!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_continue" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -2804,7 +2804,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="1" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Block ended!" valType="str" updates="constant" name="text"/>
+        <Param val="$Inst.font_condition_ended" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>

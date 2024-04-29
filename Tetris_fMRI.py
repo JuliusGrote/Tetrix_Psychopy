@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 27, 2024, at 12:40
+    on April 29, 2024, at 01:26
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -91,6 +91,11 @@ def Tetris_Instance(
     score_surface = title_font.render("Score", True, Colors.white)
     next_surface = title_font.render("Next", True, Colors.white)
     game_over_surface = title_font.render("GAME OVER", True, Colors.white)
+    if game.three_next_blocks == False:
+        y_position_game_over = 450
+    else:
+        y_position_game_over = 540
+        
     level_surface = title_font.render("Level", True, Colors.white )
     
     score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)
@@ -140,8 +145,9 @@ def Tetris_Instance(
                     game.move_down()
                   
                 if event.type == GAME_UPDATE and game.game_over == True:
-                    game.game_over = False
-                    game.reset()
+                    if event.type == pygame.KEYDOWN or game.automatic_restart == True:
+                        game.game_over = False
+                        game.reset()
                
              
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
@@ -161,7 +167,7 @@ def Tetris_Instance(
         screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         #displays game over message
         if game.game_over == True:
-            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 450 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
+            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, y_position_game_over * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
                
         pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
         screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))
@@ -786,14 +792,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     x_5_5 =  "-"
     all_checked = False
     text_check_response = visual.TextStim(win=win, name='text_check_response',
-        text='Please press each button on the responsebox twice!',
+        text=font_check_response,
         font='Open Sans',
         pos=(0, 0.2), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     text_check_response_2 = visual.TextStim(win=win, name='text_check_response_2',
-        text='Responses checked successfully!',
+        text=font_check_response_2,
         font='Open Sans',
         pos=(0, -0.2), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -838,14 +844,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "pretrial_intro" ---
     Intro_2 = visual.TextStim(win=win, name='Intro_2',
-        text='Welcome to the Tetris experiment',
+        text=font_Intro_2,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     Text_continue_1 = visual.TextStim(win=win, name='Text_continue_1',
-        text='Press any button to continue!',
+        text=font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -3049,7 +3055,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from Tetris_pretrial
-        if game.game_over_counter.value == 5:
+        if game.game_over_counter.value == game.pretrial_rounds:
             continueRoutine = False
         
         # *fix_2* updates
@@ -3121,9 +3127,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Run 'End Routine' code from Tetris_pretrial
     #adds the achieved level and score to the data file
     thisExp.addData('pretrial_score', game.score.value)
+    thisExp.addData('pretrial_level_avg', game.level_for_main.value)
+    thisExp.addData('Condition.info', 'info_preTrial')
     #resets absolut score
     game.score.value = 0
-    thisExp.addData('pretrial_level_avg', game.level_for_main.value)
     #sets new start level for main game
     game.level.value = round(game.level_for_main.value * 0.75)
     
@@ -4505,8 +4512,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # set up handler to look after randomisation of conditions etc
     main_trials = data.TrialHandler(nReps=n_repeats, method='fullRandom', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('loop_template.xlsx'),
-        seed=None, name='main_trials')
+        trialList=data.importConditions('main_trials_template.xlsx'),
+        seed=main_trials_seed, name='main_trials')
     thisExp.addLoop(main_trials)  # add the loop to the experiment
     thisMain_trial = main_trials.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisMain_trial.rgb)

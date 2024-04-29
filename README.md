@@ -52,6 +52,18 @@
 2. Config of game specifics: [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)
 
 - - - 
+
+## Languages:
+
+&rarr; This Experiment is available in **English** and **German**, see [config_paradigm_psychopy](config_paradigm_psychopy.txt)
+
+
+
+&rarr; Note that this refers to the instructions for participants only to edit information go to [instructions.py](instructions.py)
+
+
+
+- - -
 ## Game Code:
 
 For further information on game code read the [README.md](PyGame_Tetris_Code/README.md) file in the "PyGame_Tetris_Code" folder.
@@ -109,8 +121,7 @@ psychopy.useVersion('your version')
 - - -
 ## Eye Tracking:
 
-*currently under development*
-*no ROIs defined yet*
+*currently under development*, *no ROIs defined yet!*
 
 Eyetracking can be activated in "config_paradigm_psychopy.txt".
 
