@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 29, 2024, at 12:02
+    on April 29, 2024, at 19:09
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -67,6 +67,7 @@ def Tetris_Instance(
             game_over_counter,
             score,
             level,
+            speed,
             level_for_main
     ):
         
@@ -76,6 +77,7 @@ def Tetris_Instance(
     game.game_over_counter = game_over_counter
     game.score = score
     game.level = level
+    game.speed = speed
     game.level_for_main = level_for_main
     
     #set gamespeed
@@ -352,14 +354,16 @@ def setupData(expInfo, dataDir=None):
     thisExp.setPriority('Condition.duration', 27)
     thisExp.setPriority('Condition.info', 26)
     thisExp.setPriority('game.score', 24)
-    thisExp.setPriority('participant', 23)
-    thisExp.setPriority('main_trials.thisTrialN', 22)
-    thisExp.setPriority('main_trials.thisIndex', 21)
-    thisExp.setPriority('main_trials.thisN', 20)
-    thisExp.setPriority('main_trials.thisRepN', 19)
-    thisExp.setPriority('targeted_duration', 18)
-    thisExp.setPriority('control_condition', 17)
-    thisExp.setPriority('Images_next_cond', 16)
+    thisExp.setPriority('game.level', 23)
+    thisExp.setPriority('game.speed', 22)
+    thisExp.setPriority('participant', 21)
+    thisExp.setPriority('main_trials.thisTrialN', 20)
+    thisExp.setPriority('main_trials.thisIndex', 19)
+    thisExp.setPriority('main_trials.thisN', 18)
+    thisExp.setPriority('main_trials.thisRepN', 17)
+    thisExp.setPriority('targeted_duration', 16)
+    thisExp.setPriority('control_condition', 15)
+    thisExp.setPriority('Images_next_cond', 14)
     thisExp.setPriority('notes', 0)
     thisExp.setPriority('play_pretrial.started', -1)
     thisExp.setPriority('play_pretrial.stopped', -2)
@@ -418,7 +422,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1707, 960], fullscr=_fullScr, screen=0,
+            size=[1280, 720], fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='Home_test', color=[-0.6549, -0.6549, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -1326,6 +1330,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                               game.game_over_counter,
                               game.score,
                               game.level,
+                              game.speed,
                               game.level_for_main
                               ))
     pretrial_Tetris.start()
@@ -1339,6 +1344,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                           game.game_over_counter,
                           game.score,
                           game.level,
+                          game.speed,
                           game.level_for_main,
                           ))
     play_Tetris.start()
@@ -1351,6 +1357,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                            game.game_over_counter,
                            game.score,
                            game.level,
+                           game.speed,
                            game.level_for_main,
                            ))
     watch_Tetris.start()
@@ -5004,6 +5011,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         thisExp.addData('Condition.duration', condition_stopped - condition_started)
         thisExp.addData('Condition.info', 'info_play_Tetris')
         thisExp.addData('game.score', game.score.value)
+        thisExp.addData('game.score', game.score.value)
+        thisExp.addData('game.level', game.level.value)
+        thisExp.addData('game.speed', game.speed.value)
         thisExp.nextEntry()
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if routineForceEnded:
@@ -5195,12 +5205,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # Run 'Begin Routine' code from execute_codition
         #if the control condition is "watch_Tetris": set Tetris to foreground
         Get_on_top(control_condition)
-        
-        #initialize press rhythm
-        if control_condition == "motor_control" and show_motor_rhythm == True:
-            pygame.init()
-            game.calculate_speed()
-        
         #wait one sec
         condition_or_wait_timer("wait")
         #if the control condition is "watch_Tetris": Tetris begins here
@@ -5237,7 +5241,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             #created a press rhythm if enabled by "config_paradigm_psychopy.txt" by changing the opacity of the cross shape periodically
             if control_condition == "motor_control" and show_motor_rhythm == True:
                 press_rhythm = core.getTime()
-                if press_rhythm % (game.speed/1000 * 2) < (game.speed/2000):   
+                if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):   
                     press_cross.setOpacity(1)
                 else:
                     press_cross.setOpacity(0)

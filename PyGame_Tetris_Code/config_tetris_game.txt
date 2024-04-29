@@ -51,10 +51,10 @@ toggle_three_next_blocks = True
 Lines_for_levelup = 3
 
 ### determine at which level to start
-Start_level = 1
+Start_level = 4
 
 ### do you want to keep the level progression for the "Main Trials"?
-level_progression_main = False
+level_progression_main = True
 
 ## Game speed
 

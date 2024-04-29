@@ -48,12 +48,12 @@ class Game:
 		self.level = Value('i', Start_level)
 		self.score = Value('i', 0)
 		self.automatic_restart = restart_automatically
-		self.speed = Start_speed
+		self.speed = Value('i', Start_speed)
 		self.total_lines_cleared = 0
 
 	def calculate_speed(self):
-		self.speed = round((Start_speed/1250 - ((self.level.value - 1) * Speed_slope)) ** (self.level.value - 1) * 1000)
-		pygame.time.set_timer(pygame.USEREVENT, self.speed)
+		self.speed.value = round((Start_speed/1250 - ((self.level.value - 1) * Speed_slope)) ** (self.level.value - 1) * 1000)
+		pygame.time.set_timer(pygame.USEREVENT, self.speed.value)
 		pygame.time.set_timer(pygame.USEREVENT + 1, round(260 * 6 / self.level.value))
 		
 	def check_for_Keep_score(self):
