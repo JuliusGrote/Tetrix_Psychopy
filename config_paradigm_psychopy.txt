@@ -1,4 +1,4 @@
-#Config for overarching paradigm settings
+# Config for overarching paradigm settings
 
 ## Instruction language
 ## Choose either "german" or "english"!
@@ -24,8 +24,8 @@ n_repeats = 10
 
 ### Would you like to compare "high" working memory load (WM load) against "low" working memory load (WM load) (one "NEXT" Block against three "NEXT" BLocks)? 
 ### Each "play_Tetris" condition it is randomly chosen whether wm_load is "high" or "low"!
-### works with the "three_next_blocks" option from "config_tetris_game.txt"
-toggle_wm_load = True
+### uses the same mechanic as the "three_next_blocks" option from "config_tetris_game.txt"
+toggle_wm_load = False
 
 ### Default: None; if you want to use that function set "load_seed" to any number.
 load_seed = None

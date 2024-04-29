@@ -32,9 +32,12 @@ Keep_score = True
 restart_automatically = True
 
 ### determines whether game starts in Fullscreen or not
+### Default: False 
+### Overwritten, if you use the "Tetris_Psychopy" Experiment
 Start_Fullscreen = False
 
 ### determines whether game starts paused or not
+### Default and strongly recommended for "Tetris_Psychopy": True
 Start_Pause = True
 
 ### Setting for visual control purposes, blocks get deleted when reaching the bottom of the grid, no stacking. Blocks move in a random pattern simulation actual gameplay.
@@ -42,6 +45,7 @@ Start_Pause = True
 Visual_control = False
 
 ### Should there be three "next" blocks instead of one on the screen?
+### If you enabled the "toggle_wm_load" option in the "config_paradigm_psyhopy.txt", this option here only relates to the "Pre-Trials"
 ### With reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" blocks and in the "level mode" there is only one "next" block.
 toggle_three_next_blocks = True
 
@@ -51,7 +55,7 @@ toggle_three_next_blocks = True
 Lines_for_levelup = 3
 
 ### determine at which level to start
-Start_level = 12
+Start_level = 1
 
 ### do you want to keep the level progression for the "Main Trials"?
 level_progression_main = True
