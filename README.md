@@ -15,7 +15,8 @@
 - - -
 ## General Structure:
 
-&rarr; The Paradigm consists of a "Pre-Trial" part, in which the individual skill of a participant is determined by playing three rounds and calculating the mean level reached. The "Main Part" holds the actual fMRI related experiment. There are 4 condition blocks in one trial lasting 20sec each with 20 trials in total (can be altered, though not recommended, in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
+&rarr; The Paradigm consists of a "Pre-Trial" part, in which the individual skill of a participant is determined by playing three rounds and calculating the mean level reached. The "Main Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial lasting 20sec each with 
+30 trials in total (can be altered, though not recommended, in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
 
 ### Conditions:
 
