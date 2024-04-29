@@ -34,7 +34,7 @@ class Game:
 		self.game_over = False
 		self.pretrial = config_pretrial
 		self.pretrial_rounds = config_pretrial_rounds
-		self.three_next_blocks = toggle_three_next_blocks
+		self.three_next_blocks = Value('b', toggle_three_next_blocks)
 		self.game_over_counter = Value('i', 0)
 		self.toggle_pretrial = Value('b', Start_Pause)
 		self.toggle_play = Value('b', Start_Pause)
@@ -137,7 +137,7 @@ class Game:
 			self.grid.grid[position.row][position.column] = self.current_block.id
 		if self.visual_control == True:
 				self.grid.reset()
-		if self.three_next_blocks == False:
+		if self.three_next_blocks.value == False:
 			self.current_block = self.next_block
 			self.next_block = self.get_random_block()
 		else:
@@ -190,7 +190,7 @@ class Game:
 		three_next_blocks_y_shift = 90
 		self.grid.draw(screen)
 		self.current_block.draw(screen, 22 * self.grid.scale.scale_factor + self.grid.scale.x_displacement,  20 * self.grid.scale.scale_factor )
-		if self.three_next_blocks == False:
+		if self.three_next_blocks.value == False:
 			if self.next_block.id == 3:
 				self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 305 * self.grid.scale.scale_factor)
 			elif self.next_block.id == 4:

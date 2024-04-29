@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 29, 2024, at 19:09
+    on April 30, 2024, at 01:24
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -68,7 +68,8 @@ def Tetris_Instance(
             score,
             level,
             speed,
-            level_for_main
+            level_for_main,
+            three_next_blocks
     ):
         
     #transfer game parameters from parent to child process
@@ -79,39 +80,33 @@ def Tetris_Instance(
     game.level = level
     game.speed = speed
     game.level_for_main = level_for_main
+    game.three_next_blocks = three_next_blocks
     
     #set gamespeed
     clock = pygame.time.Clock()
     game.calculate_speed()
+    #define the USEREVENTS
     GAME_UPDATE = pygame.USEREVENT
     VISUAL_CONTROL_CAP = pygame.USEREVENT + 1
-    previous_level = game.level.value
+    #set "previous" variables to None
+    previous_level = None
+    previous_three_next_blocks = None
     
     #name and initialize GUI
     screen = pygame.display.set_mode((game.grid.scale.screen_w, game.grid.scale.screen_h), pygame.FULLSCREEN | pygame.SCALED)
     pygame.display.set_caption(window_name)
     ctypes.windll.user32.ShowCursor(False)
     
-    #create graphic object for the game
+    #create static graphic objects for the game
     title_font = pygame.font.Font(None, game.grid.scale.scale_font)
     score_surface = title_font.render("Score", True, Colors.white)
     next_surface = title_font.render("Next", True, Colors.white)
     game_over_surface = title_font.render("GAME OVER", True, Colors.white)
-    if game.three_next_blocks == False:
-        y_position_game_over = 450
-    else:
-        y_position_game_over = 540
-        
-    level_surface = title_font.render("Level", True, Colors.white )
-    
+    level_surface = title_font.render("Level", True, Colors.white )    
     score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)
-    if game.three_next_blocks == False:
-       next_rect_height = 180 
-    else:
-       next_rect_height = 285
-       
-    next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)
-       
+   
+    #Game Loop 
+    #Be catious when changing code in here!
     while True:
         for event in pygame.event.get():
         #changes pausing state according to is_paused()
@@ -155,7 +150,7 @@ def Tetris_Instance(
                         game.game_over = False
                         game.reset()
                
-             
+        #Create the GUI for score and level     
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
         level_value_surface = title_font.render(str(game.level.value), True, Colors.white)
                 
@@ -163,27 +158,37 @@ def Tetris_Instance(
         if previous_level != game.level.value:
             game.calculate_speed()
             previous_level = game.level.value
-             
-        #creates  GUI for changeable objects
             
+        #checks whether game.three_next_blocks.value changed and sets new "height" of rect for NEXT-blocks accordingly
+        if previous_three_next_blocks != game.three_next_blocks.value:
+            if game.three_next_blocks.value == False:
+               next_rect_height = 180 
+            else:
+               next_rect_height = 285
+            #draw next rect
+            next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)
+            previous_three_next_blocks = game.three_next_blocks.value 
+        
+        #creates  GUI for changeable objects
         screen.fill(Colors.dark_blue)
         screen.blit(score_surface, (386 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 40 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         screen.blit(next_surface, (398 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 200 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         screen.blit(level_surface, (426 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
+        
         #displays game over message
         if game.game_over == True:
-            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, y_position_game_over * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
-               
+            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 540 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
+        
+        #blit screen elements
         pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
         screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))
         pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)
-        #pygamefunction do execute screen instructions
-             
         game.draw(screen)
-        #if the disply needs to be flipped vertically thus function does it
+        
+        #if the disply needs to be flipped vertically this function does it
         if flip_vertically == True or flip_horizontally == True:
-            original_surf = pygame.display.get_surface()
+            original_surf = pygame.display.get_surface() #collect all different surfaces on the screen to a new one
             flipped_surface = pygame.transform.flip(original_surf, flip_vertically, flip_horizontally)
             screen.blit(flipped_surface, dest=(0, 0))
             
@@ -233,6 +238,28 @@ def is_paused(process):
         game.toggle_watch.value = not game.toggle_watch.value
     elif str(process) == "pretrial_Tetris":
         game.toggle_pretrial.value = not game.toggle_pretrial.value
+#define the compare between high and low working memory load method
+#setfirst_trial to true
+first_trial = True
+
+#define functions that creates a List with shuffled order of "high" and "low" wm_load
+#used to randomize the "high" and "low" "play_Tetris" blocks
+def comp_wm_load(total_trials, trial_nr):
+    global first_trial
+    global wm_load_seq
+    if first_trial == True: 
+        n_per_load = int(total_trials/2)
+        wm_load_low = 'low'
+        wm_load_high = 'high'
+        wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load #add equal number of "high" and "low"
+        np.random.seed(load_seed) 
+        np.random.shuffle(wm_load_seq)
+        print(wm_load_seq)
+        first_trial = False
+    if wm_load_seq[trial_nr] == 'low':
+        game.three_next_blocks.value = False
+    else:
+        game.three_next_blocks.value = True
 # Run 'Before Experiment' code from code_play
 
 
@@ -352,18 +379,19 @@ def setupData(expInfo, dataDir=None):
     thisExp.setPriority('Condition.started', 29)
     thisExp.setPriority('Condition.stopped', 28)
     thisExp.setPriority('Condition.duration', 27)
-    thisExp.setPriority('Condition.info', 26)
-    thisExp.setPriority('game.score', 24)
-    thisExp.setPriority('game.level', 23)
-    thisExp.setPriority('game.speed', 22)
-    thisExp.setPriority('participant', 21)
-    thisExp.setPriority('main_trials.thisTrialN', 20)
-    thisExp.setPriority('main_trials.thisIndex', 19)
-    thisExp.setPriority('main_trials.thisN', 18)
-    thisExp.setPriority('main_trials.thisRepN', 17)
-    thisExp.setPriority('targeted_duration', 16)
-    thisExp.setPriority('control_condition', 15)
-    thisExp.setPriority('Images_next_cond', 14)
+    thisExp.setPriority('game.score', 26)
+    thisExp.setPriority('game.level', 24)
+    thisExp.setPriority('game.speed', 23)
+    thisExp.setPriority('game.wm_load', 22)
+    thisExp.setPriority('Condition.info', 21)
+    thisExp.setPriority('participant', 20)
+    thisExp.setPriority('main_trials.thisTrialN', 19)
+    thisExp.setPriority('main_trials.thisIndex', 18)
+    thisExp.setPriority('main_trials.thisN', 17)
+    thisExp.setPriority('main_trials.thisRepN', 16)
+    thisExp.setPriority('targeted_duration', 15)
+    thisExp.setPriority('control_condition', 14)
+    thisExp.setPriority('Images_next_cond', 13)
     thisExp.setPriority('notes', 0)
     thisExp.setPriority('play_pretrial.started', -1)
     thisExp.setPriority('play_pretrial.stopped', -2)
@@ -422,7 +450,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1280, 720], fullscr=_fullScr, screen=0,
+            size=[1707, 960], fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='Home_test', color=[-0.6549, -0.6549, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -473,16 +501,6 @@ def setupDevices(expInfo, thisExp, win):
     # --- Setup input devices ---
     ioConfig = {}
     
-    # Setup eyetracking
-    ioConfig['eyetracker.hw.mouse.EyeTracker'] = {
-        'name': 'tracker',
-        'controls': {
-            'move': [],
-            'blink':('MIDDLE_BUTTON',),
-            'saccade_threshold': 0.5,
-        }
-    }
-    
     # Setup iohub keyboard
     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
     
@@ -492,7 +510,6 @@ def setupDevices(expInfo, thisExp, win):
     ioServer = io.launchHubServer(window=win, experiment_code='Tetris_fMRI', session_code=ioSession, datastore_name=thisExp.dataFileName, **ioConfig)
     # store ioServer object in the device manager
     deviceManager.ioServer = ioServer
-    deviceManager.devices['eyetracker'] = ioServer.getDevice('tracker')
     
     # create a default keyboard (e.g. to check for escape)
     if deviceManager.getDevice('defaultKeyboard') is None:
@@ -975,7 +992,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-1.0);
     press_continue_5 = keyboard.Keyboard(deviceName='press_continue_5')
     
-    # --- Initialize components for Routine "explanation_basic_structure" ---
+    # --- Initialize components for Routine "explain_basic_structure" ---
     Announcement = visual.TextStim(win=win, name='Announcement',
         text=Inst.font_Announcement,
         font='Open Sans',
@@ -1331,7 +1348,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                               game.score,
                               game.level,
                               game.speed,
-                              game.level_for_main
+                              game.level_for_main,
+                              game.three_next_blocks 
                               ))
     pretrial_Tetris.start()
     
@@ -1346,6 +1364,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                           game.level,
                           game.speed,
                           game.level_for_main,
+                          game.three_next_blocks
                           ))
     play_Tetris.start()
     #create a window for the controll visual_control condition
@@ -1359,6 +1378,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                            game.level,
                            game.speed,
                            game.level_for_main,
+                           game.three_next_blocks
                            ))
     watch_Tetris.start()
     
@@ -1639,8 +1659,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from code_show_and_hide_pretrial
-    is_paused("pretrial_Tetris")
-    is_paused("pretrial_Tetris")
     Get_on_top("pretrial_Tetris")
     
     # keep track of which components have finished
@@ -3367,15 +3385,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # the Routine "intro_main" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
-    # --- Prepare to start Routine "explanation_basic_structure" ---
+    # --- Prepare to start Routine "explain_basic_structure" ---
     continueRoutine = True
     # update component parameters for each repeat
     press_continue_6.keys = []
     press_continue_6.rt = []
     _press_continue_6_allKeys = []
     # keep track of which components have finished
-    explanation_basic_structureComponents = [Announcement, controller_example_1, watch_example_1, motorcontrol_example_1, baseline_example_1, press_continue_6, Text_continue_6]
-    for thisComponent in explanation_basic_structureComponents:
+    explain_basic_structureComponents = [Announcement, controller_example_1, watch_example_1, motorcontrol_example_1, baseline_example_1, press_continue_6, Text_continue_6]
+    for thisComponent in explain_basic_structureComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
         thisComponent.tStartRefresh = None
@@ -3387,7 +3405,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     _timeToFirstFrame = win.getFutureFlipTime(clock="now")
     frameN = -1
     
-    # --- Run Routine "explanation_basic_structure" ---
+    # --- Run Routine "explain_basic_structure" ---
     routineForceEnded = not continueRoutine
     while continueRoutine:
         # get current time
@@ -3543,7 +3561,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             routineForceEnded = True
             break
         continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in explanation_basic_structureComponents:
+        for thisComponent in explain_basic_structureComponents:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
@@ -3552,12 +3570,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     
-    # --- Ending Routine "explanation_basic_structure" ---
-    for thisComponent in explanation_basic_structureComponents:
+    # --- Ending Routine "explain_basic_structure" ---
+    for thisComponent in explain_basic_structureComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     thisExp.nextEntry()
-    # the Routine "explanation_basic_structure" was not non-slip safe, so reset the non-slip timer
+    # the Routine "explain_basic_structure" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
     # --- Prepare to start Routine "explain_play_Tetris" ---
@@ -4730,6 +4748,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from execute_play_Tetris
+        if toggle_wm_load == True:
+            comp_wm_load(main_trials.nTotal, main_trials.thisN)
+            print(f'{main_trials.thisN} and {main_trials.nTotal}')
+        
         #Tetris to foreground
         Get_on_top("play_Tetris")
         #wait one sec
@@ -5014,6 +5036,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         thisExp.addData('game.score', game.score.value)
         thisExp.addData('game.level', game.level.value)
         thisExp.addData('game.speed', game.speed.value)
+        if toggle_wm_load == True:
+            thisExp.addData('game.wm_load', wm_load_seq[main_trials.thisN])
+        else: 
+            thisExp.addData('game.wm_load', '-')
         thisExp.nextEntry()
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if routineForceEnded:

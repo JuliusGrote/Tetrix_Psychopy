@@ -15,12 +15,20 @@ main_trials_seed = None
 
 ### Duration for all conditions in sec.
 ### Default and strongly recommended: 20
-targeted_duration = 20
+targeted_duration = 5
 
 ### How often should each control condition occur 
 ### Each trial consists of "play_Tetris" followed by a randomly chosen control condition!
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
 n_repeats = 10
+
+### Would you like to compare "high" working memory load (WM load) against "low" working memory load (WM load) (one "NEXT" Block against three "NEXT" BLocks)? 
+### Each "play_Tetris" condition it is randomly chosen whether wm_load is "high" or "low"!
+### works with the "three_next_blocks" option from "config_tetris_game.txt"
+toggle_wm_load = True
+
+### Default: None; if you want to use that function set "load_seed" to any number.
+load_seed = None
 
 ### Toggle rhythmic cross during motor_control, frequency based on game.speed
 show_motor_rhythm = True

@@ -20,7 +20,7 @@
 
 ### Conditions:
 
-1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z)).
+1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z)). Additionally, the "wm_load" can be analyzied using randomized "high" and "low" "play_Tetris" trials. See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
 
 2. watch_Tetris: Control condition to account for basic visual processing not important for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subject participate in the game subconsciously.
 
@@ -41,7 +41,7 @@
 ### Main Structure:
 
 
-5. Each trials begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repreat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "n_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
+5. Each trials begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repreat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "n_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
 
 6. The paradigm waits for remaining triggers and then ends.
 

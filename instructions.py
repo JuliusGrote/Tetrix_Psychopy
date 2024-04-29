@@ -16,7 +16,7 @@ class Instructions:
 			self.font_start_pretrial = 'Beliebige Taste drücken, um das erste TETRIS-Spiel zu starten!'
 			self.font_intro_main = 'Jetzt beginnt der Hauptteil des Experiments!'
 			self.font_Announcement = 'Während des Experiments werden Sie 4 verschiedene Symbole sehen:'
-			self.font_play_Tetris = 'Controller: Spielen Sie Tetris! Konzentrieren Sie sich darauf, die Blöcke beim Spielen MENTAL ZU ROTIEREN! Das Start-Level basiert auf den Leveln, die Sie im ersten Teil erreicht haben!'
+			self.font_play_Tetris = 'Controller: Spielen Sie Tetris! Konzentrieren Sie sich darauf, die Blöcke beim Spielen MENTAL ZU ROTIEREN! Das Start-Level basiert auf den Leveln, die Sie im ersten Teil erreicht haben!' # <-- Alternative: Versuchen Sie zu VISUALISISEREN, wo der DERZEITIGE Tetris-Block und die NEXT (nächsten) Blöcke am besten hinpassen. 
 			self.font_motor = 'Hand: Drücken Sie die Tasten ABWECHSELND zum Rhythmus, der auf dem Bildschirm zu sehen ist!'
 			self.font_watch = 'Auge: Schauen Sie Tetris! Schauen Sie einfach nur zu, während eine Spiel-Aufzeichnung für Sie gespielt wird. Bitte Drücken Sie KEINE Tasten!'
 			self.font_cross = 'Fixationskreuz: Schauen Sie einfach das Kreuz in der Bildschirmmitte an und machen Sie nichts Anderes!'
@@ -36,7 +36,7 @@ class Instructions:
 			self.font_start_pretrial = 'Press any button to start the first TETRIS-GAME!'
 			self.font_intro_main = 'Now the main part of the experiment begins!'
 			self.font_Announcement = 'During the Experiment you will encounter 4 different symbols:'
-			self.font_play_Tetris = 'Controller: Play Tetris! Focus on MENTALLY ROTATING the blocks when playing! The starting level is adjusted based on the levels you reached in the first part!'
+			self.font_play_Tetris = 'Controller: Play Tetris! Focus on MENTALLY ROTATING the blocks when playing! The starting level is adjusted based on the levels you reached in the first part!'# <-- Alternative: Try to VISUALIZE where the CURRENT Tetris block and the NEXTs blocks fit best. 
 			self.font_motor = 'Hand: Press the Buttons ALTERNATELY (one after another) to the rhythm displayed on the screen!'
 			self.font_watch = 'Eye: Watch Tetris! Just watch while a game recording is played for you. Please DO NOT press any buttons!'
 			self.font_cross = 'Fixation Cross: Just look at the cross in the middle of the screen and do nothing else!'
