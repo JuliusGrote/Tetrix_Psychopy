@@ -41,7 +41,8 @@
 ### Main Structure:
 
 
-5. Each trials begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repreat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "n_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
+5. Each trials begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repreat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "n_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
+
 
 6. The paradigm waits for remaining triggers and then ends.
 

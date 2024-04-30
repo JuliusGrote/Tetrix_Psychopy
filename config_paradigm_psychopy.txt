@@ -15,9 +15,10 @@ main_trials_seed = None
 
 ### Duration for all conditions in sec.
 ### Default and strongly recommended: 20
-targeted_duration = 5
+targeted_duration = 20
 
-### How often should each control condition occur 
+### How often should each control condition occur
+### Also sets the number of Trials! 
 ### Each trial consists of "play_Tetris" followed by a randomly chosen control condition!
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
 n_repeats = 10

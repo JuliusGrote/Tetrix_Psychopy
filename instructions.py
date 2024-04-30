@@ -9,7 +9,7 @@ class Instructions:
 			self.font_check_response_2 = 'Responsebox erfolgreich gecheckt!'
 			self.font_Intro_2 = 'Willkommen zum Tetris-Experiment!'
 			self.font_continue = 'Beliebige Taste drücken, um fortzufahren!'
-			self.font_explanation_pretrial = 'Während diesem erstem Teil des Experiments werden Sie Tetris spielen und sich an das Setup gewöhnen! \n Wie man spielt:'
+			self.font_explanation_pretrial = 'Während diesem ersten Teil des Experiments werden Sie Tetris spielen und sich an das Setup gewöhnen! \n \n Wie man spielt:'
 			self.img_explain_game_mechanics = 'Images/explain_game_mechanics_de.png'
 			self.img_explain_controls = 'Images/explain_controls_de.png'
 			self.font_Controls = 'So bewegen Sie die Tetris-Blöcke:'
