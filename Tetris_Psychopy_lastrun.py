@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on April 30, 2024, at 11:00
+    on Mai 02, 2024, at 00:59
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -187,9 +187,9 @@ def Tetris_Instance(
         game.draw(screen)
         
         #if the disply needs to be flipped vertically this function does it
-        if flip_vertically == True or flip_horizontally == True:
+        if Flip_vertically == True or Flip_horizontally == True:
             original_surf = pygame.display.get_surface() #collect all different surfaces on the screen to a new one
-            flipped_surface = pygame.transform.flip(original_surf, flip_vertically, flip_horizontally)
+            flipped_surface = pygame.transform.flip(original_surf, Flip_vertically, Flip_horizontally)
             screen.blit(flipped_surface, dest=(0, 0))
             
          #updates screen in clock.tick(x) per second
@@ -238,28 +238,54 @@ def is_paused(process):
         game.toggle_watch.value = not game.toggle_watch.value
     elif str(process) == "pretrial_Tetris":
         game.toggle_pretrial.value = not game.toggle_pretrial.value
-#define the compare between high and low working memory load method
+
+
+#define the compare between high and low working memory load and speed method
+#define functions that creates a List with shuffled order of "high" and "low" wm_load and speed
+#used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
 #setfirst_trial to true
 first_trial = True
-
-#define functions that creates a List with shuffled order of "high" and "low" wm_load
-#used to randomize the "high" and "low" "play_Tetris" blocks
-def comp_wm_load(total_trials, trial_nr):
+def comp_wm_load_speed(total_trials, trial_nr):
     global first_trial
     global wm_load_seq
+    global speed_seq
+    global high_level
+    global low_level
     if first_trial == True: 
         n_per_load = int(total_trials/2)
-        wm_load_low = 'low'
-        wm_load_high = 'high'
-        wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load #add equal number of "high" and "low"
-        np.random.seed(load_seed) 
-        np.random.shuffle(wm_load_seq)
-        print(wm_load_seq)
+        if Comp_wm_load == True:
+            wm_load_low = 'low_load'
+            wm_load_high = 'high_load'
+            wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load #add equal number of "high" and "low"
+            np.random.seed(Load_seed) 
+            np.random.shuffle(wm_load_seq)
+            print(wm_load_seq)
+        if Comp_speed == True:
+            speed_low = 'low_speed'
+            speed_high = 'high_speed'
+            speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load #add equal number of "high" and "low"
+            np.random.seed(Speed_seed) 
+            np.random.shuffle(speed_seq)
+            print(speed_seq)
+            if Minus_level < game.level.value:
+                low_level = game.level.value - Minus_level
+            else:
+                low_level = 1
+            high_level = game.level.value + Plus_level
         first_trial = False
-    if wm_load_seq[trial_nr] == 'low':
-        game.three_next_blocks.value = False
-    else:
-        game.three_next_blocks.value = True
+    if Comp_wm_load == True:
+        if wm_load_seq[trial_nr] == 'low_load':
+            game.three_next_blocks.value = False
+        else:
+            game.three_next_blocks.value = True
+    if Comp_speed == True:
+        if speed_seq[trial_nr] == 'low_speed':
+            game.level.value = low_level
+        else:
+            game.level.value = high_level
+            
+        
+        
 # Run 'Before Experiment' code from code_play
 
 
@@ -382,16 +408,17 @@ def setupData(expInfo, dataDir=None):
     thisExp.setPriority('game.score', 26)
     thisExp.setPriority('game.level', 24)
     thisExp.setPriority('game.speed', 23)
-    thisExp.setPriority('game.wm_load', 22)
-    thisExp.setPriority('Condition.info', 21)
-    thisExp.setPriority('participant', 20)
-    thisExp.setPriority('main_trials.thisTrialN', 19)
-    thisExp.setPriority('main_trials.thisIndex', 18)
-    thisExp.setPriority('main_trials.thisN', 17)
-    thisExp.setPriority('main_trials.thisRepN', 16)
-    thisExp.setPriority('targeted_duration', 15)
-    thisExp.setPriority('control_condition', 14)
-    thisExp.setPriority('Images_next_cond', 13)
+    thisExp.setPriority('game.wm_load_condition', 22)
+    thisExp.setPriority('game.speed_condition', 21)
+    thisExp.setPriority('Condition.info', 20)
+    thisExp.setPriority('participant', 19)
+    thisExp.setPriority('main_trials.thisTrialN', 18)
+    thisExp.setPriority('main_trials.thisIndex', 17)
+    thisExp.setPriority('main_trials.thisN', 16)
+    thisExp.setPriority('main_trials.thisRepN', 15)
+    thisExp.setPriority('targeted_duration', 14)
+    thisExp.setPriority('control_condition', 13)
+    thisExp.setPriority('Images_next_cond', 12)
     thisExp.setPriority('notes', 0)
     thisExp.setPriority('play_pretrial.started', -1)
     thisExp.setPriority('play_pretrial.stopped', -2)
@@ -588,12 +615,6 @@ def setupDevices(expInfo, thisExp, win):
             deviceClass='keyboard',
             deviceName='press_continue_11',
         )
-    if deviceManager.getDevice('wait_for_trigger_response') is None:
-        # initialise wait_for_trigger_response
-        wait_for_trigger_response = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='wait_for_trigger_response',
-        )
     # return True if completed successfully
     return True
 
@@ -701,14 +722,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "load_processes" ---
     # Run 'Begin Experiment' code from create_processes
     #checks whether display orientation is altered (defined in "config_paradigm_psychopy.txt")
-    if flip_vertically == True or flip_horizontally == True:
+    if Flip_vertically == True or Flip_horizontally == True:
         
         #warping function provided by psychopy.visual.windowwarper
+        #cannot be done "Before  experiment" due to win being defined at the end of "Before experiment"
         warper = Warper(win)
         
         #even if warping function is set warper needs to be updated before changes apply to the display
         #Psychopy uses switched arguments for a vertical and horizontal mirroring compared to "config_paradigm_psychopy.txt"
-        warper.changeProjection(None, flipHorizontal = flip_vertically, flipVertical = flip_horizontally)
+        warper.changeProjection(None, flipHorizontal = Flip_vertically, flipVertical = Flip_horizontally)
     
     #create a keyboard listener that collets Trigger by the MR
     #cannot be defined before the experiment due to globalCLock being defined in run(...)
@@ -716,7 +738,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         try:
             if key.char =='q':
                 return False
-            if key.char == trigger:
+            if key.char == Trigger:
                 thisExp.addData('trigger.t', globalClock.getTime(format='float'))
                 thisExp.nextEntry()
         except AttributeError: 
@@ -1184,7 +1206,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    wait_for_trigger_response = keyboard.Keyboard(deviceName='wait_for_trigger_response')
     
     # --- Initialize components for Routine "show_play_tetris" ---
     Icon_for_play_Tetris = visual.ImageStim(
@@ -3107,7 +3128,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Start_eytracking* updates
         
         # if Start_eytracking is starting this frame...
-        if Start_eytracking.status == NOT_STARTED and eye_tracking == True:
+        if Start_eytracking.status == NOT_STARTED and Eye_tracking == True:
             # keep track of start time/frame for later
             Start_eytracking.frameNStart = frameN  # exact frame index
             Start_eytracking.tStart = t  # local t and not account for scr refresh
@@ -3161,8 +3182,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     #resets absolut score
     game.score.value = 0
     #sets new start level for main game
-    game.level.value = round(game.level_for_main.value * 0.75)
-    
+    game.level_for_main.value = round(game.level_for_main.value * 0.75)
+    game.level.value = int(game.level_for_main.value)
+    #prints out the value for control purposes
+    print(f'new level for main: {game.level_for_main.value}')
     #ends pretrial pygame
     pretrial_Tetris.terminate()
     pretrial_Tetris.join()
@@ -4436,13 +4459,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Prepare to start Routine "wait_for_trigger" ---
     continueRoutine = True
     # update component parameters for each repeat
-    # Run 'Begin Routine' code from log_first_trigger
+    # Run 'Begin Routine' code from first_trigger
     thisExp.addData('Condition.info', 'first_trigger')
-    wait_for_trigger_response.keys = []
-    wait_for_trigger_response.rt = []
-    _wait_for_trigger_response_allKeys = []
     # keep track of which components have finished
-    wait_for_triggerComponents = [wait_for_trigger_text, wait_for_trigger_response]
+    wait_for_triggerComponents = [wait_for_trigger_text]
     for thisComponent in wait_for_triggerComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -4464,6 +4484,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from first_trigger
+        if defaultKeyboard.getKeys(keyList=[Trigger]):
+            continueRoutine = False
         
         # *wait_for_trigger_text* updates
         
@@ -4482,32 +4505,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if wait_for_trigger_text.status == STARTED:
             # update params
             pass
-        
-        # *wait_for_trigger_response* updates
-        waitOnFlip = False
-        
-        # if wait_for_trigger_response is starting this frame...
-        if wait_for_trigger_response.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-            # keep track of start time/frame for later
-            wait_for_trigger_response.frameNStart = frameN  # exact frame index
-            wait_for_trigger_response.tStart = t  # local t and not account for scr refresh
-            wait_for_trigger_response.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(wait_for_trigger_response, 'tStartRefresh')  # time at next scr refresh
-            # update status
-            wait_for_trigger_response.status = STARTED
-            # keyboard checking is just starting
-            waitOnFlip = True
-            win.callOnFlip(wait_for_trigger_response.clock.reset)  # t=0 on next screen flip
-            win.callOnFlip(wait_for_trigger_response.clearEvents, eventType='keyboard')  # clear events on next screen flip
-        if wait_for_trigger_response.status == STARTED and not waitOnFlip:
-            theseKeys = wait_for_trigger_response.getKeys(keyList=['t'], ignoreKeys=["escape"], waitRelease=False)
-            _wait_for_trigger_response_allKeys.extend(theseKeys)
-            if len(_wait_for_trigger_response_allKeys):
-                wait_for_trigger_response.keys = _wait_for_trigger_response_allKeys[-1].name  # just the last key pressed
-                wait_for_trigger_response.rt = _wait_for_trigger_response_allKeys[-1].rt
-                wait_for_trigger_response.duration = _wait_for_trigger_response_allKeys[-1].duration
-                # a response ends the routine
-                continueRoutine = False
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -4539,10 +4536,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
-    main_trials = data.TrialHandler(nReps=n_repeats, method='fullRandom', 
+    main_trials = data.TrialHandler(nReps=N_repeats, method='fullRandom', 
         extraInfo=expInfo, originPath=-1,
         trialList=data.importConditions('main_trials_template.xlsx'),
-        seed=main_trials_seed, name='main_trials')
+        seed=Main_trials_seed, name='main_trials')
     thisExp.addLoop(main_trials)  # add the loop to the experiment
     thisMain_trial = main_trials.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisMain_trial.rgb)
@@ -4748,8 +4745,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from execute_play_Tetris
-        if toggle_wm_load == True:
-            comp_wm_load(main_trials.nTotal, main_trials.thisN)
+        
+        if Comp_wm_load == True or Comp_speed == True:
+            comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)
             print(f'{main_trials.thisN} and {main_trials.nTotal}')
         
         #Tetris to foreground
@@ -4807,7 +4805,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if duration_and_fix_play_Tetris is stopping this frame...
             if duration_and_fix_play_Tetris.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > duration_and_fix_play_Tetris.tStartRefresh + targeted_duration-frameTolerance:
+                if tThisFlipGlobal > duration_and_fix_play_Tetris.tStartRefresh + Targeted_duration-frameTolerance:
                     # keep track of stop time/frame for later
                     duration_and_fix_play_Tetris.tStop = t  # not accounting for scr refresh
                     duration_and_fix_play_Tetris.tStopRefresh = tThisFlipGlobal  # on global time
@@ -5029,17 +5027,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         #logs on and offsets and condition duration into one line for later processing
         thisExp.addData('Condition.started', condition_started)
         thisExp.addData('Condition.stopped', condition_stopped)
-        thisExp.addData('targeted.duration', targeted_duration)
+        thisExp.addData('targeted.duration', Targeted_duration)
         thisExp.addData('Condition.duration', condition_stopped - condition_started)
         thisExp.addData('Condition.info', 'info_play_Tetris')
         thisExp.addData('game.score', game.score.value)
         thisExp.addData('game.score', game.score.value)
         thisExp.addData('game.level', game.level.value)
         thisExp.addData('game.speed', game.speed.value)
-        if toggle_wm_load == True:
-            thisExp.addData('game.wm_load', wm_load_seq[main_trials.thisN])
+        if Comp_wm_load == True:
+            thisExp.addData('game.wm_load_condition', wm_load_seq[main_trials.thisN])
         else: 
-            thisExp.addData('game.wm_load', '-')
+            thisExp.addData('game.wm_load_condition', '-')
+        if Comp_speed == True:
+            thisExp.addData('game.speed_condition', speed_seq[main_trials.thisN])
+        else:
+            thisExp.addData('game.speed_condition', '-')
+        
         thisExp.nextEntry()
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if routineForceEnded:
@@ -5265,7 +5268,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # update/draw components on each frame
             # Run 'Each Frame' code from execute_codition
             #created a press rhythm if enabled by "config_paradigm_psychopy.txt" by changing the opacity of the cross shape periodically
-            if control_condition == "motor_control" and show_motor_rhythm == True:
+            if control_condition == "motor_control" and Show_motor_rhythm == True:
                 press_rhythm = core.getTime()
                 if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):   
                     press_cross.setOpacity(1)
@@ -5293,7 +5296,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if press_cross is stopping this frame...
             if press_cross.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > press_cross.tStartRefresh + targeted_duration-frameTolerance:
+                if tThisFlipGlobal > press_cross.tStartRefresh + Targeted_duration-frameTolerance:
                     # keep track of stop time/frame for later
                     press_cross.tStop = t  # not accounting for scr refresh
                     press_cross.tStopRefresh = tThisFlipGlobal  # on global time
@@ -5323,7 +5326,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if duration_and_fix is stopping this frame...
             if duration_and_fix.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > duration_and_fix.tStartRefresh + targeted_duration-frameTolerance:
+                if tThisFlipGlobal > duration_and_fix.tStartRefresh + Targeted_duration-frameTolerance:
                     # keep track of stop time/frame for later
                     duration_and_fix.tStop = t  # not accounting for scr refresh
                     duration_and_fix.tStopRefresh = tThisFlipGlobal  # on global time
@@ -5547,7 +5550,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         #logs on and offsets and condition duration into one line for later processing
         thisExp.addData('Condition.started', condition_started)
         thisExp.addData('Condition.stopped', condition_stopped)
-        thisExp.addData('targeted.duration', targeted_duration)
+        thisExp.addData('targeted.duration', Targeted_duration)
         thisExp.addData('Condition.duration', condition_stopped - condition_started)
         thisExp.addData('Condition.info', f'info_{control_condition}')
         
@@ -5561,7 +5564,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-    # completed n_repeats repeats of 'main_trials'
+    # completed N_repeats repeats of 'main_trials'
     
     
     # --- Prepare to start Routine "wait_10sec_for_Trigger" ---
@@ -5598,7 +5601,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if timer_wait_for_trigger.getTime() <= 0:
             continueRoutine = False # Exit the loop  
         #reset timer
-        elif defaultKeyboard.getKeys(keyList=["t"]):
+        elif defaultKeyboard.getKeys(keyList=[Trigger]):
            timer_wait_for_trigger.reset()
         
         # *wait_10sec_for_trigger_text* updates
@@ -5705,7 +5708,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         
         # if Stop_eyetracker is stopping this frame...
         if Stop_eyetracker.status == STARTED:
-            if bool(eye_tracking == True):
+            if bool(Eye_tracking == True):
                 # keep track of stop time/frame for later
                 Stop_eyetracker.tStop = t  # not accounting for scr refresh
                 Stop_eyetracker.tStopRefresh = tThisFlipGlobal  # on global time

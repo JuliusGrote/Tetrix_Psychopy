@@ -7,21 +7,31 @@
 ### Pretrial? Note: When using the Tetris_Psychopy Experiment, this setting will be overwritten when the experiment starts.
 ### For more Info see: "load_processes" Routine --> "create_processes" code --> "Before Experiment" tab --> "Tetris_Instance()" function 
 ### Default: True
-config_pretrial = True
+Pretrial = True
+
+
+### Pretrial design: Staircase or Normal
+### Staircase: each time you complete a level = level + 1, if you lose in that level you get level = level - stair_drop
+### if pretrial_staircase = True, staircase design is enabled, if pretrial_staircase = False, Pre-Trial levels are just the normal Tetris experience
+Pretrial_staircase = True
+
+### "stair_drop" determines by which number "game.level.value" drops each time a participant loses in the pretrials
+Stair_drop = 2
+
 
 ### How many rounds of pretrial should be played? This is not overwritten in "Tetris_Psychopy" and important for your experimental design.
-### Default and recommended: 3
-config_pretrial_rounds = 3
+### Default: 3 (normal) <-> 5-10 (staircase)
+Pretrial_rounds = 5
 
 ### Should a seed for the randomizer be used to generate:
 
 ### 1. Movements of visual control (watch_Tetris) so that the movements are the same for each participant/each time running the experiment? 
 ### Default: None; if you want to use that function set "visual_seed" to any number.
-visual_seed = None
+Visual_seed = None
 
 ### 2. Which block is chosen each time a new block is needed so that the choice is the same for each participant/each time running the experiment? 
 ### Default: None; if you want to use that function set "block_seed" to any number.
-block_seed = None
+Block_seed = None
 
 
 ### Should the score be kept after "game over"
@@ -29,7 +39,7 @@ Keep_score = True
 
 ### Should the game restart automatically after "game over"?
 ### Default and recommended: True
-restart_automatically = True
+Restart_automatically = True
 
 ### determines whether game starts in Fullscreen or not
 ### Default: False 
@@ -47,7 +57,7 @@ Visual_control = False
 ### Should there be three "next" blocks instead of one on the screen?
 ### If you enabled the "toggle_wm_load" option in the "config_paradigm_psyhopy.txt", this option here only relates to the "Pre-Trials"
 ### With reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" blocks and in the "level mode" there is only one "next" block.
-toggle_three_next_blocks = True
+Toggle_three_next_blocks = True
 
 ## Level Design
 
@@ -58,7 +68,8 @@ Lines_for_levelup = 3
 Start_level = 1
 
 ### do you want to keep the level progression for the "Main Trials"?
-level_progression_main = True
+### Should be "False" if you want to use "Comp_Speed" in "config_paradigm_psychopy.txt"
+Level_progression_main = True
 
 ## Game speed
 

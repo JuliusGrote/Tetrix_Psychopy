@@ -13,9 +13,9 @@ with open("PyGame_Tetris_Code/config_tetris_game.txt", "r") as c_tetris:
 	exec(config_tetris)
 
 #apply seeds for random.choice() function defined in config_tetris_game.txt
-random.seed(visual_seed)
+random.seed(Visual_seed)
 visual_rand = random.Random()
-random.seed(block_seed)
+random.seed(Block_seed)
 block_rand = random.Random()
 
 class Game:
@@ -32,9 +32,9 @@ class Game:
 		
 				#define game mechanism variables
 		self.game_over = False
-		self.pretrial = config_pretrial
-		self.pretrial_rounds = config_pretrial_rounds
-		self.three_next_blocks = Value('b', toggle_three_next_blocks)
+		self.pretrial = Pretrial
+		self.pretrial_rounds = Pretrial_rounds
+		self.three_next_blocks = Value('b', Toggle_three_next_blocks)
 		self.game_over_counter = Value('i', 0)
 		self.toggle_pretrial = Value('b', Start_Pause)
 		self.toggle_play = Value('b', Start_Pause)
@@ -47,7 +47,7 @@ class Game:
 		self.level_for_main = Value('f', 0)
 		self.level = Value('i', Start_level)
 		self.score = Value('i', 0)
-		self.automatic_restart = restart_automatically
+		self.automatic_restart = Restart_automatically
 		self.speed = Value('i', Start_speed)
 		self.total_lines_cleared = 0
 
@@ -99,9 +99,8 @@ class Game:
 		self.update_level()
 	
 	def update_level(self):
-		if level_progression_main == True or self.pretrial == True:
-			lines_for_levelup = Lines_for_levelup 
-			if self.total_lines_cleared >= lines_for_levelup:
+		if Level_progression_main == True or self.pretrial == True:
+			if self.total_lines_cleared >= Lines_for_levelup:
 				self.level.value += 1
 				self.total_lines_cleared = 0
 
@@ -163,9 +162,15 @@ class Game:
 		if self.pretrial == True:
 			self.level_for_main.value += 1/self.pretrial_rounds * self.level.value
 			self.game_over_counter.value += 1
-			self.level.value = Start_level
-		elif self.pretrial == False: 
-			self.level.value = round(self.level_for_main.value * 0.75)
+			if Pretrial_staircase == True:
+				if Stair_drop < self.level.value:
+					self.level.value -= Stair_drop
+				else:
+					self.level.value = 1
+			else:
+				self.level.value = Start_level
+		else: 
+			self.level.value = self.level_for_main.value
 			
 	def block_fits(self):
 		tiles = self.current_block.get_cell_positions()

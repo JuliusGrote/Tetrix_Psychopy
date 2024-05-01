@@ -4,7 +4,7 @@
 class Instructions:
 	## Check what is given in the config files and set instuctions accordingly.
 	def set_instructions(self, language):
-		if language == 'german':
+		if Language == 'german':
 			self.font_check_response = 'Bitte pressen Sie jede Taste der Responsebox zwei mal!'
 			self.font_check_response_2 = 'Responsebox erfolgreich gecheckt!'
 			self.font_Intro_2 = 'Willkommen zum Tetris-Experiment!'

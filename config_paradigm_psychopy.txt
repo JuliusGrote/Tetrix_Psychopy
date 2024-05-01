@@ -2,46 +2,61 @@
 
 ## Instruction language
 ## Choose either "german" or "english"!
-language = "german"
+Language = "german"
 
 ## Trials settings
 
-### How many pretrial rounds should be played?
+### How many Pre-Trial rounds should be played or what Pre-Trial design?
 ### --> see "config_tetris_game.txt"
 
 ### Do you want to use a random seed for the main trials so that the random choice of control conditions is the same for each participant/each time running the experiment? 
 ### Default: None; if you want to use that function set "main_trials_seed" to any number.
-main_trials_seed = None
+Main_trials_seed = None
 
 ### Duration for all conditions in sec.
 ### Default and strongly recommended: 20
-targeted_duration = 20
+Targeted_duration = 20
 
 ### How often should each control condition occur
 ### Also sets the number of Trials! 
 ### Each trial consists of "play_Tetris" followed by a randomly chosen control condition!
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
-n_repeats = 10
+N_repeats = 10
 
-### Would you like to compare "high" working memory load (WM load) against "low" working memory load (WM load) (one "NEXT" Block against three "NEXT" BLocks)? 
-### Each "play_Tetris" condition it is randomly chosen whether wm_load is "high" or "low"!
+
+### Would you like to compare "high_load" working memory load (WM load) against "low_load" working memory load (WM load) (one "NEXT" Block against three "NEXT" BLocks)? 
+### Each "play_Tetris" condition it is randomly chosen whether wm_load is "high_load" or "low_load"!
 ### uses the same mechanic as the "three_next_blocks" option from "config_tetris_game.txt"
-toggle_wm_load = False
+Comp_wm_load = False
 
 ### Default: None; if you want to use that function set "load_seed" to any number.
-load_seed = None
+Load_seed = None
+
+
+### Would you like to compare "high_speed" "game.speed/level" against "low_speed" in the main Trials  
+### Each "play_Tetris" condition it is randomly chosen whether "game.speed/level" is either "high_speed" or "low_speed"  
+### only works properly if level "Level_progression_main = False" in "config_tetris_game.txt"
+Comp_speed = True
+
+### How many levels lower should the "low_speed" condition / how many levels higher should the "high_speed" condition be compared to "game.level_for_main.value" (individual level for "main_trials")
+Plus_level = 1
+Minus_level = 1
+
+### Default: None; if you want to use that function set "speed_seed" to any number.
+Speed_seed = None
+
 
 ### Toggle rhythmic cross during motor_control, frequency based on game.speed
-show_motor_rhythm = True
+Show_motor_rhythm = True
 
 
 ## Keys
 
 ### Determine whether to use a test keyset for pygame (Tetris gameplay) or not 
-test_keys = True
+Test_keys = True
 
 ### Define which keys to use in pygame
-if test_keys == True:
+if Test_keys == True:
 	### Test keys
 	pygame_key_1 = pygame.K_DOWN # Move Tetris Block down
 	pygame_key_2 = pygame.K_LEFT # Move Tetris Block left 
@@ -66,18 +81,18 @@ psychopy_key_5 = '0'
 
 ## Define trigger signal
 ## This only works if your Trigger signal can be converted to a char/letter, i.e. via an according responsebox.
-trigger = 't'
+Trigger = 't'
 
 ## Toggle display flip (mirroring)
 
 ### Left --> <-- Right
-flip_vertically = False
+Flip_vertically = False
 
 ### Up | ^
 ###    v | Down
-flip_horizontally = False
+Flip_horizontally = False
 
 
 ## Toggle eye tracking
 ## Feature not fully developed yet!
-eye_tracking = False
+Eye_tracking = False
