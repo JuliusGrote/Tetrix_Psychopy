@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 02, 2024, at 00:59
+    on Mai 02, 2024, at 14:59
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -56,7 +56,7 @@ with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
 
 #determine the instruction language
 Inst = Instructions()
-Inst.set_instructions(language)
+Inst.set_instructions(Language)
 
 #define Tetris game as a global function 
 def Tetris_Instance(
@@ -281,9 +281,10 @@ def comp_wm_load_speed(total_trials, trial_nr):
     if Comp_speed == True:
         if speed_seq[trial_nr] == 'low_speed':
             game.level.value = low_level
+            game.level_for_main.value = low_level
         else:
             game.level.value = high_level
-            
+            game.level_for_main.value = high_level
         
         
 # Run 'Before Experiment' code from code_play
@@ -309,7 +310,7 @@ deviceManager = hardware.DeviceManager()
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2024.1.1'
-expName = 'Tetris_fMRI'  # from the Builder filename that created this script
+expName = 'Tetris_Psychopy'  # from the Builder filename that created this script
 # information about this experiment
 expInfo = {
     'participant': 'sub00',
@@ -477,7 +478,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1707, 960], fullscr=_fullScr, screen=0,
+            size=[1280, 720], fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='Home_test', color=[-0.6549, -0.6549, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -534,7 +535,7 @@ def setupDevices(expInfo, thisExp, win):
     ioSession = '1'
     if 'session' in expInfo:
         ioSession = str(expInfo['session'])
-    ioServer = io.launchHubServer(window=win, experiment_code='Tetris_fMRI', session_code=ioSession, datastore_name=thisExp.dataFileName, **ioConfig)
+    ioServer = io.launchHubServer(window=win, experiment_code='Tetris_Psychopy', session_code=ioSession, datastore_name=thisExp.dataFileName, **ioConfig)
     # store ioServer object in the device manager
     deviceManager.ioServer = ioServer
     
@@ -4748,7 +4749,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         
         if Comp_wm_load == True or Comp_speed == True:
             comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)
-            print(f'{main_trials.thisN} and {main_trials.nTotal}')
+            print(f'{main_trials.thisN} and {main_trials.nTotal} - {speed_seq[main_trials.thisN]} and {wm_load_seq[main_trials.thisN]}')
         
         #Tetris to foreground
         Get_on_top("play_Tetris")

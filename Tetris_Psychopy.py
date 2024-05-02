@@ -1,8 +1,8 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2024.1.0),
-    on April 19, 2024, at 16:55
+This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
+    on Mai 02, 2024, at 15:15
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -11,10 +11,6 @@ If you publish work using this script the most relevant publication is:
 
 """
 
-import psychopy
-psychopy.useVersion('2024.1.0')
-
-
 # --- Import packages ---
 from psychopy import locale_setup
 from psychopy import prefs
@@ -22,7 +18,7 @@ from psychopy import plugins
 plugins.activatePlugins()
 prefs.hardware['audioLib'] = 'ptb'
 prefs.hardware['audioLatencyMode'] = '3'
-from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware
+from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware, iohub
 from psychopy.tools import environmenttools
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER, priority)
@@ -48,7 +44,7 @@ from psychopy.visual.windowwarp import Warper
 sys.path.append('PyGame_Tetris_Code')
 from game import Game
 from colors import Colors
-
+from instructions import Instructions
 #Initialize Pygame and Game
 pygame.init()
 game = Game()
@@ -57,6 +53,10 @@ game = Game()
 with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
     config_paradigm = c_paradigm.read()
     exec(config_paradigm)
+
+#determine the instruction language
+Inst = Instructions()
+Inst.set_instructions(Language)
 
 #define Tetris game as a global function 
 def Tetris_Instance(
@@ -67,7 +67,9 @@ def Tetris_Instance(
             game_over_counter,
             score,
             level,
-            level_for_main
+            speed,
+            level_for_main,
+            three_next_blocks
     ):
         
     #transfer game parameters from parent to child process
@@ -76,30 +78,35 @@ def Tetris_Instance(
     game.game_over_counter = game_over_counter
     game.score = score
     game.level = level
+    game.speed = speed
     game.level_for_main = level_for_main
+    game.three_next_blocks = three_next_blocks
     
     #set gamespeed
     clock = pygame.time.Clock()
     game.calculate_speed()
+    #define the USEREVENTS
     GAME_UPDATE = pygame.USEREVENT
     VISUAL_CONTROL_CAP = pygame.USEREVENT + 1
-    previous_level = game.level.value
+    #set "previous" variables to None
+    previous_level = None
+    previous_three_next_blocks = None
     
     #name and initialize GUI
     screen = pygame.display.set_mode((game.grid.scale.screen_w, game.grid.scale.screen_h), pygame.FULLSCREEN | pygame.SCALED)
     pygame.display.set_caption(window_name)
     ctypes.windll.user32.ShowCursor(False)
     
-    #create graphic object for the game
+    #create static graphic objects for the game
     title_font = pygame.font.Font(None, game.grid.scale.scale_font)
     score_surface = title_font.render("Score", True, Colors.white)
     next_surface = title_font.render("Next", True, Colors.white)
     game_over_surface = title_font.render("GAME OVER", True, Colors.white)
-    level_surface = title_font.render("Level", True, Colors.white )
-    
+    level_surface = title_font.render("Level", True, Colors.white )    
     score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)
-    next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 180  * game.grid.scale.scale_factor)
-       
+   
+    #Game Loop 
+    #Be catious when changing code in here!
     while True:
         for event in pygame.event.get():
         #changes pausing state according to is_paused()
@@ -139,10 +146,11 @@ def Tetris_Instance(
                     game.move_down()
                   
                 if event.type == GAME_UPDATE and game.game_over == True:
-                    game.game_over = False
-                    game.reset()
+                    if event.type == pygame.KEYDOWN or game.automatic_restart == True:
+                        game.game_over = False
+                        game.reset()
                
-             
+        #Create the GUI for score and level     
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
         level_value_surface = title_font.render(str(game.level.value), True, Colors.white)
                 
@@ -150,28 +158,38 @@ def Tetris_Instance(
         if previous_level != game.level.value:
             game.calculate_speed()
             previous_level = game.level.value
-             
-        #creates  GUI for changeable objects
             
+        #checks whether game.three_next_blocks.value changed and sets new "height" of rect for NEXT-blocks accordingly
+        if previous_three_next_blocks != game.three_next_blocks.value:
+            if game.three_next_blocks.value == False:
+               next_rect_height = 180 
+            else:
+               next_rect_height = 285
+            #draw next rect
+            next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)
+            previous_three_next_blocks = game.three_next_blocks.value 
+        
+        #creates  GUI for changeable objects
         screen.fill(Colors.dark_blue)
         screen.blit(score_surface, (386 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 40 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         screen.blit(next_surface, (398 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 200 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         screen.blit(level_surface, (426 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
+        
         #displays game over message
         if game.game_over == True:
-            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 450 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
-               
+            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 540 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
+        
+        #blit screen elements
         pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
         screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))
         pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)
-        #pygamefunction do execute screen instructions
-             
         game.draw(screen)
-        #if the disply needs to be flipped vertically thus function does it
-        if flip_vertically == True or flip_horizontally == True:
-            original_surf = pygame.display.get_surface()
-            flipped_surface = pygame.transform.flip(original_surf, flip_vertically, flip_horizontally)
+        
+        #if the disply needs to be flipped vertically this function does it
+        if Flip_vertically == True or Flip_horizontally == True:
+            original_surf = pygame.display.get_surface() #collect all different surfaces on the screen to a new one
+            flipped_surface = pygame.transform.flip(original_surf, Flip_vertically, Flip_horizontally)
             screen.blit(flipped_surface, dest=(0, 0))
             
          #updates screen in clock.tick(x) per second
@@ -220,6 +238,55 @@ def is_paused(process):
         game.toggle_watch.value = not game.toggle_watch.value
     elif str(process) == "pretrial_Tetris":
         game.toggle_pretrial.value = not game.toggle_pretrial.value
+
+
+#define the compare between high and low working memory load and speed method
+#define functions that creates a List with shuffled order of "high" and "low" wm_load and speed
+#used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
+#setfirst_trial to true
+first_trial = True
+def comp_wm_load_speed(total_trials, trial_nr):
+    global first_trial
+    global wm_load_seq
+    global speed_seq
+    global high_level
+    global low_level
+    if first_trial == True: 
+        n_per_load = int(total_trials/2)
+        if Comp_wm_load == True:
+            wm_load_low = 'low_load'
+            wm_load_high = 'high_load'
+            wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load #add equal number of "high" and "low"
+            np.random.seed(Load_seed) 
+            np.random.shuffle(wm_load_seq)
+            print(wm_load_seq)
+        if Comp_speed == True:
+            speed_low = 'low_speed'
+            speed_high = 'high_speed'
+            speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load #add equal number of "high" and "low"
+            np.random.seed(Speed_seed) 
+            np.random.shuffle(speed_seq)
+            print(speed_seq)
+            if Minus_level < game.level.value:
+                low_level = game.level.value - Minus_level
+            else:
+                low_level = 1
+            high_level = game.level.value + Plus_level
+        first_trial = False
+    if Comp_wm_load == True:
+        if wm_load_seq[trial_nr] == 'low_load':
+            game.three_next_blocks.value = False
+        else:
+            game.three_next_blocks.value = True
+    if Comp_speed == True:
+        if speed_seq[trial_nr] == 'low_speed':
+            game.level.value = low_level
+            game.level_for_main.value = low_level
+        else:
+            game.level.value = high_level
+            game.level_for_main.value = high_level
+        
+        
 # Run 'Before Experiment' code from code_play
 
 
@@ -242,8 +309,8 @@ deviceManager = hardware.DeviceManager()
 # ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
-psychopyVersion = '2024.1.0'
-expName = 'Tetris_fMRI'  # from the Builder filename that created this script
+psychopyVersion = '2024.1.1'
+expName = 'Tetris_Psychopy'  # from the Builder filename that created this script
 # information about this experiment
 expInfo = {
     'participant': 'sub00',
@@ -330,24 +397,29 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='G:\\Meine Ablage\\Studium\\Bachelorarbeit\\Code\\Tetris_Psychopy\\Tetris_fMRI.py',
+        originPath='G:\\Meine Ablage\\Studium\\Github\\Tetris_Psychopy\\Tetris_Psychopy.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='priority'
     )
-    thisExp.setPriority('trigger.t', 30)
-    thisExp.setPriority('thisRow.t', 29)
-    thisExp.setPriority('Condition.started', 28)
-    thisExp.setPriority('Condition.stopped', 27)
-    thisExp.setPriority('Condition.duration', 26)
-    thisExp.setPriority('condition', 25)
-    thisExp.setPriority('participant', 24)
-    thisExp.setPriority('game.score', 23)
-    thisExp.setPriority('trials.thisTrialN', 22)
-    thisExp.setPriority('trials.thisIndex', 21)
-    thisExp.setPriority('trials.thisN', 20)
-    thisExp.setPriority('trials.thisRepN', 19)
-    thisExp.setPriority('targeted_duration', 18)
-    thisExp.setPriority('Images_next_cond', 17)
+    thisExp.setPriority('trigger.t', 31)
+    thisExp.setPriority('thisRow.t', 30)
+    thisExp.setPriority('Condition.started', 29)
+    thisExp.setPriority('Condition.stopped', 28)
+    thisExp.setPriority('Condition.duration', 27)
+    thisExp.setPriority('game.score', 26)
+    thisExp.setPriority('game.level', 24)
+    thisExp.setPriority('game.speed', 23)
+    thisExp.setPriority('game.wm_load_condition', 22)
+    thisExp.setPriority('game.speed_condition', 21)
+    thisExp.setPriority('Condition.info', 20)
+    thisExp.setPriority('participant', 19)
+    thisExp.setPriority('main_trials.thisTrialN', 18)
+    thisExp.setPriority('main_trials.thisIndex', 17)
+    thisExp.setPriority('main_trials.thisN', 16)
+    thisExp.setPriority('main_trials.thisRepN', 15)
+    thisExp.setPriority('targeted_duration', 14)
+    thisExp.setPriority('control_condition', 13)
+    thisExp.setPriority('Images_next_cond', 12)
     thisExp.setPriority('notes', 0)
     thisExp.setPriority('play_pretrial.started', -1)
     thisExp.setPriority('play_pretrial.stopped', -2)
@@ -406,7 +478,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1707, 960], fullscr=_fullScr, screen=0,
+            size=[1280, 720], fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='Home_test', color=[-0.6549, -0.6549, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -463,7 +535,7 @@ def setupDevices(expInfo, thisExp, win):
     ioSession = '1'
     if 'session' in expInfo:
         ioSession = str(expInfo['session'])
-    ioServer = io.launchHubServer(window=win, **ioConfig)
+    ioServer = io.launchHubServer(window=win, experiment_code='Tetris_Psychopy', session_code=ioSession, datastore_name=thisExp.dataFileName, **ioConfig)
     # store ioServer object in the device manager
     deviceManager.ioServer = ioServer
     
@@ -543,12 +615,6 @@ def setupDevices(expInfo, thisExp, win):
         press_continue_11 = deviceManager.addDevice(
             deviceClass='keyboard',
             deviceName='press_continue_11',
-        )
-    if deviceManager.getDevice('wait_for_trigger_response') is None:
-        # initialise wait_for_trigger_response
-        wait_for_trigger_response = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='wait_for_trigger_response',
         )
     # return True if completed successfully
     return True
@@ -657,14 +723,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "load_processes" ---
     # Run 'Begin Experiment' code from create_processes
     #checks whether display orientation is altered (defined in "config_paradigm_psychopy.txt")
-    if flip_vertically == True or flip_horizontally == True:
+    if Flip_vertically == True or Flip_horizontally == True:
         
         #warping function provided by psychopy.visual.windowwarper
+        #cannot be done "Before  experiment" due to win being defined at the end of "Before experiment"
         warper = Warper(win)
         
         #even if warping function is set warper needs to be updated before changes apply to the display
         #Psychopy uses switched arguments for a vertical and horizontal mirroring compared to "config_paradigm_psychopy.txt"
-        warper.changeProjection(None, flipHorizontal = flip_vertically, flipVertical = flip_horizontally)
+        warper.changeProjection(None, flipHorizontal = Flip_vertically, flipVertical = Flip_horizontally)
     
     #create a keyboard listener that collets Trigger by the MR
     #cannot be defined before the experiment due to globalCLock being defined in run(...)
@@ -672,7 +739,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         try:
             if key.char =='q':
                 return False
-            if key.char == trigger:
+            if key.char == Trigger:
                 thisExp.addData('trigger.t', globalClock.getTime(format='float'))
                 thisExp.nextEntry()
         except AttributeError: 
@@ -773,14 +840,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     x_5_5 =  "-"
     all_checked = False
     text_check_response = visual.TextStim(win=win, name='text_check_response',
-        text='Please press each button on the responsebox twice!',
+        text=Inst.font_check_response,
         font='Open Sans',
         pos=(0, 0.2), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     text_check_response_2 = visual.TextStim(win=win, name='text_check_response_2',
-        text='Responses checked successfully!',
+        text=Inst.font_check_response_2,
         font='Open Sans',
         pos=(0, -0.2), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -825,14 +892,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "pretrial_intro" ---
     Intro_2 = visual.TextStim(win=win, name='Intro_2',
-        text='Welcome to the Tetris experiment',
+        text=Inst.font_Intro_2,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     Text_continue_1 = visual.TextStim(win=win, name='Text_continue_1',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -842,14 +909,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "explain_pretrial" ---
     explanation_pretrial = visual.TextStim(win=win, name='explanation_pretrial',
-        text='During this first part of the experiment, you will play Tetris and get used to the setup!\n\nHow to play:',
+        text=Inst.font_explanation_pretrial,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=1.5, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     Text_continue_2 = visual.TextStim(win=win, name='Text_continue_2',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -861,13 +928,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     explain_game_mechanics = visual.ImageStim(
         win=win,
         name='explain_game_mechanics', 
-        image='Images/explain_game_mechanics.png', mask=None, anchor='center',
+        image=Inst.img_explain_game_mechanics, mask=None, anchor='center',
         ori=0.0, pos=(0, 0.05), size=(1.75, 0.9),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     Text_continue_3 = visual.TextStim(win=win, name='Text_continue_3',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -879,20 +946,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     explain_controls = visual.ImageStim(
         win=win,
         name='explain_controls', 
-        image='Images/Tetris_explains.png', mask=None, anchor='center',
+        image=Inst.img_explain_controls, mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1.04, 0.8),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     Controls = visual.TextStim(win=win, name='Controls',
-        text='This is how you move the Tetris-Blocks:',
+        text=Inst.font_Controls,
         font='Open Sans',
         pos=(0, 0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_4 = visual.TextStim(win=win, name='Text_continue_4',
-        text='Press any button to start the first TETRIS-GAME!',
+        text=Inst.font_start_pretrial,
         font='Open Sans',
         pos=(0.0, -0.45), height=0.05, wrapWidth=2.0, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -917,6 +984,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
+    Start_eytracking = hardware.eyetracker.EyetrackerControl(
+        tracker=eyetracker,
+        actionType='Start Only'
+    )
     
     # --- Initialize components for Routine "wait_1s" ---
     fix = visual.TextStim(win=win, name='fix',
@@ -929,14 +1000,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "intro_main" ---
     intro_main_text = visual.TextStim(win=win, name='intro_main_text',
-        text='Now the main part of the experiment begins!',
+        text=Inst.font_intro_main,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     text_continue_5 = visual.TextStim(win=win, name='text_continue_5',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -944,9 +1015,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-1.0);
     press_continue_5 = keyboard.Keyboard(deviceName='press_continue_5')
     
-    # --- Initialize components for Routine "explanation_basic_structure" ---
+    # --- Initialize components for Routine "explain_basic_structure" ---
     Announcement = visual.TextStim(win=win, name='Announcement',
-        text='During the Experiment you will encounter 4 different symbols:',
+        text=Inst.font_Announcement,
         font='Open Sans',
         pos=(0, 0.2), height=0.1, wrapWidth=1.8, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -986,7 +1057,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         texRes=128.0, interpolate=True, depth=-4.0)
     press_continue_6 = keyboard.Keyboard(deviceName='press_continue_6')
     Text_continue_6 = visual.TextStim(win=win, name='Text_continue_6',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -998,19 +1069,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='controller_example', 
         image='Images/controller.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0), size=(0.3, 0.3),
+        ori=0.0, pos=(-0.65, 0), size=(0.2, 0.2),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     play_Tetris_text = visual.TextStim(win=win, name='play_Tetris_text',
-        text='Controller: Play the game! Try to focus on MENTALLY ROTATING the blocks when playing! The starting level is adjusted based on the level you reached in the earlier rounds!',
+        text=Inst.font_play_Tetris,
         font='Open Sans',
         pos=(0.2, 0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_7 = visual.TextStim(win=win, name='Text_continue_7',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1028,14 +1099,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     text_motor = visual.TextStim(win=win, name='text_motor',
-        text='Hand: Press the Buttons ALTERNATELY (one after another) to the rhythm displayed on the screen!',
+        text=Inst.font_motor,
         font='Open Sans',
         pos=(0.2, 0.0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_8 = visual.TextStim(win=win, name='Text_continue_8',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1053,14 +1124,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     text_watch = visual.TextStim(win=win, name='text_watch',
-        text='Eye: Watch Tetris! Just look at the screen while a game recording is played for you. Do not press any buttons!',
+        text=Inst.font_watch,
         font='Open Sans',
         pos=(0.2, 0.0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_9 = visual.TextStim(win=win, name='Text_continue_9',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1078,14 +1149,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     text_cross = visual.TextStim(win=win, name='text_cross',
-        text='Fixation Cross: just look at the cross in the middle of the screen and do nothing else!',
+        text=Inst.font_cross,
         font='Open Sans',
         pos=(0.2, 0.0), height=0.06, wrapWidth=1.25, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
     Text_continue_10 = visual.TextStim(win=win, name='Text_continue_10',
-        text='Press any button to continue!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1095,14 +1166,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "start_experiment" ---
     Start = visual.TextStim(win=win, name='Start',
-        text='Now, the experiment starts!',
+        text=Inst.font_start,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     Text_continue_11 = visual.TextStim(win=win, name='Text_continue_11',
-        text='Press any button to start!',
+        text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1136,9 +1207,54 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    wait_for_trigger_response = keyboard.Keyboard(deviceName='wait_for_trigger_response')
     
-    # --- Initialize components for Routine "Show_next_Cond" ---
+    # --- Initialize components for Routine "show_play_tetris" ---
+    Icon_for_play_Tetris = visual.ImageStim(
+        win=win,
+        name='Icon_for_play_Tetris', 
+        image='default.png', mask=None, anchor='center',
+        ori=0.0, pos=(0, 0), size=1.0,
+        color=[1,1,1], colorSpace='rgb', opacity=None,
+        flipHoriz=False, flipVert=False,
+        texRes=128.0, interpolate=True, depth=0.0)
+    
+    # --- Initialize components for Routine "wait_1s" ---
+    fix = visual.TextStim(win=win, name='fix',
+        text='+',
+        font='Open Sans',
+        pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    
+    # --- Initialize components for Routine "tetris_condition" ---
+    duration_and_fix_play_Tetris = visual.TextStim(win=win, name='duration_and_fix_play_Tetris',
+        text='+',
+        font='Open Sans',
+        pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-1.0);
+    
+    # --- Initialize components for Routine "condition_ended" ---
+    condition_ended_text = visual.TextStim(win=win, name='condition_ended_text',
+        text=Inst.font_condition_ended,
+        font='Open Sans',
+        pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    
+    # --- Initialize components for Routine "wait_3s_after_play_tetris" ---
+    fix_after_play_Tetris = visual.TextStim(win=win, name='fix_after_play_Tetris',
+        text='+',
+        font='Open Sans',
+        pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    
+    # --- Initialize components for Routine "show_next_control" ---
     Icon_for_next_cond = visual.ImageStim(
         win=win,
         name='Icon_for_next_cond', 
@@ -1148,7 +1264,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
     
-    # --- Initialize components for Routine "Condition" ---
+    # --- Initialize components for Routine "wait_1s" ---
+    fix = visual.TextStim(win=win, name='fix',
+        text='+',
+        font='Open Sans',
+        pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    
+    # --- Initialize components for Routine "random_control_condition" ---
     press_cross = visual.ShapeStim(
         win=win, name='press_cross', vertices='cross',
         size=(0.075, 0.075),
@@ -1163,14 +1288,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=-2.0);
     
-    # --- Initialize components for Routine "wait_1s_after_cond" ---
-    fix_after_cond = visual.TextStim(win=win, name='fix_after_cond',
+    # --- Initialize components for Routine "condition_ended" ---
+    condition_ended_text = visual.TextStim(win=win, name='condition_ended_text',
+        text=Inst.font_condition_ended,
+        font='Open Sans',
+        pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    
+    # --- Initialize components for Routine "wait_3s_after_control" ---
+    fix_after_control = visual.TextStim(win=win, name='fix_after_control',
         text='+',
         font='Open Sans',
         pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
+        depth=0.0);
     
     # --- Initialize components for Routine "wait_10sec_for_Trigger" ---
     wait_10sec_for_trigger_text = visual.TextStim(win=win, name='wait_10sec_for_trigger_text',
@@ -1182,13 +1316,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-1.0);
     
     # --- Initialize components for Routine "End" ---
-    End_Font = visual.TextStim(win=win, name='End_Font',
-        text='Thank you for your Participation!',
+    end_text = visual.TextStim(win=win, name='end_text',
+        text=Inst.font_end,
         font='Open Sans',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=0.0);
+        depth=-1.0);
+    Stop_eyetracker = hardware.eyetracker.EyetrackerControl(
+        tracker=eyetracker,
+        actionType='Stop Only'
+    )
     
     # create some handy timers
     
@@ -1231,7 +1369,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                               game.game_over_counter,
                               game.score,
                               game.level,
-                              game.level_for_main
+                              game.speed,
+                              game.level_for_main,
+                              game.three_next_blocks 
                               ))
     pretrial_Tetris.start()
     
@@ -1244,7 +1384,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                           game.game_over_counter,
                           game.score,
                           game.level,
+                          game.speed,
                           game.level_for_main,
+                          game.three_next_blocks
                           ))
     play_Tetris.start()
     #create a window for the controll visual_control condition
@@ -1256,7 +1398,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                            game.game_over_counter,
                            game.score,
                            game.level,
+                           game.speed,
                            game.level_for_main,
+                           game.three_next_blocks
                            ))
     watch_Tetris.start()
     
@@ -1346,9 +1490,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from create_processes
     Get_on_top("PsychoPy")
-    print(game.toggle_pretrial.value)
-    print(game.toggle_play.value)
-    print(game.toggle_watch.value)
+    print(f'pretrial_Tetris loaded and paused({game.toggle_pretrial.value})')
+    print(f'play_Tetris loaded and paused({game.toggle_play.value})')
+    print(f'watch_Tetris loaded and paused({game.toggle_watch.value})')
     thisExp.nextEntry()
     # the Routine "load_processes" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1537,8 +1681,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from code_show_and_hide_pretrial
-    is_paused("pretrial_Tetris")
-    is_paused("pretrial_Tetris")
     Get_on_top("pretrial_Tetris")
     
     # keep track of which components have finished
@@ -2941,7 +3083,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     #start Tetris
     is_paused("pretrial_Tetris")
     # keep track of which components have finished
-    play_pretrialComponents = [fix_2]
+    play_pretrialComponents = [fix_2, Start_eytracking]
     for thisComponent in play_pretrialComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -2963,6 +3105,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from Tetris_pretrial
+        if game.game_over_counter.value == game.pretrial_rounds:
+            continueRoutine = False
         
         # *fix_2* updates
         
@@ -2981,17 +3126,28 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if fix_2.status == STARTED:
             # update params
             pass
+        # *Start_eytracking* updates
         
-        # if fix_2 is stopping this frame...
-        if fix_2.status == STARTED:
-            if bool(game.game_over_counter.value == 3):
+        # if Start_eytracking is starting this frame...
+        if Start_eytracking.status == NOT_STARTED and Eye_tracking == True:
+            # keep track of start time/frame for later
+            Start_eytracking.frameNStart = frameN  # exact frame index
+            Start_eytracking.tStart = t  # local t and not account for scr refresh
+            Start_eytracking.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(Start_eytracking, 'tStartRefresh')  # time at next scr refresh
+            # update status
+            Start_eytracking.status = STARTED
+        
+        # if Start_eytracking is stopping this frame...
+        if Start_eytracking.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > Start_eytracking.tStartRefresh + 0-frameTolerance:
                 # keep track of stop time/frame for later
-                fix_2.tStop = t  # not accounting for scr refresh
-                fix_2.tStopRefresh = tThisFlipGlobal  # on global time
-                fix_2.frameNStop = frameN  # exact frame index
+                Start_eytracking.tStop = t  # not accounting for scr refresh
+                Start_eytracking.tStopRefresh = tThisFlipGlobal  # on global time
+                Start_eytracking.frameNStop = frameN  # exact frame index
                 # update status
-                fix_2.status = FINISHED
-                fix_2.setAutoDraw(False)
+                Start_eytracking.status = FINISHED
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -3022,17 +3178,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Run 'End Routine' code from Tetris_pretrial
     #adds the achieved level and score to the data file
     thisExp.addData('pretrial_score', game.score.value)
+    thisExp.addData('pretrial_level_avg', game.level_for_main.value)
+    thisExp.addData('Condition.info', 'info_preTrial')
     #resets absolut score
     game.score.value = 0
-    thisExp.addData('pretrial_level_avg', game.level_for_main.value)
     #sets new start level for main game
-    game.level.value = round(game.level_for_main.value * 0.75)
-    
+    game.level_for_main.value = round(game.level_for_main.value * 0.75)
+    game.level.value = int(game.level_for_main.value)
+    #prints out the value for control purposes
+    print(f'new level for main: {game.level_for_main.value}')
     #ends pretrial pygame
     pretrial_Tetris.terminate()
     pretrial_Tetris.join()
     
     Get_on_top("PsychoPy")
+    # make sure the eyetracker recording stops
+    if Start_eytracking.status != FINISHED:
+        Start_eytracking.status = FINISHED
     thisExp.nextEntry()
     # the Routine "play_pretrial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -3247,15 +3409,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # the Routine "intro_main" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
-    # --- Prepare to start Routine "explanation_basic_structure" ---
+    # --- Prepare to start Routine "explain_basic_structure" ---
     continueRoutine = True
     # update component parameters for each repeat
     press_continue_6.keys = []
     press_continue_6.rt = []
     _press_continue_6_allKeys = []
     # keep track of which components have finished
-    explanation_basic_structureComponents = [Announcement, controller_example_1, watch_example_1, motorcontrol_example_1, baseline_example_1, press_continue_6, Text_continue_6]
-    for thisComponent in explanation_basic_structureComponents:
+    explain_basic_structureComponents = [Announcement, controller_example_1, watch_example_1, motorcontrol_example_1, baseline_example_1, press_continue_6, Text_continue_6]
+    for thisComponent in explain_basic_structureComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
         thisComponent.tStartRefresh = None
@@ -3267,7 +3429,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     _timeToFirstFrame = win.getFutureFlipTime(clock="now")
     frameN = -1
     
-    # --- Run Routine "explanation_basic_structure" ---
+    # --- Run Routine "explain_basic_structure" ---
     routineForceEnded = not continueRoutine
     while continueRoutine:
         # get current time
@@ -3423,7 +3585,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             routineForceEnded = True
             break
         continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in explanation_basic_structureComponents:
+        for thisComponent in explain_basic_structureComponents:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
@@ -3432,12 +3594,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     
-    # --- Ending Routine "explanation_basic_structure" ---
-    for thisComponent in explanation_basic_structureComponents:
+    # --- Ending Routine "explain_basic_structure" ---
+    for thisComponent in explain_basic_structureComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     thisExp.nextEntry()
-    # the Routine "explanation_basic_structure" was not non-slip safe, so reset the non-slip timer
+    # the Routine "explain_basic_structure" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
     # --- Prepare to start Routine "explain_play_Tetris" ---
@@ -3721,7 +3883,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Prepare to start Routine "explain_watch_Tetris" ---
     continueRoutine = True
     # update component parameters for each repeat
-    thisExp.addData('explain_watch_Tetris.started', globalClock.getTime(format='float'))
     press_continue_9.keys = []
     press_continue_9.rt = []
     _press_continue_9_allKeys = []
@@ -3854,7 +4015,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     for thisComponent in explain_watch_TetrisComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    thisExp.addData('explain_watch_Tetris.stopped', globalClock.getTime(format='float'))
     thisExp.nextEntry()
     # the Routine "explain_watch_Tetris" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -3862,7 +4022,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Prepare to start Routine "explain_fixation_cross" ---
     continueRoutine = True
     # update component parameters for each repeat
-    thisExp.addData('explain_fixation_cross.started', globalClock.getTime(format='float'))
     press_continue_10.keys = []
     press_continue_10.rt = []
     _press_continue_10_allKeys = []
@@ -3995,7 +4154,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     for thisComponent in explain_fixation_crossComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    thisExp.addData('explain_fixation_cross.stopped', globalClock.getTime(format='float'))
     thisExp.nextEntry()
     # the Routine "explain_fixation_cross" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -4302,13 +4460,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Prepare to start Routine "wait_for_trigger" ---
     continueRoutine = True
     # update component parameters for each repeat
-    # Run 'Begin Routine' code from log_first_trigger
-    thisExp.addData('condition', 'first_trigger')
-    wait_for_trigger_response.keys = []
-    wait_for_trigger_response.rt = []
-    _wait_for_trigger_response_allKeys = []
+    # Run 'Begin Routine' code from first_trigger
+    thisExp.addData('Condition.info', 'first_trigger')
     # keep track of which components have finished
-    wait_for_triggerComponents = [wait_for_trigger_text, wait_for_trigger_response]
+    wait_for_triggerComponents = [wait_for_trigger_text]
     for thisComponent in wait_for_triggerComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -4330,6 +4485,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from first_trigger
+        if defaultKeyboard.getKeys(keyList=[Trigger]):
+            continueRoutine = False
         
         # *wait_for_trigger_text* updates
         
@@ -4348,32 +4506,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if wait_for_trigger_text.status == STARTED:
             # update params
             pass
-        
-        # *wait_for_trigger_response* updates
-        waitOnFlip = False
-        
-        # if wait_for_trigger_response is starting this frame...
-        if wait_for_trigger_response.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-            # keep track of start time/frame for later
-            wait_for_trigger_response.frameNStart = frameN  # exact frame index
-            wait_for_trigger_response.tStart = t  # local t and not account for scr refresh
-            wait_for_trigger_response.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(wait_for_trigger_response, 'tStartRefresh')  # time at next scr refresh
-            # update status
-            wait_for_trigger_response.status = STARTED
-            # keyboard checking is just starting
-            waitOnFlip = True
-            win.callOnFlip(wait_for_trigger_response.clock.reset)  # t=0 on next screen flip
-            win.callOnFlip(wait_for_trigger_response.clearEvents, eventType='keyboard')  # clear events on next screen flip
-        if wait_for_trigger_response.status == STARTED and not waitOnFlip:
-            theseKeys = wait_for_trigger_response.getKeys(keyList=['t'], ignoreKeys=["escape"], waitRelease=False)
-            _wait_for_trigger_response_allKeys.extend(theseKeys)
-            if len(_wait_for_trigger_response_allKeys):
-                wait_for_trigger_response.keys = _wait_for_trigger_response_allKeys[-1].name  # just the last key pressed
-                wait_for_trigger_response.rt = _wait_for_trigger_response_allKeys[-1].rt
-                wait_for_trigger_response.duration = _wait_for_trigger_response_allKeys[-1].duration
-                # a response ends the routine
-                continueRoutine = False
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -4405,19 +4537,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1.0, method='sequential', 
+    main_trials = data.TrialHandler(nReps=N_repeats, method='fullRandom', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('loop_template.xlsx'),
-        seed=None, name='trials')
-    thisExp.addLoop(trials)  # add the loop to the experiment
-    thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-    if thisTrial != None:
-        for paramName in thisTrial:
-            globals()[paramName] = thisTrial[paramName]
+        trialList=data.importConditions('main_trials_template.xlsx'),
+        seed=Main_trials_seed, name='main_trials')
+    thisExp.addLoop(main_trials)  # add the loop to the experiment
+    thisMain_trial = main_trials.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisMain_trial.rgb)
+    if thisMain_trial != None:
+        for paramName in thisMain_trial:
+            globals()[paramName] = thisMain_trial[paramName]
     
-    for thisTrial in trials:
-        currentLoop = trials
+    for thisMain_trial in main_trials:
+        currentLoop = main_trials
         thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
         # pause experiment here if requested
         if thisExp.status == PAUSED:
@@ -4427,19 +4559,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 timers=[routineTimer], 
                 playbackComponents=[]
         )
-        # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-        if thisTrial != None:
-            for paramName in thisTrial:
-                globals()[paramName] = thisTrial[paramName]
+        # abbreviate parameter names if possible (e.g. rgb = thisMain_trial.rgb)
+        if thisMain_trial != None:
+            for paramName in thisMain_trial:
+                globals()[paramName] = thisMain_trial[paramName]
         
-        # --- Prepare to start Routine "Show_next_Cond" ---
+        # --- Prepare to start Routine "show_play_tetris" ---
         continueRoutine = True
         # update component parameters for each repeat
-        Icon_for_next_cond.setSize((0.5, 0.5))
-        Icon_for_next_cond.setImage(Images_next_cond)
+        Icon_for_play_Tetris.setSize((0.5, 0.5))
+        Icon_for_play_Tetris.setImage('Images/controller.png')
         # keep track of which components have finished
-        Show_next_CondComponents = [Icon_for_next_cond]
-        for thisComponent in Show_next_CondComponents:
+        show_play_tetrisComponents = [Icon_for_play_Tetris]
+        for thisComponent in show_play_tetrisComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -4451,7 +4583,494 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "Show_next_Cond" ---
+        # --- Run Routine "show_play_tetris" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 2.0:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *Icon_for_play_Tetris* updates
+            
+            # if Icon_for_play_Tetris is starting this frame...
+            if Icon_for_play_Tetris.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                Icon_for_play_Tetris.frameNStart = frameN  # exact frame index
+                Icon_for_play_Tetris.tStart = t  # local t and not account for scr refresh
+                Icon_for_play_Tetris.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(Icon_for_play_Tetris, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                Icon_for_play_Tetris.status = STARTED
+                Icon_for_play_Tetris.setAutoDraw(True)
+            
+            # if Icon_for_play_Tetris is active this frame...
+            if Icon_for_play_Tetris.status == STARTED:
+                # update params
+                pass
+            
+            # if Icon_for_play_Tetris is stopping this frame...
+            if Icon_for_play_Tetris.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > Icon_for_play_Tetris.tStartRefresh + 2-frameTolerance:
+                    # keep track of stop time/frame for later
+                    Icon_for_play_Tetris.tStop = t  # not accounting for scr refresh
+                    Icon_for_play_Tetris.tStopRefresh = tThisFlipGlobal  # on global time
+                    Icon_for_play_Tetris.frameNStop = frameN  # exact frame index
+                    # update status
+                    Icon_for_play_Tetris.status = FINISHED
+                    Icon_for_play_Tetris.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in show_play_tetrisComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "show_play_tetris" ---
+        for thisComponent in show_play_tetrisComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-2.000000)
+        
+        # --- Prepare to start Routine "wait_1s" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        # keep track of which components have finished
+        wait_1sComponents = [fix]
+        for thisComponent in wait_1sComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "wait_1s" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 1.0:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *fix* updates
+            
+            # if fix is starting this frame...
+            if fix.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                fix.frameNStart = frameN  # exact frame index
+                fix.tStart = t  # local t and not account for scr refresh
+                fix.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(fix, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                fix.status = STARTED
+                fix.setAutoDraw(True)
+            
+            # if fix is active this frame...
+            if fix.status == STARTED:
+                # update params
+                pass
+            
+            # if fix is stopping this frame...
+            if fix.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > fix.tStartRefresh + 1-frameTolerance:
+                    # keep track of stop time/frame for later
+                    fix.tStop = t  # not accounting for scr refresh
+                    fix.tStopRefresh = tThisFlipGlobal  # on global time
+                    fix.frameNStop = frameN  # exact frame index
+                    # update status
+                    fix.status = FINISHED
+                    fix.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in wait_1sComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "wait_1s" ---
+        for thisComponent in wait_1sComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-1.000000)
+        
+        # --- Prepare to start Routine "tetris_condition" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        # Run 'Begin Routine' code from execute_play_Tetris
+        
+        if Comp_wm_load == True or Comp_speed == True:
+            comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)
+            print(f'{main_trials.thisN + 1} of {main_trials.nTotal} - {speed_seq[main_trials.thisN]} and {wm_load_seq[main_trials.thisN]}')
+        
+        #Tetris to foreground
+        Get_on_top("play_Tetris")
+        #wait one sec
+        condition_or_wait_timer("wait")
+        #Tetris begins here
+        is_paused("play_Tetris")
+        
+        #collect start time for logging
+        condition_started = globalClock.getTime(format='float')
+        
+        # keep track of which components have finished
+        tetris_conditionComponents = [duration_and_fix_play_Tetris]
+        for thisComponent in tetris_conditionComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "tetris_condition" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *duration_and_fix_play_Tetris* updates
+            
+            # if duration_and_fix_play_Tetris is starting this frame...
+            if duration_and_fix_play_Tetris.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+                # keep track of start time/frame for later
+                duration_and_fix_play_Tetris.frameNStart = frameN  # exact frame index
+                duration_and_fix_play_Tetris.tStart = t  # local t and not account for scr refresh
+                duration_and_fix_play_Tetris.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(duration_and_fix_play_Tetris, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                duration_and_fix_play_Tetris.status = STARTED
+                duration_and_fix_play_Tetris.setAutoDraw(True)
+            
+            # if duration_and_fix_play_Tetris is active this frame...
+            if duration_and_fix_play_Tetris.status == STARTED:
+                # update params
+                duration_and_fix_play_Tetris.setOpacity(None, log=False)
+            
+            # if duration_and_fix_play_Tetris is stopping this frame...
+            if duration_and_fix_play_Tetris.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > duration_and_fix_play_Tetris.tStartRefresh + Targeted_duration-frameTolerance:
+                    # keep track of stop time/frame for later
+                    duration_and_fix_play_Tetris.tStop = t  # not accounting for scr refresh
+                    duration_and_fix_play_Tetris.tStopRefresh = tThisFlipGlobal  # on global time
+                    duration_and_fix_play_Tetris.frameNStop = frameN  # exact frame index
+                    # update status
+                    duration_and_fix_play_Tetris.status = FINISHED
+                    duration_and_fix_play_Tetris.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in tetris_conditionComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "tetris_condition" ---
+        for thisComponent in tetris_conditionComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # Run 'End Routine' code from execute_play_Tetris
+        #get offset of the condition
+        condition_stopped = globalClock.getTime(format='float')
+        #if the control condition is "watch_Tetris": pauses Tetris
+        is_paused("play_Tetris")
+        #waits one seconds
+        condition_or_wait_timer("wait")
+        #if the control condition is "watch_Tetris": sets Tetris window to background
+        Get_on_top("PsychoPy")
+        
+        
+        # the Routine "tetris_condition" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
+        
+        # --- Prepare to start Routine "condition_ended" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        # keep track of which components have finished
+        condition_endedComponents = [condition_ended_text]
+        for thisComponent in condition_endedComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "condition_ended" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 1.0:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *condition_ended_text* updates
+            
+            # if condition_ended_text is starting this frame...
+            if condition_ended_text.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+                # keep track of start time/frame for later
+                condition_ended_text.frameNStart = frameN  # exact frame index
+                condition_ended_text.tStart = t  # local t and not account for scr refresh
+                condition_ended_text.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(condition_ended_text, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                condition_ended_text.status = STARTED
+                condition_ended_text.setAutoDraw(True)
+            
+            # if condition_ended_text is active this frame...
+            if condition_ended_text.status == STARTED:
+                # update params
+                condition_ended_text.setOpacity(None, log=False)
+            
+            # if condition_ended_text is stopping this frame...
+            if condition_ended_text.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > condition_ended_text.tStartRefresh + 1-frameTolerance:
+                    # keep track of stop time/frame for later
+                    condition_ended_text.tStop = t  # not accounting for scr refresh
+                    condition_ended_text.tStopRefresh = tThisFlipGlobal  # on global time
+                    condition_ended_text.frameNStop = frameN  # exact frame index
+                    # update status
+                    condition_ended_text.status = FINISHED
+                    condition_ended_text.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in condition_endedComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "condition_ended" ---
+        for thisComponent in condition_endedComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-1.000000)
+        
+        # --- Prepare to start Routine "wait_3s_after_play_tetris" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        # keep track of which components have finished
+        wait_3s_after_play_tetrisComponents = [fix_after_play_Tetris]
+        for thisComponent in wait_3s_after_play_tetrisComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "wait_3s_after_play_tetris" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 3.0:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *fix_after_play_Tetris* updates
+            
+            # if fix_after_play_Tetris is starting this frame...
+            if fix_after_play_Tetris.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                fix_after_play_Tetris.frameNStart = frameN  # exact frame index
+                fix_after_play_Tetris.tStart = t  # local t and not account for scr refresh
+                fix_after_play_Tetris.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(fix_after_play_Tetris, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                fix_after_play_Tetris.status = STARTED
+                fix_after_play_Tetris.setAutoDraw(True)
+            
+            # if fix_after_play_Tetris is active this frame...
+            if fix_after_play_Tetris.status == STARTED:
+                # update params
+                pass
+            
+            # if fix_after_play_Tetris is stopping this frame...
+            if fix_after_play_Tetris.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > fix_after_play_Tetris.tStartRefresh + 3-frameTolerance:
+                    # keep track of stop time/frame for later
+                    fix_after_play_Tetris.tStop = t  # not accounting for scr refresh
+                    fix_after_play_Tetris.tStopRefresh = tThisFlipGlobal  # on global time
+                    fix_after_play_Tetris.frameNStop = frameN  # exact frame index
+                    # update status
+                    fix_after_play_Tetris.status = FINISHED
+                    fix_after_play_Tetris.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in wait_3s_after_play_tetrisComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "wait_3s_after_play_tetris" ---
+        for thisComponent in wait_3s_after_play_tetrisComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # Run 'End Routine' code from add_data_play_Tetris
+        #logs on and offsets and condition duration into one line for later processing
+        thisExp.addData('Condition.started', condition_started)
+        thisExp.addData('Condition.stopped', condition_stopped)
+        thisExp.addData('targeted.duration', Targeted_duration)
+        thisExp.addData('Condition.duration', condition_stopped - condition_started)
+        thisExp.addData('Condition.info', 'info_play_Tetris')
+        thisExp.addData('game.score', game.score.value)
+        thisExp.addData('game.score', game.score.value)
+        thisExp.addData('game.level', game.level.value)
+        thisExp.addData('game.speed', game.speed.value)
+        if Comp_wm_load == True:
+            thisExp.addData('game.wm_load_condition', wm_load_seq[main_trials.thisN])
+        else: 
+            thisExp.addData('game.wm_load_condition', '-')
+        if Comp_speed == True:
+            thisExp.addData('game.speed_condition', speed_seq[main_trials.thisN])
+        else:
+            thisExp.addData('game.speed_condition', '-')
+        
+        thisExp.nextEntry()
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-3.000000)
+        
+        # --- Prepare to start Routine "show_next_control" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        Icon_for_next_cond.setSize((0.5, 0.5))
+        Icon_for_next_cond.setImage(Images_next_cond)
+        # keep track of which components have finished
+        show_next_controlComponents = [Icon_for_next_cond]
+        for thisComponent in show_next_controlComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "show_next_control" ---
         routineForceEnded = not continueRoutine
         while continueRoutine and routineTimer.getTime() < 2.0:
             # get current time
@@ -4503,7 +5122,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in Show_next_CondComponents:
+            for thisComponent in show_next_controlComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -4512,8 +5131,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "Show_next_Cond" ---
-        for thisComponent in Show_next_CondComponents:
+        # --- Ending Routine "show_next_control" ---
+        for thisComponent in show_next_controlComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
@@ -4522,30 +5141,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         else:
             routineTimer.addTime(-2.000000)
         
-        # --- Prepare to start Routine "Condition" ---
+        # --- Prepare to start Routine "wait_1s" ---
         continueRoutine = True
         # update component parameters for each repeat
-        # Run 'Begin Routine' code from execute_codition
-        #set Tetris to foreground
-        Get_on_top(condition)
-        
-        #initialize press rhythm
-        if condition == "motor_control" and show_motor_rhythm == True:
-            pygame.init()
-            game.calculate_speed()
-        
-        #wait one sec
-        condition_or_wait_timer("wait")
-        #Tetris begins here
-        is_paused(condition)
-        
-        #collect start time for logging
-        condition_started = globalClock.getTime(format='float')
-        
-        press_cross.setOpacity(0.0)
         # keep track of which components have finished
-        ConditionComponents = [press_cross, duration_and_fix]
-        for thisComponent in ConditionComponents:
+        wait_1sComponents = [fix]
+        for thisComponent in wait_1sComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -4557,7 +5158,107 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "Condition" ---
+        # --- Run Routine "wait_1s" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 1.0:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *fix* updates
+            
+            # if fix is starting this frame...
+            if fix.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                fix.frameNStart = frameN  # exact frame index
+                fix.tStart = t  # local t and not account for scr refresh
+                fix.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(fix, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                fix.status = STARTED
+                fix.setAutoDraw(True)
+            
+            # if fix is active this frame...
+            if fix.status == STARTED:
+                # update params
+                pass
+            
+            # if fix is stopping this frame...
+            if fix.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > fix.tStartRefresh + 1-frameTolerance:
+                    # keep track of stop time/frame for later
+                    fix.tStop = t  # not accounting for scr refresh
+                    fix.tStopRefresh = tThisFlipGlobal  # on global time
+                    fix.frameNStop = frameN  # exact frame index
+                    # update status
+                    fix.status = FINISHED
+                    fix.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in wait_1sComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "wait_1s" ---
+        for thisComponent in wait_1sComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-1.000000)
+        
+        # --- Prepare to start Routine "random_control_condition" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        # Run 'Begin Routine' code from execute_codition
+        #if the control condition is "watch_Tetris": set Tetris to foreground
+        Get_on_top(control_condition)
+        #wait one sec
+        condition_or_wait_timer("wait")
+        #if the control condition is "watch_Tetris": Tetris begins here
+        is_paused(control_condition)
+        
+        #collect start time for logging
+        condition_started = globalClock.getTime(format='float')
+        
+        press_cross.setOpacity(0.0)
+        # keep track of which components have finished
+        random_control_conditionComponents = [press_cross, duration_and_fix]
+        for thisComponent in random_control_conditionComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "random_control_condition" ---
         routineForceEnded = not continueRoutine
         while continueRoutine:
             # get current time
@@ -4568,9 +5269,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # update/draw components on each frame
             # Run 'Each Frame' code from execute_codition
             #created a press rhythm if enabled by "config_paradigm_psychopy.txt" by changing the opacity of the cross shape periodically
-            if condition == "motor_control" and show_motor_rhythm == True:
+            if control_condition == "motor_control" and Show_motor_rhythm == True:
                 press_rhythm = core.getTime()
-                if press_rhythm % (game.speed/1000 * 2) < (game.speed/2000):   
+                if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):   
                     press_cross.setOpacity(1)
                 else:
                     press_cross.setOpacity(0)
@@ -4596,7 +5297,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if press_cross is stopping this frame...
             if press_cross.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > press_cross.tStartRefresh + targeted_duration-frameTolerance:
+                if tThisFlipGlobal > press_cross.tStartRefresh + Targeted_duration-frameTolerance:
                     # keep track of stop time/frame for later
                     press_cross.tStop = t  # not accounting for scr refresh
                     press_cross.tStopRefresh = tThisFlipGlobal  # on global time
@@ -4626,7 +5327,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if duration_and_fix is stopping this frame...
             if duration_and_fix.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > duration_and_fix.tStartRefresh + targeted_duration-frameTolerance:
+                if tThisFlipGlobal > duration_and_fix.tStartRefresh + Targeted_duration-frameTolerance:
                     # keep track of stop time/frame for later
                     duration_and_fix.tStop = t  # not accounting for scr refresh
                     duration_and_fix.tStopRefresh = tThisFlipGlobal  # on global time
@@ -4647,7 +5348,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in ConditionComponents:
+            for thisComponent in random_control_conditionComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -4656,8 +5357,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "Condition" ---
-        for thisComponent in ConditionComponents:
+        # --- Ending Routine "random_control_condition" ---
+        for thisComponent in random_control_conditionComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from execute_codition
@@ -4665,23 +5366,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         press_cross.setOpacity(0)
         #get offset of the condition
         condition_stopped = globalClock.getTime(format='float')
-        #pauses Tetris
-        is_paused(condition)
+        #if the control condition is "watch_Tetris": pauses Tetris
+        is_paused(control_condition)
         #waits one seconds
         condition_or_wait_timer("wait")
-        #sets Tetris window to background
+        #if the control condition is "watch_Tetris": sets Tetris window to background
         Get_on_top("PsychoPy")
         
         
-        # the Routine "Condition" was not non-slip safe, so reset the non-slip timer
+        # the Routine "random_control_condition" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
-        # --- Prepare to start Routine "wait_1s_after_cond" ---
+        # --- Prepare to start Routine "condition_ended" ---
         continueRoutine = True
         # update component parameters for each repeat
         # keep track of which components have finished
-        wait_1s_after_condComponents = [fix_after_cond]
-        for thisComponent in wait_1s_after_condComponents:
+        condition_endedComponents = [condition_ended_text]
+        for thisComponent in condition_endedComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -4693,7 +5394,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "wait_1s_after_cond" ---
+        # --- Run Routine "condition_ended" ---
         routineForceEnded = not continueRoutine
         while continueRoutine and routineTimer.getTime() < 1.0:
             # get current time
@@ -4703,35 +5404,35 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             
-            # *fix_after_cond* updates
+            # *condition_ended_text* updates
             
-            # if fix_after_cond is starting this frame...
-            if fix_after_cond.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if condition_ended_text is starting this frame...
+            if condition_ended_text.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
                 # keep track of start time/frame for later
-                fix_after_cond.frameNStart = frameN  # exact frame index
-                fix_after_cond.tStart = t  # local t and not account for scr refresh
-                fix_after_cond.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(fix_after_cond, 'tStartRefresh')  # time at next scr refresh
+                condition_ended_text.frameNStart = frameN  # exact frame index
+                condition_ended_text.tStart = t  # local t and not account for scr refresh
+                condition_ended_text.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(condition_ended_text, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                fix_after_cond.status = STARTED
-                fix_after_cond.setAutoDraw(True)
+                condition_ended_text.status = STARTED
+                condition_ended_text.setAutoDraw(True)
             
-            # if fix_after_cond is active this frame...
-            if fix_after_cond.status == STARTED:
+            # if condition_ended_text is active this frame...
+            if condition_ended_text.status == STARTED:
                 # update params
-                pass
+                condition_ended_text.setOpacity(None, log=False)
             
-            # if fix_after_cond is stopping this frame...
-            if fix_after_cond.status == STARTED:
+            # if condition_ended_text is stopping this frame...
+            if condition_ended_text.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > fix_after_cond.tStartRefresh + 1.0-frameTolerance:
+                if tThisFlipGlobal > condition_ended_text.tStartRefresh + 1-frameTolerance:
                     # keep track of stop time/frame for later
-                    fix_after_cond.tStop = t  # not accounting for scr refresh
-                    fix_after_cond.tStopRefresh = tThisFlipGlobal  # on global time
-                    fix_after_cond.frameNStop = frameN  # exact frame index
+                    condition_ended_text.tStop = t  # not accounting for scr refresh
+                    condition_ended_text.tStopRefresh = tThisFlipGlobal  # on global time
+                    condition_ended_text.frameNStop = frameN  # exact frame index
                     # update status
-                    fix_after_cond.status = FINISHED
-                    fix_after_cond.setAutoDraw(False)
+                    condition_ended_text.status = FINISHED
+                    condition_ended_text.setAutoDraw(False)
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -4745,7 +5446,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in wait_1s_after_condComponents:
+            for thisComponent in condition_endedComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -4754,28 +5455,117 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "wait_1s_after_cond" ---
-        for thisComponent in wait_1s_after_condComponents:
+        # --- Ending Routine "condition_ended" ---
+        for thisComponent in condition_endedComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
-        # Run 'End Routine' code from add_data_condition
-        #logs on and offsets and condition duration into one line for later processing
-        thisExp.addData('Condition.started', condition_started)
-        thisExp.addData('Condition.stopped', condition_stopped)
-        thisExp.addData('Condition.duration', condition_stopped - condition_started)
-        if condition == "play_Tetris":
-            thisExp.addData('game.score', game.score.value)
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if routineForceEnded:
             routineTimer.reset()
         else:
             routineTimer.addTime(-1.000000)
+        
+        # --- Prepare to start Routine "wait_3s_after_control" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        # keep track of which components have finished
+        wait_3s_after_controlComponents = [fix_after_control]
+        for thisComponent in wait_3s_after_controlComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "wait_3s_after_control" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 3.0:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *fix_after_control* updates
+            
+            # if fix_after_control is starting this frame...
+            if fix_after_control.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                fix_after_control.frameNStart = frameN  # exact frame index
+                fix_after_control.tStart = t  # local t and not account for scr refresh
+                fix_after_control.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(fix_after_control, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                fix_after_control.status = STARTED
+                fix_after_control.setAutoDraw(True)
+            
+            # if fix_after_control is active this frame...
+            if fix_after_control.status == STARTED:
+                # update params
+                pass
+            
+            # if fix_after_control is stopping this frame...
+            if fix_after_control.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > fix_after_control.tStartRefresh + 3-frameTolerance:
+                    # keep track of stop time/frame for later
+                    fix_after_control.tStop = t  # not accounting for scr refresh
+                    fix_after_control.tStopRefresh = tThisFlipGlobal  # on global time
+                    fix_after_control.frameNStop = frameN  # exact frame index
+                    # update status
+                    fix_after_control.status = FINISHED
+                    fix_after_control.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in wait_3s_after_controlComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "wait_3s_after_control" ---
+        for thisComponent in wait_3s_after_controlComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # Run 'End Routine' code from add_data_control
+        #logs on and offsets and condition duration into one line for later processing
+        thisExp.addData('Condition.started', condition_started)
+        thisExp.addData('Condition.stopped', condition_stopped)
+        thisExp.addData('targeted.duration', Targeted_duration)
+        thisExp.addData('Condition.duration', condition_stopped - condition_started)
+        thisExp.addData('Condition.info', f'info_{control_condition}')
+        
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-3.000000)
         thisExp.nextEntry()
         
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-    # completed 1.0 repeats of 'trials'
+    # completed N_repeats repeats of 'main_trials'
     
     
     # --- Prepare to start Routine "wait_10sec_for_Trigger" ---
@@ -4783,7 +5573,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # update component parameters for each repeat
     # Run 'Begin Routine' code from wait_10sec_for_trigger_code
     #creates coutdown
-    timer = core.CountdownTimer(10)
+    timer_wait_for_trigger = core.CountdownTimer(10)
     # keep track of which components have finished
     wait_10sec_for_TriggerComponents = [wait_10sec_for_trigger_text]
     for thisComponent in wait_10sec_for_TriggerComponents:
@@ -4809,11 +5599,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from wait_10sec_for_trigger_code
         # Use a while loop to do nothing until the time runs out but can be interuptes by trigger (trigger signal determined by "config_paradigm_psychopy.txt")
-        if timer.getTime() <= 0:
+        if timer_wait_for_trigger.getTime() <= 0:
             continueRoutine = False # Exit the loop  
         #reset timer
-        elif defaultKeyboard.getKeys(keyList=["t"]):
-           timer.reset()
+        elif defaultKeyboard.getKeys(keyList=[Trigger]):
+           timer_wait_for_trigger.reset()
         
         # *wait_10sec_for_trigger_text* updates
         
@@ -4831,7 +5621,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if wait_10sec_for_trigger_text is active this frame...
         if wait_10sec_for_trigger_text.status == STARTED:
             # update params
-            wait_10sec_for_trigger_text.setText(f'Wait for remaining triggers...\n\n{round(timer.getTime())}', log=False)
+            wait_10sec_for_trigger_text.setText(f'Wait for remaining triggers...\n\n{round(timer_wait_for_trigger.getTime())}', log=False)
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -4865,8 +5655,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Prepare to start Routine "End" ---
     continueRoutine = True
     # update component parameters for each repeat
+    # Run 'Begin Routine' code from wait_3sec_to_end
+    #creates coutdown
+    timer_wait_3_sec = core.CountdownTimer(3)
     # keep track of which components have finished
-    EndComponents = [End_Font]
+    EndComponents = [end_text, Stop_eyetracker]
     for thisComponent in EndComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -4881,43 +5674,50 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Run Routine "End" ---
     routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 3.0:
+    while continueRoutine:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from wait_3sec_to_end
+        #due to the eyetracking component not ending the routine an additional routine breaker is needed
+        # Use a while loop to do nothing until the time runs out 
+        if timer_wait_3_sec.getTime() <= 0:
+            continueRoutine = False # Exit the loop and the routine --> paradigm ends
+            
         
-        # *End_Font* updates
+        # *end_text* updates
         
-        # if End_Font is starting this frame...
-        if End_Font.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # if end_text is starting this frame...
+        if end_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            End_Font.frameNStart = frameN  # exact frame index
-            End_Font.tStart = t  # local t and not account for scr refresh
-            End_Font.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(End_Font, 'tStartRefresh')  # time at next scr refresh
+            end_text.frameNStart = frameN  # exact frame index
+            end_text.tStart = t  # local t and not account for scr refresh
+            end_text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(end_text, 'tStartRefresh')  # time at next scr refresh
             # update status
-            End_Font.status = STARTED
-            End_Font.setAutoDraw(True)
+            end_text.status = STARTED
+            end_text.setAutoDraw(True)
         
-        # if End_Font is active this frame...
-        if End_Font.status == STARTED:
+        # if end_text is active this frame...
+        if end_text.status == STARTED:
             # update params
             pass
+        # *Stop_eyetracker* updates
         
-        # if End_Font is stopping this frame...
-        if End_Font.status == STARTED:
-            # is it time to stop? (based on local clock)
-            if tThisFlip > 3-frameTolerance:
+        # if Stop_eyetracker is stopping this frame...
+        if Stop_eyetracker.status == STARTED:
+            if bool(Eye_tracking == True):
                 # keep track of stop time/frame for later
-                End_Font.tStop = t  # not accounting for scr refresh
-                End_Font.tStopRefresh = tThisFlipGlobal  # on global time
-                End_Font.frameNStop = frameN  # exact frame index
+                Stop_eyetracker.tStop = t  # not accounting for scr refresh
+                Stop_eyetracker.tStopRefresh = tThisFlipGlobal  # on global time
+                Stop_eyetracker.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.addData('Stop_eyetracker.stopped', t)
                 # update status
-                End_Font.status = FINISHED
-                End_Font.setAutoDraw(False)
+                Stop_eyetracker.status = FINISHED
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -4944,12 +5744,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     for thisComponent in EndComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-    if routineForceEnded:
-        routineTimer.reset()
-    else:
-        routineTimer.addTime(-3.000000)
+    # make sure the eyetracker recording stops
+    if Stop_eyetracker.status != FINISHED:
+        Stop_eyetracker.status = FINISHED
     thisExp.nextEntry()
+    # the Routine "End" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
     # Run 'End Experiment' code from create_processes
     #Terminate game and watch process
     play_Tetris.terminate()

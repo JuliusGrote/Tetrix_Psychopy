@@ -27,7 +27,7 @@ N_repeats = 10
 ### Would you like to compare "high_load" working memory load (WM load) against "low_load" working memory load (WM load) (one "NEXT" Block against three "NEXT" BLocks)? 
 ### Each "play_Tetris" condition it is randomly chosen whether wm_load is "high_load" or "low_load"!
 ### uses the same mechanic as the "three_next_blocks" option from "config_tetris_game.txt"
-Comp_wm_load = False
+Comp_wm_load = True
 
 ### Default: None; if you want to use that function set "load_seed" to any number.
 Load_seed = None
@@ -38,12 +38,12 @@ Load_seed = None
 ### only works properly if level "Level_progression_main = False" in "config_tetris_game.txt"
 Comp_speed = True
 
+### Default: None; if you want to use that function set "speed_seed" to any number.
+Speed_seed = None
+
 ### How many levels lower should the "low_speed" condition / how many levels higher should the "high_speed" condition be compared to "game.level_for_main.value" (individual level for "main_trials")
 Plus_level = 1
 Minus_level = 1
-
-### Default: None; if you want to use that function set "speed_seed" to any number.
-Speed_seed = None
 
 
 ### Toggle rhythmic cross during motor_control, frequency based on game.speed

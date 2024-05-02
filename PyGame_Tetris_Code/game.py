@@ -170,7 +170,7 @@ class Game:
 			else:
 				self.level.value = Start_level
 		else: 
-			self.level.value = self.level_for_main.value
+			self.level.value = int(self.level_for_main.value)
 			
 	def block_fits(self):
 		tiles = self.current_block.get_cell_positions()
