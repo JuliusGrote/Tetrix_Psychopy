@@ -4,7 +4,8 @@
 ## Choose either "german" or "english"!
 Language = "german"
 
-## Trials settings
+
+## Trial settings
 
 ### How many Pre-Trial rounds should be played or what Pre-Trial design?
 ### --> see "config_tetris_game.txt"
@@ -32,7 +33,6 @@ Comp_wm_load = True
 ### Default: None; if you want to use that function set "load_seed" to any number.
 Load_seed = None
 
-
 ### Would you like to compare "high_speed" "game.speed/level" against "low_speed" in the main Trials  
 ### Each "play_Tetris" condition it is randomly chosen whether "game.speed/level" is either "high_speed" or "low_speed"  
 ### only works properly if level "Level_progression_main = False" in "config_tetris_game.txt"
@@ -41,10 +41,11 @@ Comp_speed = True
 ### Default: None; if you want to use that function set "speed_seed" to any number.
 Speed_seed = None
 
-### How many levels lower should the "low_speed" condition / how many levels higher should the "high_speed" condition be compared to "game.level_for_main.value" (individual level for "main_trials")
-Plus_level = 1
-Minus_level = 1
-
+### How many levels lower should the "low_speed" condition / how many levels higher/lower should the "high_speed" condition be compared to "game.level_for_main.value" (individual level for "main_trials")
+### please indicate your level as positive OR negative (e.g. if you want to go a level lower use "-1"!)
+### When using the "Jnd_regression" option from "config_tetris_game.txt" it is recommended to set both to negative values, since the JND is the upper limit for consistend Gameplay for each specific subject (take into account your setting of "Level_for_main_factor" in "config_tetris_game.txt"!).
+High_level = -1
+Low_level = -3
 
 ### Toggle rhythmic cross during motor_control, frequency based on game.speed
 Show_motor_rhythm = True
@@ -80,10 +81,14 @@ psychopy_key_5 = '0'
 
 
 ## Define trigger signal
-## This only works if your Trigger signal can be converted to a char/letter, i.e. via an according responsebox.
+
+### This only works if your Trigger signal can be converted to a char/letter, i.e. via an according responsebox.
 Trigger = 't'
 
-## Toggle display flip (mirroring)
+
+## Display Mirroring
+
+###Toggle display flip (mirroring)
 
 ### Left --> <-- Right
 Flip_vertically = False
@@ -92,7 +97,7 @@ Flip_vertically = False
 ###    v | Down
 Flip_horizontally = False
 
-
 ## Toggle eye tracking
-## Feature not fully developed yet!
+
+### Feature not fully developed yet!
 Eye_tracking = False

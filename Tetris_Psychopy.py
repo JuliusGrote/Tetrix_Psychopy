@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 02, 2024, at 15:15
+    on Mai 04, 2024, at 13:27
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -69,10 +69,13 @@ def Tetris_Instance(
             level,
             speed,
             level_for_main,
-            three_next_blocks
+            three_next_blocks,
+            x_array,
+            y_array,
+            weights
     ):
         
-    #transfer game parameters from parent to child process
+    #transfer Tetris_Instance() parameters from parent to child process
     game.visual_control = is_control
     game.pretrial = pretrial
     game.game_over_counter = game_over_counter
@@ -81,6 +84,9 @@ def Tetris_Instance(
     game.speed = speed
     game.level_for_main = level_for_main
     game.three_next_blocks = three_next_blocks
+    game.regression.x_array = x_array
+    game.regression.y_array = y_array
+    game.regression.weights = weights
     
     #set gamespeed
     clock = pygame.time.Clock()
@@ -423,13 +429,18 @@ def setupData(expInfo, dataDir=None):
     thisExp.setPriority('notes', 0)
     thisExp.setPriority('play_pretrial.started', -1)
     thisExp.setPriority('play_pretrial.stopped', -2)
-    thisExp.setPriority('pretrial_score', -3)
-    thisExp.setPriority('pretrial_level_avg', -4)
-    thisExp.setPriority('expName', -5)
-    thisExp.setPriority('date', -6)
-    thisExp.setPriority('expStart', -7)
-    thisExp.setPriority('frameRate', -8)
-    thisExp.setPriority('psychopyVersion', -9)
+    thisExp.setPriority('pretrial.score', -3)
+    thisExp.setPriority('pretrial.level_avg/JND', -4)
+    thisExp.setPriority('pretrial.game_speeds', -5)
+    thisExp.setPriority('pretrial.completion_rate', -6)
+    thisExp.setPriority('pretrial.weights', -7)
+    thisExp.setPriority('pretrial.optimization_parameters(a, b, c)', -8)
+    thisExp.setPriority('pretrial.covariance', -9)
+    thisExp.setPriority('expName', -10)
+    thisExp.setPriority('date', -11)
+    thisExp.setPriority('expStart', -12)
+    thisExp.setPriority('frameRate', -13)
+    thisExp.setPriority('psychopyVersion', -14)
     # return experiment handler
     return thisExp
 
@@ -478,7 +489,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1280, 720], fullscr=_fullScr, screen=0,
+            size=[1707, 960], fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='Home_test', color=[-0.6549, -0.6549, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -1371,7 +1382,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                               game.level,
                               game.speed,
                               game.level_for_main,
-                              game.three_next_blocks 
+                              game.three_next_blocks,
+                              game.regression.x_array,
+                              game.regression.y_array,
+                              game.regression.weights
                               ))
     pretrial_Tetris.start()
     
@@ -1386,7 +1400,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                           game.level,
                           game.speed,
                           game.level_for_main,
-                          game.three_next_blocks
+                          game.three_next_blocks,
+                          game.regression.x_array,
+                          game.regression.y_array,
+                          game.regression.weights
                           ))
     play_Tetris.start()
     #create a window for the controll visual_control condition
@@ -1400,7 +1417,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                            game.level,
                            game.speed,
                            game.level_for_main,
-                           game.three_next_blocks
+                           game.three_next_blocks,
+                           game.regression.x_array,
+                           game.regression.y_array,
+                           game.regression.weights
                            ))
     watch_Tetris.start()
     
@@ -3082,6 +3102,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     condition_or_wait_timer("wait")
     #start Tetris
     is_paused("pretrial_Tetris")
+    print(f' y_array: {game.regression.y_array[:]}')
+    
+    print(f' weights: {game.regression.weights[:]}')
     # keep track of which components have finished
     play_pretrialComponents = [fix_2, Start_eytracking]
     for thisComponent in play_pretrialComponents:
@@ -3108,6 +3131,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # Run 'Each Frame' code from Tetris_pretrial
         if game.game_over_counter.value == game.pretrial_rounds:
             continueRoutine = False
+        
+        if thisFrame.N %120:
+            print(f' y_array: {game.regression.y_array[:]}')
+            print(f' weights: {game.regression.weights[:]}')
         
         # *fix_2* updates
         
@@ -3177,14 +3204,33 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     thisExp.addData('play_pretrial.stopped', globalClock.getTime(format='float'))
     # Run 'End Routine' code from Tetris_pretrial
     #adds the achieved level and score to the data file
-    thisExp.addData('pretrial_score', game.score.value)
-    thisExp.addData('pretrial_level_avg', game.level_for_main.value)
+    thisExp.addData('pretrial.score', game.score.value)
     thisExp.addData('Condition.info', 'info_preTrial')
+    
+    #execute game.level_for_main.value as defined by "config_tetris_game.txt"
+    if game.regression.jnd_regression == True:
+        game.level_for_main.value, popt, pcov = game.regression.determine_main_level()
+        thisExp.addData('pretrial.game_speeds', game.regression.x_array[:])
+        thisExp.addData('pretrial.level_avg/JND', game.level_for_main.value)
+        thisExp.addData('pretrial.completion_rate', game.regression.y_array[:])
+        thisExp.addData('pretrial.weights', game.regression.weights[:])
+        thisExp.addData('pretrial.optimization_parameters', popt)
+        thisExp.addData('pretrial.covariance', pcov)
+    else:
+        thisExp.addData('pretrial.game_speeds', '-')
+        thisExp.addData('pretrial.level_avg/JND', game.level_for_main.value)
+        thisExp.addData('pretrial.completion_rate', '-')
+        thisExp.addData('pretrial.weights', '-')
+        thisExp.addData('pretrial.optimization_parameters', '-')
+        thisExp.addData('pretrial.covariance', '-')
+        game.level_for_main.value = round(game.level_for_main.value * 0.75)
+        
+    
+    #sets new start level for main game
+    game.level.value = int(game.level_for_main.value)
+    
     #resets absolut score
     game.score.value = 0
-    #sets new start level for main game
-    game.level_for_main.value = round(game.level_for_main.value * 0.75)
-    game.level.value = int(game.level_for_main.value)
     #prints out the value for control purposes
     print(f'new level for main: {game.level_for_main.value}')
     #ends pretrial pygame

@@ -15,12 +15,15 @@
 - - -
 ## General Structure:
 
-&rarr; The Paradigm consists of a "Pre-Trial" part, in which the individual skill of a participant is determined by playing three rounds and calculating the mean level reached. The "Main Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial lasting 20sec each with 
+&rarr; The Paradigm consists of a:
+1. "Pre-Trial" part, in which the individual skill of a participant is determined by playing "Pretrial_rounds" rounds and calculating the level for the "Main Part". Additionally, you can choose how this level is calculated - either by averaging or determining the Just Noticable Difference via weighted logistic regression. (JND: level/ game speed at which participants fail 50% of the time, adopted and modified from [Baker et al. 2018](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0201486). "Objective" treshold at which the highest neural activity is observed). For more information see on options [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)
+
+2. The "Main Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial lasting 20sec each with 
 30 trials in total (can be altered, though not recommended, in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
 
-### Conditions:
+### Conditions ("Main Part"):
 
-1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z )). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
+1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z)). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
 
 2. watch_Tetris: Control condition to account for basic visual processing not important for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subject participate in the game subconsciously.
 
@@ -28,13 +31,13 @@
 
 4. fixation_cross: Baseline condition. Subjects are instructed to just look at the fixation cross and do nothing else. 
 
-### Pretrial:
+### Pretrial and Introduction:
 
 1. All windows are checked to be created correctly and then the subject is asked to press the required buttons on the responsebox twice (adjust your settings in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
 
 2. Instuctions for playing Tetris follow on how to play the game (with one responsebox using the right hand)
 
-3. To determine how skilled a subject is in playing Tetris, the participant plays 3 rounds of Tetris starting from the lowest and slowest level 1. Afterwards, the level for the actual MRI measurement is calculated based on: $levelformain / 3 * 0.75$.
+3. To determine how skilled a subject is in playing Tetris, the participant plays 3 rounds of Tetris starting from the lowest and slowest level 1. Afterwards, the level for the actual MRI measurement is calculated based on options in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
 
 4. The 4 conditions in the main part are explained.
 
@@ -46,7 +49,6 @@
 
 6. The paradigm waits for remaining triggers and then ends.
 
-
 - - - 
 ## Config:
 
@@ -55,7 +57,6 @@
 2. Config of game specifics: [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)
 
 - - - 
-
 ## Languages:
 
 &rarr; This Experiment is available in **English** and **German**, see [config_paradigm_psychopy](config_paradigm_psychopy.txt)
@@ -91,6 +92,18 @@ Are collected in the [data](./data/) folder as a **csv** (not the .log) file nam
 	- "play_pretrial.stopped" : Offset of "pre_Trials".
 	- "pretrial_score": Score obtained in the "pre_Trials".
 	- "pretrial_level_avg": Mean level reached in the "pre_Trials".
+   
+   &rarr;*If you use either of the "Comp_speed" and/or "Speed_seed" from [config_paradigm_psychopy](config_paradigm_psychopy.txt), you will get additional parameters:*
+	- game.wm_load_condition: indicates the "wm_load" of that "play_Tetris" condition
+	- game.speed_condition: indicates the "speed" of that "play_Tetris" condition
+
+   &rarr;*If you make use of the "Jnd_regression" from [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt), you will get additional parameters:*
+	- pretrial.game_speeds: an array of game.speed per level until level "Regression_range".
+    - pretrial.completion_rate: an array indicating the percentage of completing each level.
+    - pretrial.weights: an array giving the regression weights of each level (correlates to "1/sigma") based on how often that level was played
+    - pretrial.optimization_parameters: an array of the parameters of the logistic function calculated by the regression performed in [regression.py](./PyGame_Tetris_Code/regression.py)
+
+ 
  
 - - -
 ## Version Compatibility:
@@ -131,25 +144,3 @@ psychopy.useVersion('your version')
 Eyetracking can be activated in "config_paradigm_psychopy.txt".
 
 In order to set which eye tracker to use go to: Setting (gear symbol) &rarr; go to the "Eyetracking" tab &rarr; select your "Eyetracking Device".
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-

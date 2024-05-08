@@ -29,19 +29,18 @@ Defined by [config_tetris_game](config_tetris_game.txt)
 	- Number of Pretrial rounds
 	- etc.
 
-	&rarr; for more infos check descriptions in [config_tetris_game](config_tetris_game.txt)
+	&rarr; for more infos check descriptions in [config_tetris_game.txt](config_tetris_game.txt)
 
-3. [game.py](game.py) contains the game mechnanics such as moving the blocks, score, difficulty, game reset...; Code from config.txt is executed here 
+3. [game.py](game.py) contains the game mechnanics such as moving the blocks, score, difficulty, game reset...; Code [config_tetris_game.txt](config_tetris_game.txt) is executed here.
 
-4. [grid.py](grid.py) contains information about how the grid, in which the blocks/Tetrominoes move, is built
+4. [grid.py](grid.py) contains information about how the grid, in which the blocks/Tetrominoes move, is built.
 
 5. [block.py](block.py) contains information about what the blocks/Tetrominoes can do e.g. move, rotate, etc.
 
-6. [blocks.py](blocks.py) contains information about the shape and rotation state of the blocks as type of 2x2, 3x3, 4x4 Matrix depending on the block
+6. [blocks.py](blocks.py) contains information about the shape and rotation state of the blocks as type of 2x2, 3x3, 4x4 Matrix depending on the block.
 	
-7. [scale.py](scale.py) extracts information from about screen size, so that the game window is depicted relative to screen size	
+7. [scale.py](scale.py) extracts information from about screen size, so that the game window is depicted relative to screen size.
 	
-8. [position.py](position.py) acts as a storage for positioning information about the number of rows and columns in grid 
+8. [position.py](position.py) acts as a storage for positioning information about the number of rows and columns in grid.
 
-
-
+9. [regression.py](regression.py) stores the regression mechanic if the "Jnd_regression" in [config_tetris_game.txt](config_tetris_game.txt) is enabled.
