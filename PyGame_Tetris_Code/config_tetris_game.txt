@@ -14,8 +14,8 @@ Pretrial = True
 ### If you want to use the regression, make sure that you have enough pretrial rounds, otherwise you the curve_fit function might not be able to estimate the function paramters!
 ### If you dont want to make use of the PreTrials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
 ### ---> The level for the "main_trials" is then set by the "Start_level" option here. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
-### Default: >3 (normal) <-> >6 (regression). 
-Pretrial_rounds = None
+### Default: >3 (normal) <-> >6 (regression, the more values the more precise the regression...). 
+Pretrial_rounds = 12
 
 ### Pretrial design: Staircase or Normal
 ### Staircase: each time you complete a level = level + 1, if you lose in that level you get level = level * Stair_factor 
@@ -32,6 +32,7 @@ Stair_factor = 2/3
 Restart_round = 4
 
 ### JND Regression
+
 ### Based on a logistic regression the JND (Just Noticable Difference, here for the parameter "game.speed") is determined - correlating with the strongest neural activity (design adopted from Baker et al. 2018)
 ### After regression the level nearest to the JND is the new level for the "main_trials" 
 ### If "Jnd_regression = false", level in "main_trials" will be determined by averaging!
@@ -42,6 +43,7 @@ Jnd_regression = True
 Regression_range = 15
 
 ### Factor for "main_trials" level:
+
 ### By which factor should "game.level_for_main" (the level calculated in the "pretrials" either by averaging or regression) be multiplied to get the base level used in the "main_trials" ("game.level")
 ### Default: 0.75; Note: If you use averaging to determine "game.level_for_main" then this value should be lower compared to regression, since the regression calculates where subjects fail 50% of the time, while the averaging calculates the mean level at which they fail! 
 Level_for_main_factor = 1
@@ -52,7 +54,7 @@ Level_for_main_factor = 1
 ### determine at which level to start
 ### Overwritten if you use the "Pretrial_Rounds" setting, but if "Pretrial_rounds = None" this sets the "game.level" for the "main_trials" in "Tetris_Psychopy.psyexp"
 ### Default: 1
-Start_level = 7
+Start_level = 1
 
 ### determines how many lines need to be cleared in order to reach the next level
 Lines_for_levelup = 3
