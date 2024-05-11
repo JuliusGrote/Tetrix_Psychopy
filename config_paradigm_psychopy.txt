@@ -2,7 +2,7 @@
 
 ## Instruction language
 ## Choose either "German" or "English"!
-Language = "English"
+Language = "German"
 
 
 ## Trial settings
