@@ -47,7 +47,7 @@ Load_seed = None
 ### only works properly if level "Level_progression_main = False" in "config_tetris_game.txt"
 Comp_speed = True
 
-### Default: None; if you want to use that function set "speed_seed" to any number(ensures the same random order for each participant --> pseudorandomization).
+### Default: None; if you want to use that function set "speed_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
 Speed_seed = None
 
 ### How many levels lower should the "low_speed" condition / how many levels higher/lower should the "high_speed" condition be compared to "game.level_for_main.value" (individual level for "main_trials")

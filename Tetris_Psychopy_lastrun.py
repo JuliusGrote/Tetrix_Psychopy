@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 11, 2024, at 13:47
+    on Mai 11, 2024, at 15:20
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -34,6 +34,9 @@ import psychopy.iohub as io
 from psychopy.hardware import keyboard
 
 # Run 'Before Experiment' code from create_processes
+# Here almost all import paradigm functions are defined (keyboard listener in tab "Begin Experiment") 
+
+
 #import necessary packages for Tetris and load them
 import ctypes
 import pygame
@@ -248,15 +251,14 @@ def is_paused(process):
 #define the compare between high and low working memory load and speed method
 #define functions that creates a list with shuffled order of "high" and "low" wm_load and speed
 #used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
-#setfirst_trial to true
-first_trial = True
 def comp_wm_load_speed(total_trials, trial_nr):
     global first_trial
     global wm_load_seq
     global speed_seq
     global high_level
     global low_level
-    if first_trial == True: 
+    #create the arrays only on the first trial
+    if trial_nr == 0: 
         #halfs the amount of conditions based on total trials
         n_per_load = int(total_trials/2)
         
@@ -302,19 +304,19 @@ def comp_wm_load_speed(total_trials, trial_nr):
      
     #set "high" or "low" for "wm_load" or "speed"
     if Comp_wm_load == True:
+        print(f'Trial {trial_nr + 1} of {total_trials} - {wm_load_seq[trial_nr]}')
         if wm_load_seq[trial_nr] == 'low_load':
             game.three_next_blocks.value = False
         else:
             game.three_next_blocks.value = True
     if Comp_speed == True:
+        print(f'Trial {trial_nr + 1} of {total_trials} - {speed_seq[trial_nr]}')
         if speed_seq[trial_nr] == 'low_speed':
             game.level.value = low_level
             game.level_for_main.value = low_level
         else:
             game.level.value = high_level
-            game.level_for_main.value = high_level
-        
-        
+            game.level_for_main.value = high_level        
 # Run 'Before Experiment' code from code_play
 
 
@@ -3728,8 +3730,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if game.game_over_counter.value == game.pretrial_rounds or game.pretrial_rounds == None:
            continueRoutine = False
         
-        #keep track of weights and completion rate if you use jnd regression
-        if game.jnd_regression == True and frameN % 600 == 0:
+        #keep track of weights and completion rate if you use jnd regression ans the Pretrial
+        if game.jnd_regression == True and game.pretrial_rounds != None and frameN % 600 == 0:
             print(f' y_array: {game.regression.y_array[:]}')
             print(f' weights: {game.regression.weights[:]}')
         
@@ -5875,7 +5877,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if text_three_sec_timer is active this frame...
         if text_three_sec_timer.status == STARTED:
             # update params
-            text_three_sec_timer.setText(round(three_sec_timer.getTime()), log=False)
+            text_three_sec_timer.setText(int(three_sec_timer.getTime()) + 1
+            , log=False)
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -6116,10 +6119,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from execute_play_Tetris
-        
+        #sets "high" or "low" "speed" or "wm_load"
         if Comp_wm_load == True or Comp_speed == True:
             comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)
-            print(f'{main_trials.thisN + 1} of {main_trials.nTotal} - {speed_seq[main_trials.thisN]} and {wm_load_seq[main_trials.thisN]}')
         
         #Tetris to foreground
         Get_on_top("play_Tetris")

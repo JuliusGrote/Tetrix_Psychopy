@@ -15,7 +15,7 @@ Pretrial = True
 ### If you dont want to make use of the PreTrials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
 ### ---> The level for the "main_trials" is then set by the "Start_level" option here. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
 ### Default: >3 (normal) <-> >6 (regression, the more values the more precise the regression...). 
-Pretrial_rounds = 12
+Pretrial_rounds = None
 
 ### Pretrial design: Staircase or Normal
 ### Staircase: each time you complete a level = level + 1, if you lose in that level you get level = level * Stair_factor 
