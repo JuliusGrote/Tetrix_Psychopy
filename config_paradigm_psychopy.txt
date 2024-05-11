@@ -1,8 +1,8 @@
 # Config for overarching paradigm settings
 
 ## Instruction language
-## Choose either "german" or "english"!
-Language = "german"
+## Choose either "German" or "English"!
+Language = "English"
 
 
 ## Trial settings
@@ -18,19 +18,28 @@ Main_trials_seed = None
 ### Default and strongly recommended: 20
 Targeted_duration = 20
 
-### How often should each control condition occur
+### Control condition settings
+
+### By default (and recommended), all control conditions are included. If you to exclude a specific control condition, you can remove its line from the excel table in "main_trials_template.xlsx" (make sure to also exclude routines in "Tetris_Psychopy.psyexp" that explain the excluded control con### Control condition settingsditions)
+
+### How often should each control condition occur?
 ### Also sets the number of Trials! 
 ### Each trial consists of "play_Tetris" followed by a randomly chosen control condition!
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
+### if you want to use both "Comp_wm_load" and "Comp_speed" (--> 4 total combinations) this number should be dividable by 4 (e.g. 12)
 N_repeats = 10
 
+### Toggle rhythmic cross during motor_control, frequency based on game.speed
+Show_motor_rhythm = True
+
+### Play_Tetris settings
 
 ### Would you like to compare "high_load" working memory load (WM load) against "low_load" working memory load (WM load) (one "NEXT" Block against three "NEXT" BLocks)? 
 ### Each "play_Tetris" condition it is randomly chosen whether wm_load is "high_load" or "low_load"!
 ### uses the same mechanic as the "three_next_blocks" option from "config_tetris_game.txt"
 Comp_wm_load = True
 
-### Default: None; if you want to use that function set "load_seed" to any number.
+### Default: None; if you want to use that function set "load_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
 Load_seed = None
 
 ### Would you like to compare "high_speed" "game.speed/level" against "low_speed" in the main Trials  
@@ -38,7 +47,7 @@ Load_seed = None
 ### only works properly if level "Level_progression_main = False" in "config_tetris_game.txt"
 Comp_speed = True
 
-### Default: None; if you want to use that function set "speed_seed" to any number.
+### Default: None; if you want to use that function set "speed_seed" to any number(ensures the same random order for each participant --> pseudorandomization).
 Speed_seed = None
 
 ### How many levels lower should the "low_speed" condition / how many levels higher/lower should the "high_speed" condition be compared to "game.level_for_main.value" (individual level for "main_trials")
@@ -47,9 +56,10 @@ Speed_seed = None
 High_level = -1
 Low_level = -3
 
-### Toggle rhythmic cross during motor_control, frequency based on game.speed
-Show_motor_rhythm = True
-
+### if you have both comparisons enabled are different method is used to also ensure that each possible combination "speed" and "wm_load" conditions occurs equally often 
+### do you want to set a seed for this combination randomization?
+### Default: None; if you want to use that function set "speed_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
+Comp_all_seed = None
 
 ## Keys
 

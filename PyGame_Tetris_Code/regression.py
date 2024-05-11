@@ -18,11 +18,10 @@ class Regression:
 	def speed_formula(self, x):
 		return ((Start_speed/1250 - ((x - 1) * Speed_slope)) ** (x - 1) * 1000)	
 	
-	def logistic(self, x, a, b, c):
-		z = c * (x - b)
-		# To prevent overflow, use np.clip to limit the values of z
-		# z = np.clip(z, 0, 1)
-		return a / (1 + np.exp(-c*(x-b)))
+	def logistic(self, x, a, b):
+    #in theoy at infinte game.speeds the logistic should apporach 1 and at 0 game.speed the completion rate of at that specific game.speed should also be 0.
+	#so the neumerator is set to 1 limiting the upper y limit to 1
+	    return 1 / (1 + np.exp(-b*(x-a)))
 
 	#function that performs the actual regression using scipy
 	def logistic_regression(self, x_data, y_data, weights):
@@ -33,7 +32,7 @@ class Regression:
 		return min(values, key=lambda x: abs(x - n))
 	
 	def determine_main_level(self):
-		print(f'y_array: {self.y_array[:]}')
+		print(f'raw y_array: {self.y_array[:]}')
 		#divide self.y_array by self.weights but without getting a zero error 
 		for i in range(len(self.y_array)):
 			#operation is not performed when deviding by 0
@@ -44,6 +43,7 @@ class Regression:
 			self.weights[i] = self.weights[i] + 1
 
 		sigma_weights = np.array(self.weights[:])
+		print(f'normalized y_array: {self.y_array[:]}')
 		print(f'weights: {self.weights[:]}')
 		
 		#perform regression
@@ -51,8 +51,8 @@ class Regression:
 		#print results
 		print(f'parameters: {popt}, covariance: {pcov}')
 
-		#JND correlates to the b parameter of regression function (popt[1])
-		jnd = popt[1]
+		#JND correlates to the b parameter of regression function (popt[0])
+		jnd = popt[0]
 		nearest_speed = self.find_nearest(self.x_array[:], jnd)
 		#find the level that is neares to the speed of JND
 		jnd_level = self.x_array[:].index(nearest_speed) + 1

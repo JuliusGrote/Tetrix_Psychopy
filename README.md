@@ -1,4 +1,4 @@
-# Tetris Experiment for Psychopy 2024.1.1:
+1111# Tetris Experiment for Psychopy 2024.1.1:
 
 - - -  
 ## Getting Started:
@@ -15,15 +15,20 @@
 - - -
 ## General Structure:
 
-&rarr; The Paradigm consists of a:
+&rarr; This fMRI Paradigm is designed to be highly customizable. All follwoing aspects can be - at least in some way - adjusted to your specific needs.
+
+&rarr; By default, the Paradigm consists of a:
+
 1. "Pre-Trial" part, in which the individual skill of a participant is determined by playing "Pretrial_rounds" rounds and calculating the level for the "Main Part". Additionally, you can choose how this level is calculated - either by averaging or determining the Just Noticable Difference via weighted logistic regression. (JND: level/ game speed at which participants fail 50% of the time, adopted and modified from [Baker et al. 2018](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0201486). "Objective" treshold at which the highest neural activity is observed). For more information see on options [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)
 
-2. The "Main Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial lasting 20sec each with 
+&rarr; Note that this part of the experiment (with all explanatory routines) can be disabled in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt), set "Pretrial_rounds" to "None" (for more information, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)).
+
+3. The "Main Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial lasting 20sec each with 
 30 trials in total (can be altered, though not recommended, in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
 
 ### Conditions ("Main Part"):
 
-1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z)). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
+1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z )). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
 
 2. watch_Tetris: Control condition to account for basic visual processing not important for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subject participate in the game subconsciously.
 
@@ -31,7 +36,7 @@
 
 4. fixation_cross: Baseline condition. Subjects are instructed to just look at the fixation cross and do nothing else. 
 
-### Pretrial and Introduction:
+### Pretrial (if enabled) and Instructions:
 
 1. All windows are checked to be created correctly and then the subject is asked to press the required buttons on the responsebox twice (adjust your settings in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
 
@@ -49,6 +54,9 @@
 
 6. The paradigm waits for remaining triggers and then ends.
 
+### .psyexp file
+&rarr; If you want to change the core structure of the Paradigm or adjust more specific things, check out the "Flow" of the experiment in [Tetris_Psychopy.psyexp](Tetris_Psychopy.psyexp) with all its routines. "Routines" and "Components" are named according to their function and as described in the config files / this README.md. Keep in mind that Tetris' game mechanics are stored in the [PyGame_Tetris_Code](./PyGame_Tetris_Code/) folder and instructions for each routine can be found in [instructions.py](instructions.py).
+
 - - - 
 ## Config:
 
@@ -62,10 +70,7 @@
 &rarr; This Experiment is available in **English** and **German**, see [config_paradigm_psychopy](config_paradigm_psychopy.txt)
 
 
-
 &rarr; Note that this refers to the instructions for participants only, to edit information go to [instructions.py](instructions.py)
-
-
 
 - - -
 ## Game Code:
@@ -124,7 +129,7 @@ pip install {your package}
 
 *if this message occurs:* 
 
-``` 
+```shell
 'File "C:\Users\Julius\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 1456, in _execute_child:
 hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
 

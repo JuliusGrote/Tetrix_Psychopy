@@ -39,6 +39,7 @@ class Game:
 		self.jnd_regression = Jnd_regression
 		self.game_over = False
 		self.pretrial = Pretrial
+		self.pretrial_staircase = Pretrial_staircase
 		self.pretrial_rounds = Pretrial_rounds
 		self.three_next_blocks = Value('b', Toggle_three_next_blocks)
 		self.game_over_counter = Value('i', 0)
@@ -181,15 +182,16 @@ class Game:
 			self.level_for_main.value += 1/self.pretrial_rounds * self.level.value
 			self.game_over_counter.value += 1
 			
-			if Pretrial_staircase == True:
+			if self.pretrial_staircase == True:
 				if Restart_round != None and self.game_over_counter.value % Restart_round == 0:
 					self.level.value = Start_level
 				else:					
 					self.level.value = round(Stair_factor * self.level.value)
 			else: 
 				self.level.value = Start_level
+				
 			#add a weight to the new level if "Jnd_regression" is enabled
-			if self.jnd_regression == True:
+			if self.jnd_regression == True and self.game_over_counter.value != self.pretrial_rounds:
 					self.regression.weights[self.level.value - 1] += 1
 				
 		#restart level for main_trials				

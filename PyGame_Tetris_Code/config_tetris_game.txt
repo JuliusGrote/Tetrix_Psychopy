@@ -3,7 +3,6 @@
 # accessed by "game.py" where all important game mechanics are stored and processed (and regression.py for regression parameters)
 
 
-
 ## PreTrial
 
 ### Pretrial? Note: When using the Tetris_Psychopy Experiment, this setting will be overwritten when the experiment starts.
@@ -12,8 +11,11 @@
 Pretrial = True
 
 ### How many rounds of pretrial should be played? This is not overwritten in "Tetris_Psychopy" and important for your experimental design.
-### Default: > 3 (normal) <-> > 5 (regression)
-Pretrial_rounds = 12
+### If you want to use the regression, make sure that you have enough pretrial rounds, otherwise you the curve_fit function might not be able to estimate the function paramters!
+### If you dont want to make use of the PreTrials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
+### ---> The level for the "main_trials" is then set by the "Start_level" option here. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
+### Default: >3 (normal) <-> >6 (regression). 
+Pretrial_rounds = None
 
 ### Pretrial design: Staircase or Normal
 ### Staircase: each time you complete a level = level + 1, if you lose in that level you get level = level * Stair_factor 
@@ -42,7 +44,36 @@ Regression_range = 15
 ### Factor for "main_trials" level:
 ### By which factor should "game.level_for_main" (the level calculated in the "pretrials" either by averaging or regression) be multiplied to get the base level used in the "main_trials" ("game.level")
 ### Default: 0.75; Note: If you use averaging to determine "game.level_for_main" then this value should be lower compared to regression, since the regression calculates where subjects fail 50% of the time, while the averaging calculates the mean level at which they fail! 
-Level_for_main_factor = 0.8
+Level_for_main_factor = 1
+
+
+## General Level Design
+
+### determine at which level to start
+### Overwritten if you use the "Pretrial_Rounds" setting, but if "Pretrial_rounds = None" this sets the "game.level" for the "main_trials" in "Tetris_Psychopy.psyexp"
+### Default: 1
+Start_level = 7
+
+### determines how many lines need to be cleared in order to reach the next level
+Lines_for_levelup = 3
+
+### do you want to keep the level progression for the "Main Trials"?
+### Should be "False" if you want to use "Comp_speed" in "config_paradigm_psychopy.txt"!
+Level_progression_main = False
+
+
+## Game speed
+
+## Speed in "ms/line": time that a block needs to move down one cell on the grid, correlates to game difficulty
+## Speed per level described by this formula in "ms": self.speed = round((Start_speed/1250 - ((level - 1) * speed_slope)) ** (level - 1) * 1000) mimicking the original Tetris progression
+
+###  Start_speed determines game speed at level 1 and also how fast game difficulty progresses. 
+### Default: 1000 
+Start_speed = 1000
+
+### Speed_slope also determines how fast the game progresses... 
+### Default: 0.007
+Speed_slope = 0.007 
 
 
 ## Randomizer
@@ -70,7 +101,7 @@ Restart_automatically = True
 
 ## Pause handling
 
-### determines whether game starts paused or not
+### determines whether game/"Tetris_Instance()" (in "Tetris_Psychopy.psyexp") starts paused or not
 ### Default and strongly recommended for "Tetris_Psychopy": True
 Start_Pause = True
 
@@ -94,31 +125,3 @@ Hide_next_visual = False
 ### If you enabled the "toggle_wm_load" option in the "config_paradigm_psyhopy.txt", this option here only relates to the "Pre-Trials"
 ### With reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" blocks and in the "level mode" there is only one "next" block.
 Toggle_three_next_blocks = True
-
-
-## Level Design
-
-### determines how many lines need to be cleared in order to reach the next level
-Lines_for_levelup = 3
-
-### determine at which level to start
-### Default: 1
-Start_level = 1
-
-### do you want to keep the level progression for the "Main Trials"?
-### Should be "False" if you want to use "Comp_speed" in "config_paradigm_psychopy.txt"!
-Level_progression_main = False
-
-
-## Game speed
-
-## Speed in "ms/line": time that a block needs to move down one cell on the grid, correlates to game difficulty
-## Speed per level described by this formula in "ms": self.speed = round((Start_speed/1250 - ((level - 1) * speed_slope)) ** (level - 1) * 1000) mimicking the original Tetris progression
-
-###  Start_speed determines game speed at level 1 and also how fast game difficulty progresses. 
-### Default: 1000 
-Start_speed = 1000
-
-### Speed_slope also determines how fast the game progresses... 
-### Default: 0.007
-Speed_slope = 0.007 
