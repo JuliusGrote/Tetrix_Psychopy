@@ -1,5 +1,4 @@
-
-1# Tetris Experiment for Psychopy 2024.1.1:
+# Tetris Experiment for Psychopy 2024.1.1:
 
 - - -  
 ## Getting Started:
@@ -31,7 +30,7 @@
 
 ### Conditions ("Main Part"):
 
-1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z           )). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
+1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z             )). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
 
 2. watch_Tetris: Control condition to account for basic visual processing not important for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subject participate in the game subconsciously.
 
