@@ -54,7 +54,7 @@ Level_for_main_factor = 1
 ### determine at which level to start
 ### Overwritten if you use the "Pretrial_Rounds" setting, but if "Pretrial_rounds = None" this sets the "game.level" for the "main_trials" in "Tetris_Psychopy.psyexp"
 ### Default: 1
-Start_level = 5
+Start_level = 1
 
 ### determines how many lines need to be cleared in order to reach the next level
 Lines_for_levelup = 3
