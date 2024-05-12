@@ -15,7 +15,7 @@ Pretrial = True
 ### If you dont want to make use of the PreTrials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
 ### ---> The level for the "main_trials" is then set by the "Start_level" option here. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
 ### Default: >3 (normal) <-> >6 (regression, the more values the more precise the regression..., 12 recommended). 
-Pretrial_rounds = 12
+Pretrial_rounds = 9
 
 ### Pretrial design: Staircase or Normal
 ### Staircase: each time you complete a level = level + 1, if you lose in that level you get level = level * Stair_factor 
@@ -29,16 +29,16 @@ Stair_factor = 2/3
 ### Restart Pretrial rounds from "Start_level" each "Restart_round" (only makes sense if "Pretrial_staircase = True")
 ### If you want to disable this feature set "Restart_round" to "None"
 ### Default: None, but adjust for your desired design.
-Restart_round = 4
+Restart_round = 3
 
 ### JND Regression
 
 ### Based on a logistic regression the JND (Just Noticable Difference, here for the parameter "game.speed") is determined - correlating with the strongest neural activity (design adopted from Baker et al. 2018)
 ### After regression the level nearest to the JND is the new level for the "main_trials" 
-### If "Jnd_regression = false", level in "main_trials" will be determined by averaging!
+### If "Jnd_regression = False", level in "main_trials" will be determined by averaging!
 Jnd_regression = True
 
-### If "Jnd_regresssion == True:" Regression range how many levels should be included into the regression [level 1 -  level "Regression_range"]
+### If "Jnd_regresssion == True:" Regression range - how many levels should be included into the regression [level 1 -  level "Regression_range"]
 ### Default: 15
 Regression_range = 15
 
