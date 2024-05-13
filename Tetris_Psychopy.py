@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 13, 2024, at 14:17
+    on Mai 14, 2024, at 01:57
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -40,6 +40,7 @@ from psychopy.hardware import keyboard
 #import necessary packages for Tetris and load them
 import ctypes
 import pygame
+import time
 from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
@@ -145,12 +146,25 @@ def Tetris_Instance(
                     if event.key == pygame_key_4 and game.game_over == False:
                         game.move_right()
                     if event.key == pygame_key_1 and game.game_over == False:
+                        #even if accelerate is enabled this the playing experience is better if you can move the block down one cell manually as well. 
                         game.move_down()
-                        game.update_score(0, 1)
+                        if game.accelerate_down == True:
+                            #starts down movement by setting the start time "start_down" here
+                            game.start_down = time.time()
+                         
+                        game.update_score(0, round(1 * game.level.value/2))
+                        
                     if event.key == pygame_key_3 and game.game_over == False:
                         game.rotate()
-                    
-                 #checks whether its game over or not
+                #checks whether down key is lifted to stop the downmovement in the "accelerate" "down_type"        
+                elif event.type == pygame.KEYUP and game.game_over == False and game.accelerate_down == True:
+                    if event.key == pygame_key_1:
+                        #resets both parameters so the acceleration starts from the same speed each time
+                        game.start_down = None
+                        game.down_interval = game.start_interval
+                
+                        
+                 #checks whether its game over or not                               
                 if event.type == GAME_UPDATE and game.game_over == False:
                     game.move_down()
                   
@@ -158,6 +172,10 @@ def Tetris_Instance(
                     if event.type == pygame.KEYDOWN or game.automatic_restart == True:
                         game.game_over = False
                         game.reset()
+        
+        #logic for the accelerate down movement outside of pygame event
+        if game.accelerate_down == True:
+            game.accelerate_downwards()
                
         #Create the GUI for score and level     
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
@@ -1072,7 +1090,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='explain_controls', 
         image=Inst.img_explain_controls, mask=None, anchor='center',
-        ori=0.0, pos=(0, 0), size=(1.04, 0.8),
+        ori=0.0, pos=(0, 0), size=(1.1, 0.8),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)

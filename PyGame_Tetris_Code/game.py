@@ -5,6 +5,7 @@ import ctypes
 from blocks import *
 from grid import Grid
 from regression import Regression
+import time
 
 #config file is read and executed
 with open("PyGame_Tetris_Code/config_tetris_game.txt", "r") as c_tetris:
@@ -56,6 +57,10 @@ class Game:
 		self.level = Value('i', Start_level)
 		self.score = Value('i', 0)
 		self.automatic_restart = Restart_automatically
+		self.accelerate_down = Accelerate_down
+		self.start_down = None
+		self.start_interval = Down_interval
+		self.down_interval = Down_interval
 		self.speed = Value('i', Start_speed)
 		self.total_lines_cleared = 0
 
@@ -147,8 +152,19 @@ class Game:
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.move(-1, 0)
 			self.lock_block()
+
+	def accelerate_downwards(self):
+		global Down_interval
+		if self.start_down != None and time.time() - self.start_down > self.down_interval:
+			self.move_down()
+			self.start_down = time.time()
+			if self.down_interval > Cutoff_down:
+				self.down_interval *= Down_factor  # adjust this to control the speed-up rate	
 			
 	def lock_block(self):
+		#resets down acceleration is enabled 
+		if self.accelerate_down == True:
+			self.down_interval = self.start_interval		
 		tiles = self.current_block.get_cell_positions()
 		for position in tiles:
 			self.grid.grid[position.row][position.column] = self.current_block.id

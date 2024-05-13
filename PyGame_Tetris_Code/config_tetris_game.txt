@@ -15,7 +15,7 @@ Pretrial = True
 ### If you dont want to make use of the PreTrials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
 ### ---> The level for the "main_trials" is then set by the "Start_level" option here. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
 ### Default: >3 (normal) <-> >6 (regression, the more values the more precise the regression..., 12 recommended). 
-Pretrial_rounds = 9
+Pretrial_rounds = 5
 
 ### Pretrial design: Staircase or Normal
 
@@ -37,7 +37,7 @@ Restart_round = 3
 ### Based on a logistic regression the JND (Just Noticable Difference, here for the parameter "game.speed") is determined - correlating with the strongest neural activity (design adopted from Baker et al. 2018)
 ### After regression the level nearest to the JND is the new level for the "main_trials" 
 ### If "Jnd_regression = False", level in "main_trials" will be determined by averaging!
-Jnd_regression = True
+Jnd_regression = False
 
 ### If "Jnd_regresssion == True:" Regression range - how many levels should be included into the regression [level 1 -  level "Regression_range"]
 ### Default: 15
@@ -101,6 +101,26 @@ Keep_score = True
 ### Default and recommended: True
 Restart_automatically = True
 
+## Controls
+
+### Down
+
+### Do you want to add a "accelerated" downwards movement?
+### By default, a set key press moves the block one cell. Additionally - if "Accelerate_down = True" -  if the Key is held down, the blocks move the cells down automatically and with increased speed over time.
+### Default: True, if you disable that option, you might want to change the "explain_controls" overview in the "Images/" folder as well.
+Accelerate_down = True
+
+### If you use "Accelerate_down = True" at which "Down_Interval" (in sec) Interval should the time in between two "move_down()" movements start?
+### Default = 0.15 (the higher the longer it takes for the down movement and acceleration)
+Down_interval = 0.15
+
+### If you use "Accelerate_down = True" by which factor should the in between move_down() movements be decreased per iteration?
+### Default: 0.61 - for exponential speed increase it should be between 0 and 1 (the lower the faster)
+Down_factor = 0.61
+
+### What should be the cutoff for the maximum speed (in sec) - max "1/60" (Iterations per second of the game loop)?
+### Default = 1/45
+Cutoff_down = 1/45
 
 ## Pause handling
 
