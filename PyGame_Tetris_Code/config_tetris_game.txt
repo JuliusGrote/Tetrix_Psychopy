@@ -18,6 +18,7 @@ Pretrial = True
 Pretrial_rounds = 9
 
 ### Pretrial design: Staircase or Normal
+
 ### Staircase: each time you complete a level = level + 1, if you lose in that level you get level = level * Stair_factor 
 ### If pretrial_staircase = True, staircase design is enabled, if pretrial_staircase = False, Pre-Trial levels are just the normal Tetris experience
 Pretrial_staircase = True
@@ -42,7 +43,7 @@ Jnd_regression = True
 ### Default: 15
 Regression_range = 15
 
-### Factor for "main_trials" level:
+### Factor for "main_trials" level
 
 ### By which factor should "game.level_for_main" (the level calculated in the "pretrials" either by averaging or regression) be multiplied to get the base level used in the "main_trials" ("game.level")
 ### Default: 0.75; Note: If you use averaging to determine "game.level_for_main" then this value should be lower compared to regression, since the regression calculates where subjects fail 50% of the time, while the averaging calculates the mean level at which they fail! 

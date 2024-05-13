@@ -18,6 +18,12 @@ Main_trials_seed = None
 ### Default and strongly recommended: 20
 Targeted_duration = 20
 
+### Pause 
+
+### Should there be a pause between the "pretrial" and "main_trials" of "Pause_sec" seconds?
+### Defualt: 30, If you do not want to use that option set it to "None"
+Pause_sec = 30
+
 ### Control condition settings
 
 ### By default (and recommended), all control conditions are included. If you to exclude a specific control condition, you can remove its line from the excel table in "main_trials_template.xlsx" (make sure to also exclude routines in "Tetris_Psychopy.psyexp" that explain the excluded control condition(s))
@@ -28,7 +34,7 @@ Targeted_duration = 20
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
 ### If you want to use both "Comp_wm_load" and "Comp_speed" (--> 4 total combinations) this number should be dividable by 4 (e.g. 12)
 ### If you only want to use the pretrials (e.g. for Behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetris_psychopy.psyexp" are disabled accordingly)
-N_repeats = 10
+N_repeats = 12
 
 ### Toggle rhythmic cross during motor_control, frequency based on game.speed
 Show_motor_rhythm = True
@@ -46,7 +52,7 @@ Load_seed = None
 ### Would you like to compare "high_speed" "game.speed/level" against "low_speed" in the main Trials  
 ### Each "play_Tetris" condition it is randomly chosen whether "game.speed/level" is either "high_speed" or "low_speed"  
 ### only works properly if level "Level_progression_main = False" in "config_tetris_game.txt"
-Comp_speed = False
+Comp_speed = True
 
 ### Default: None; if you want to use that function set "speed_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
 Speed_seed = None
@@ -60,7 +66,7 @@ Low_level = -3
 ### if you have both comparisons enabled are different method is used to also ensure that each possible combination "speed" and "wm_load" conditions occurs equally often 
 ### do you want to set a seed for this combination randomization?
 ### Default: None; if you want to use that function set "speed_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
-Comp_all_seed = True
+Comp_all_seed = None
 
 ## Keys
 
