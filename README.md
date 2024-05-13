@@ -30,7 +30,7 @@
 
 ### Conditions ("Main Part"):
 
-1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z             )). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
+1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z                )). Additionally, the "wm_load" can be analyzed using randomized "high_load" and "low_load" "play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information!
 
 2. watch_Tetris: Control condition to account for basic visual processing not important for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subject participate in the game subconsciously.
 
@@ -48,15 +48,17 @@
 
 3. To determine how skilled a subject is in playing Tetris, the participant plays 3 rounds of Tetris starting from the lowest and slowest level 1. Afterwards, the level for the actual MRI measurement is calculated based on options in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
 
-4. The 4 conditions in the main part are explained.
+4. An optional break of 30sec in between the parts (30s is default and can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
+
+5. The 4 conditions in the main part are explained.
 
 #### Main Structure (if enabled):
 
 
-5. Each trials begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly (each conidition block is 20sec) &rarr; repeat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "n_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
+6. Each trials begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly (each conidition block is 20sec) &rarr; repeat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "n_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt))
 
 
-6. The paradigm waits for remaining triggers and then ends.
+7. The paradigm waits for remaining triggers and then ends.
 
 ### .psyexp file
 &rarr; If you want to change the core structure of the Paradigm or adjust more specific things, check out the "Flow" of the experiment in [Tetris_Psychopy.psyexp](Tetris_Psychopy.psyexp) with all its routines. "Routines" and "Components" are named according to their function and as described in the config files / this README.md. Keep in mind that Tetris' game mechanics are stored in the [PyGame_Tetris_Code](./PyGame_Tetris_Code/) folder and instructions for each routine can be found in [instructions.py](instructions.py).

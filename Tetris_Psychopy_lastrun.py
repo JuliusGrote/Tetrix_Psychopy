@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 12, 2024, at 14:43
+    on Mai 13, 2024, at 14:11
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -57,7 +57,8 @@ with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
     config_paradigm = c_paradigm.read()
     exec(config_paradigm)
     
-N_repeats = N_repeats 
+global N_repeats
+print(N_repeats)
 #determine the instruction language
 Inst = Instructions()
 Inst.set_instructions(Language, Targeted_duration, N_repeats)
@@ -437,7 +438,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='C:\\Users\\Julius\\OneDrive\\Dokumente\\Test Repo\\Tetris_Psychopy\\Tetris_Psychopy_lastrun.py',
+        originPath='G:\\Meine Ablage\\Studium\\Github\\Tetris_Psychopy\\Tetris_Psychopy_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='priority'
     )
@@ -812,6 +813,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "load_processes" ---
     # Run 'Begin Experiment' code from create_processes
+    #very important: define N_repeats as global otherwise it seems it cannot be accessed by the TrialHandler in the "main_trials" loop
+    global N_repeats
+    
     #checks whether display orientation is altered (defined in "config_paradigm_psychopy.txt")
     if Flip_vertically == True or Flip_horizontally == True:
         
@@ -1131,6 +1135,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
+    
+    # --- Initialize components for Routine "pause_n_sec" ---
+    text_break = visual.TextStim(win=win, name='text_break',
+        text=Inst.font_pause_n_sec,
+        font='Open Sans',
+        pos=(0, 0.15), height=0.1, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-1.0);
+    text_pause_n_sec = visual.TextStim(win=win, name='text_pause_n_sec',
+        text='',
+        font='Open Sans',
+        pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-2.0);
     
     # --- Initialize components for Routine "intro_main" ---
     intro_main_text = visual.TextStim(win=win, name='intro_main_text',
@@ -3279,8 +3299,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_staircase
         #skips this routine if there are no pretrial rounds set or the staircase method is not enabled
-        if game.pretrial_rounds == None or game.pretrial_staircase == False:
-            continueRoutine = False
+        continueRoutine = skip_if_enabled("pretrial") and game.pretrial_staircase
+        
         
         # *text_explain_staircase* updates
         
@@ -3994,6 +4014,112 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         routineTimer.addTime(-1.000000)
     thisExp.nextEntry()
     
+    # --- Prepare to start Routine "pause_n_sec" ---
+    continueRoutine = True
+    # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_pause_n_sec
+    #creates coutdown
+    pause_timer = core.CountdownTimer(Pause_sec)
+    # keep track of which components have finished
+    pause_n_secComponents = [text_break, text_pause_n_sec]
+    for thisComponent in pause_n_secComponents:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "pause_n_sec" ---
+    routineForceEnded = not continueRoutine
+    while continueRoutine:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        # Run 'Each Frame' code from code_pause_n_sec
+        #additionally checks whether main_trial or/and pretrial is enabled
+        continueRoutine = skip_if_enabled("main_trials") and skip_if_enabled("pretrial")
+        
+        #lets timer run out
+        if pause_timer.getTime() <= 0:
+            #exits routine
+            continueRoutine = False
+        
+        # *text_break* updates
+        
+        # if text_break is starting this frame...
+        if text_break.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            text_break.frameNStart = frameN  # exact frame index
+            text_break.tStart = t  # local t and not account for scr refresh
+            text_break.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(text_break, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'text_break.started')
+            # update status
+            text_break.status = STARTED
+            text_break.setAutoDraw(True)
+        
+        # if text_break is active this frame...
+        if text_break.status == STARTED:
+            # update params
+            pass
+        
+        # *text_pause_n_sec* updates
+        
+        # if text_pause_n_sec is starting this frame...
+        if text_pause_n_sec.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            text_pause_n_sec.frameNStart = frameN  # exact frame index
+            text_pause_n_sec.tStart = t  # local t and not account for scr refresh
+            text_pause_n_sec.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(text_pause_n_sec, 'tStartRefresh')  # time at next scr refresh
+            # update status
+            text_pause_n_sec.status = STARTED
+            text_pause_n_sec.setAutoDraw(True)
+        
+        # if text_pause_n_sec is active this frame...
+        if text_pause_n_sec.status == STARTED:
+            # update params
+            text_pause_n_sec.setText(int(pause_timer.getTime()) + 1
+            , log=False)
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, win=win)
+            return
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in pause_n_secComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "pause_n_sec" ---
+    for thisComponent in pause_n_secComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    thisExp.nextEntry()
+    # the Routine "pause_n_sec" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
     # --- Prepare to start Routine "intro_main" ---
     continueRoutine = True
     # update component parameters for each repeat
@@ -4607,12 +4733,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_comp_load
-        #skips this routine if there no pretrial rounds set
-        if Comp_wm_load == None:
-            continueRoutine = False
+        #additionally checks whether main_trials are enabled at all and skips this routine if there no pretrial rounds set
+        continueRoutine = skip_if_enabled("main_trials") and Comp_wm_load 
             
-        #additionally checks whether main_trials are enabled at all
-        continueRoutine = skip_if_enabled("main_trials")
+        
         
         # *controller_example_2* updates
         
@@ -4753,12 +4877,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_comp_speed
-        #skips this routine if there no pretrial rounds set
-        if Comp_speed == None:
-            continueRoutine = False
-            
-        #additionally checks whether main_trials are enabled at all
-        continueRoutine = skip_if_enabled("main_trials")
+        #additionally checks whether main_trials are enabled at all or skips this routine if there no pretrial rounds set
+        continueRoutine = skip_if_enabled("main_trials") and Comp_speed
         
         # *controller_example_3* updates
         
@@ -5993,11 +6113,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from code_three_sec_timer
-    #sets N_repeats to 0 since the upcomin TrialHandler of the loop cannot handle non int-type repeat values
+    
     if skip_if_enabled("main_trials") == False:
-        #set to global otherwise N_repeats is automatically turned into a local
-        global N_repeats
-        N_repeats = 0
+       #sets N_repeats to 0 since the upcoming TrialHandler of the loop cannot handle non int-type repeat values
+       N_repeats = 0
     thisExp.nextEntry()
     # the Routine "three_seconds_timer" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -7037,6 +7156,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from wait_10sec_for_trigger_code
+    #set N_repests back to None since "main_trials" is over and N_repeats does not need to be an int anymore
+    if N_repeats == 0:
+        N_repeats = None
     #creates coutdown
     timer_wait_for_trigger = core.CountdownTimer(10)
     # keep track of which components have finished
