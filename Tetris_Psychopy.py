@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 14, 2024, at 03:46
+    on Mai 15, 2024, at 00:44
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -151,8 +151,7 @@ def Tetris_Instance(
                         if game.accelerate_down == True:
                             #starts down movement by setting the start time "start_down" here
                             game.start_down = time.time()
-                         
-                        game.update_score(0, round(1 * game.level.value/2))
+                        game.update_score(0, 1)
                         
                     if event.key == pygame_key_3 and game.game_over == False:
                         game.rotate()
@@ -160,22 +159,25 @@ def Tetris_Instance(
                 #checks whether its game over or not                               
                 if event.type == GAME_UPDATE and game.game_over == False:
                     game.move_down()
-                  
+                    
+                #restart automatically or with a keypress depending on config
                 if event.type == GAME_UPDATE and game.game_over == True:
                     if event.type == pygame.KEYDOWN or game.automatic_restart == True:
                         game.game_over = False
                         game.reset()
+                        
               #checks whether down key is lifted to stop the downmovement in the "accelerate" "down_type"
             if event.type == pygame.KEYUP and game.accelerate_down == True:
                 if event.key == pygame_key_1:
                     #resets both parameters so the acceleration starts from the same speed each time
                     game.start_down = None
                     game.down_interval = game.start_interval
+                    
         
         #logic for the accelerate down movement outside of pygame event
         if game.accelerate_down == True and game.pause == False and game.game_over == False:
             game.accelerate_downwards()
-               
+
         #Create the GUI for score and level     
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
         level_value_surface = title_font.render(str(game.level.value), True, Colors.white)

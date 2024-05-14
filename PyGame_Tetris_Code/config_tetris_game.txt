@@ -8,46 +8,70 @@
 ### Pretrial? Note: When using the Tetris_Psychopy Experiment, this setting will be overwritten when the experiment starts.
 ### For more Info see: "load_processes" Routine --> "create_processes" code --> "Before Experiment" tab --> "Tetris_Instance()" function 
 ### Default: True
+
+#------
 Pretrial = True
+#------
 
 ### How many rounds of pretrial should be played? This is not overwritten in "Tetris_Psychopy" and important for your experimental design.
 ### If you want to use the regression, make sure that you have enough pretrial rounds, otherwise you the curve_fit function might not be able to estimate the function paramters!
 ### If you dont want to make use of the PreTrials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
 ### ---> The level for the "main_trials" is then set by the "Start_level" option here. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
-### Default: >3 (normal) <-> >6 (regression, the more values the more precise the regression..., 12 recommended). 
+### Default: >3 (normal) <-> >6 (regression, the more values the more precise the regression..., 12 recommended).
+
+#------
 Pretrial_rounds = 9
+#------
 
 ### Pretrial design: Staircase or Normal
 
 ### Staircase: each time you complete a level = level + 1, if you lose in that level you get level = level * Stair_factor 
 ### If pretrial_staircase = True, staircase design is enabled, if pretrial_staircase = False, Pre-Trial levels are just the normal Tetris experience
+
+#------
 Pretrial_staircase = True
+#------
 
 ### "Stair_factor" determines by which factor "game.level.value" drops each time a participant loses in the pretrials
 ### Default: 2/3
+
+#------
 Stair_factor = 2/3
+#------
 
 ### Restart Pretrial rounds from "Start_level" each "Restart_round" (only makes sense if "Pretrial_staircase = True")
 ### If you want to disable this feature set "Restart_round" to "None"
 ### Default: None, but adjust for your desired design.
+
+#------
 Restart_round = 3
+#------
 
 ### JND Regression
 
 ### Based on a logistic regression the JND (Just Noticable Difference, here for the parameter "game.speed") is determined - correlating with the strongest neural activity (design adopted from Baker et al. 2018)
 ### After regression the level nearest to the JND is the new level for the "main_trials" 
 ### If "Jnd_regression = False", level in "main_trials" will be determined by averaging!
+
+#------
 Jnd_regression = True
+#------
 
 ### If "Jnd_regresssion == True:" Regression range - how many levels should be included into the regression [level 1 -  level "Regression_range"]
 ### Default: 15
+
+#------
 Regression_range = 15
+#------
 
 ### Factor for "main_trials" level
 
 ### By which factor should "game.level_for_main" (the level calculated in the "pretrials" either by averaging or regression) be multiplied to get the base level used in the "main_trials" ("game.level")
 ### Default: 0.75; Note: If you use averaging to determine "game.level_for_main" then this value should be lower compared to regression, since the regression calculates where subjects fail 50% of the time, while the averaging calculates the mean level at which they fail! 
+
+#------
 Level_for_main_factor = 1
+#------
 
 
 ## General Level Design
@@ -55,14 +79,25 @@ Level_for_main_factor = 1
 ### determine at which level to start
 ### Overwritten if you use the "Pretrial_Rounds" setting, but if "Pretrial_rounds = None" this sets the "game.level" for the "main_trials" in "Tetris_Psychopy.psyexp"
 ### Default: 1
-Start_level = 1
 
-### determines how many lines need to be cleared in order to reach the next level
+#------
+Start_level = 3
+#------
+
+### Determines how many lines need to be cleared in order to reach the next level
+### Default = 3, the more the harder the level progression
+
+
+#------
 Lines_for_levelup = 3
+#------
 
 ### do you want to keep the level progression for the "Main Trials"?
 ### Should be "False" if you want to use "Comp_speed" in "config_paradigm_psychopy.txt"!
+
+#------
 Level_progression_main = False
+#------
 
 
 ## Game speed
@@ -72,11 +107,17 @@ Level_progression_main = False
 
 ###  Start_speed determines game speed at level 1 and also how fast game difficulty progresses. 
 ### Default: 1000 
+
+#------
 Start_speed = 1000
+#------
 
 ### Speed_slope also determines how fast the game progresses... 
 ### Default: 0.007
+
+#------
 Speed_slope = 0.007 
+#------
 
 
 ## Randomizer
@@ -85,48 +126,77 @@ Speed_slope = 0.007
 
 ### 1. Movements of visual control (watch_Tetris) so that the movements are the same for each participant/each time running the experiment? 
 ### Default: None; if you want to use that function set "visual_seed" to any number.
+
+#------
 Visual_seed = None
+#------
 
 ### 2. Which block is chosen each time a new block is needed so that the choice is the same for each participant/each time running the experiment? 
 ### Default: None; if you want to use that function set "block_seed" to any number.
+
+#------
 Block_seed = None
+#------
 
 
 ## Game Over
 
 ### Should the score be kept after "game over"
+
+#------
 Keep_score = True
+#------
 
 ### Should the game restart automatically after "game over"?
 ### Default and recommended: True
+
+#------
 Restart_automatically = True
+#------
+
 
 ## Controls
 
 ### Down
 
-### Do you want to add a "accelerated" downwards movement?
+### Do you want to add an "accelerated" downwards movement?
 ### By default, a set key press moves the block one cell. Additionally - if "Accelerate_down = True" -  if the Key is held down, the blocks move the cells down automatically and with increased speed over time.
 ### Default: True, if you disable that option, you might want to change the "explain_controls" overview in the "Images/" folder as well.
+
+#------
 Accelerate_down = True
+#------
 
 ### If you use "Accelerate_down = True" at which "Down_Interval" (in sec) Interval should the time in between two "move_down()" movements start?
 ### Default = 0.15 (the higher the longer it takes for the down movement and acceleration)
+
+#------
 Down_interval = 0.15
+#------
 
 ### If you use "Accelerate_down = True" by which factor should the in between move_down() movements be decreased per iteration?
 ### Default: 0.61 - for exponential speed increase it should be between 0 and 1 (the lower the faster)
+
+#------
 Down_factor = 0.61
+#------
 
 ### What should be the cutoff for the maximum speed (in sec) - max "1/60" (Iterations per second of the game loop)?
 ### Default = 1/45
+
+#------
 Cutoff_down = 1/45
+#------
+
 
 ## Pause handling
 
 ### determines whether game/"Tetris_Instance()" (in "Tetris_Psychopy.psyexp") starts paused or not
 ### Default and strongly recommended for "Tetris_Psychopy": True
+
+#------
 Start_Pause = True
+#------
 
 
 ## GUI
@@ -134,17 +204,32 @@ Start_Pause = True
 ### determines whether game starts in Fullscreen or not
 ### Default: False 
 ### Overwritten, if you use the "Tetris_Psychopy" Experiment!
+
+#------
 Start_Fullscreen = False
+#------
+
 
 ### Setting for visual control purposes, blocks get deleted when reaching the bottom of the grid, no stacking. Blocks move in a random pattern simulation actual gameplay.
 ### Similar to the Pretrial setting, when using "Tetris_Psychopy", this setting will be overwritten at the start of the experiment.
-Visual_control = False
 
-### Invisieble "next" blocks in "Visual_control"
-### Should the next blocks be visible during the visual control condition? (decrease visual load)
-Hide_next_visual = False
+#------
+Visual_control = False
+#------
+
+### Invisible "next" blocks in "Visual_control"
+### Should the next blocks be visible during the visual control condition? (decrease visual stimulus load of the control condition)
+### Default: True
+
+
+#------
+Hide_next_visual = True
+#------
 
 ### Should there be three "next" blocks instead of one on the screen?
 ### If you enabled the "toggle_wm_load" option in the "config_paradigm_psyhopy.txt", this option here only relates to the "Pre-Trials"
 ### With reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" blocks and in the "level mode" there is only one "next" block.
+
+#------
 Toggle_three_next_blocks = True
+#------

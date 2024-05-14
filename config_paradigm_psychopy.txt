@@ -2,7 +2,10 @@
 
 ## Instruction language
 ## Choose either "German" or "English"!
+
+#------
 Language = "German"
+#------
 
 
 ## Trial settings
@@ -12,17 +15,26 @@ Language = "German"
 
 ### Do you want to use a random seed for the main trials so that the random choice of control conditions is the same for each participant/each time running the experiment? 
 ### Default: None; if you want to use that function set "main_trials_seed" to any number.
+
+#------
 Main_trials_seed = None
+#------
 
 ### Duration for all conditions in sec.
 ### Default and strongly recommended: 20
+
+#------
 Targeted_duration = 20
+#------
 
 ### Pause 
 
 ### Should there be a pause between the "pretrial" and "main_trials" of "Pause_sec" seconds?
 ### Defualt: 30, If you do not want to use that option set it to "None"
+
+#------
 Pause_sec = 30
+#------
 
 ### Control condition settings
 
@@ -34,50 +46,87 @@ Pause_sec = 30
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
 ### If you want to use both "Comp_wm_load" and "Comp_speed" (--> 4 total combinations) this number should be dividable by 4 (e.g. 12)
 ### If you only want to use the pretrials (e.g. for Behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetris_psychopy.psyexp" are disabled accordingly)
+
+#------
 N_repeats = 12
+#------
 
 ### Toggle rhythmic shape during motor_control, frequency based on game.speed
+
+#------
 Show_motor_rhythm = True
+#------
 
 ### Which symbol should be displayed (choose either "hand" or "shape")
 ### If you want Motor_symbol = "shape", you can adjust which "shape" in the "press_shape" stimulus in the "random_control_condition" routine in "Tetris_Psychopy.psyexp".
+
+#------
 Motor_symbol = "hand"
+#------
 
 ### Play_Tetris settings
 
 ### Would you like to compare "high_load" working memory load (WM load) against "low_load" working memory load (WM load) (one "NEXT" Block against three "NEXT" BLocks)? 
 ### Each "play_Tetris" condition it is randomly chosen whether wm_load is "high_load" or "low_load"!
 ### uses the same mechanic as the "three_next_blocks" option from "config_tetris_game.txt"
+
+#------
 Comp_wm_load = True
+#------
 
 ### Default: None; if you want to use that function set "load_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
+
+#------
 Load_seed = None
+#------
 
 ### Would you like to compare "high_speed" "game.speed/level" against "low_speed" in the main Trials  
 ### Each "play_Tetris" condition it is randomly chosen whether "game.speed/level" is either "high_speed" or "low_speed"  
 ### only works properly if level "Level_progression_main = False" in "config_tetris_game.txt"
+
+#------
 Comp_speed = True
+#------
 
 ### Default: None; if you want to use that function set "speed_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
+
+#------
 Speed_seed = None
+#------
 
 ### How many levels lower should the "low_speed" condition / how many levels higher/lower should the "high_speed" condition be compared to "game.level_for_main.value" (individual level for "main_trials")
 ### please indicate your level as positive OR negative (e.g. if you want to go a level lower use "-1"!)
 ### When using the "Jnd_regression" option from "config_tetris_game.txt" it is recommended to set both to negative values, since the JND is the upper limit for consistend Gameplay for each specific subject (take into account your setting of "Level_for_main_factor" in "config_tetris_game.txt"!).
+
+#------
 High_level = -1
+#------
+
+#------
 Low_level = -3
+#------
 
 ### if you have both comparisons enabled are different method is used to also ensure that each possible combination "speed" and "wm_load" conditions occurs equally often 
 ### do you want to set a seed for this combination randomization?
 ### Default: None; if you want to use that function set "speed_seed" to any number (ensures the same random order for each participant --> pseudorandomization).
+
+#------
 Comp_all_seed = None
+#------
+
 
 ## Keys
 
 ### Determine whether to use a test keyset for pygame (Tetris gameplay) or not 
+
+#------
 Test_keys = True
+#------
 
 ### Define which keys to use in pygame
+
+
+#------
 if Test_keys == True:
 	### Test keys
 	pygame_key_1 = pygame.K_DOWN # Move Tetris Block down
@@ -92,33 +141,48 @@ else:
 	pygame_key_3 = pygame.K_8 # Rotate Tetris Block
 	pygame_key_4 = pygame.K_9 # Move Tetris Block right
 	pygame_key_5 = pygame.K_0 # Spare key
+#------
 
 ### Define which keys to use in Psychopy to 'continue', should be according to the keys used above
+
+#------
 psychopy_key_1 = '6'
 psychopy_key_2 = '7'
 psychopy_key_3 = '8'
 psychopy_key_4 = '9'
 psychopy_key_5 = '0'
+#------
 
 
 ## Define trigger signal
 
 ### This only works if your Trigger signal can be converted to a char/letter, i.e. via an according responsebox.
-Trigger = 't'
 
+#------
+Trigger = 't'
+#------
 
 ## Display Mirroring
 
 ###Toggle display flip (mirroring)
 
 ### Left --> <-- Right
+
+#------
 Flip_vertically = False
+#------
 
 ### Up | ^
 ###    v | Down
+
+#------
 Flip_horizontally = False
+#------
 
 ## Toggle eye tracking
 
 ### Feature not fully developed yet!
+
+#------
 Eye_tracking = False
+#------

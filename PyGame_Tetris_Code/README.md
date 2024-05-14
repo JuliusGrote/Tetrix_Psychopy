@@ -11,6 +11,7 @@
 
 ## Score system: 
 - Down_key = 1 Score Point
+	- If you enabled "Accelerate down" in [config_tetris_game](config_tetris_game.txt), each time  ablock is locked using that method an extra $game.level * 1$ points is given)
 - 1 line cleared = 100 Score Points * level
 - 2 lines cleared = 300 Score Points * level
 - 3 lines cleared = 500 Score Points * level

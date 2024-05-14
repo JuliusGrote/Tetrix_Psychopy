@@ -78,8 +78,8 @@ class Game:
 			self.score.value = 0
 
 	def exe_visual_control(self):
-		possible_moves = [1, 2, 3, 4, 5, 6, 7]
-		move = visual_rand.choices(possible_moves, weights = ([15, 4, 4, 30 - self.level.value * 1.5, 5, 3, 3])) [0]
+		possible_moves = [1, 2, 3, 4, 5, 6, 7, 8]
+		move = visual_rand.choices(possible_moves, weights = ([6 + self.level.value * 1.5, 5, 5, (20 - self.level.value * 2) / 4 , (20 - self.level.value * 2.5) / 3, 6, 3, 3])) [0]
 		if move == 1:
 			pass
 		elif move == 2:
@@ -88,12 +88,16 @@ class Game:
 			self.move_right()
 		elif move == 4:
 			self.move_down()
-		elif move == 5:
-			self.rotate()
+		#this is only performed when 
+		elif move == 5 and self.accelerate_down == True:
+			#start_down acceleration
+			self.start_down = time.time()
 		elif move == 6:
-			self.move_right()
-			self.move_right()
+			self.rotate()
 		elif move == 7:
+			self.move_right()
+			self.move_right()
+		elif move == 8:
 			self.move_left()
 			self.move_left()
 		
@@ -152,19 +156,21 @@ class Game:
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.move(-1, 0)
 			self.lock_block()
-
+	#mediates speed up of down acceleration
 	def accelerate_downwards(self):
-		global Down_interval
 		if self.start_down != None and time.time() - self.start_down > self.down_interval:
-			self.move_down()
 			self.start_down = time.time()
 			if self.down_interval > Cutoff_down:
 				self.down_interval *= Down_factor  # adjust this to control the speed-up rate	
+			self.move_down()
 			
 	def lock_block(self):
-		#resets down acceleration is enabled 
-		if self.accelerate_down == True:
-			self.down_interval = self.start_interval		
+		#resets down acceleration if enabled 
+		if self.accelerate_down == True and self.start_down != None:
+			self.start_down = None
+			if self.down_interval <= 0.05:
+				self.update_score(0, self.level.value)
+			self.down_interval = self.start_interval	
 		tiles = self.current_block.get_cell_positions()
 		for position in tiles:
 			self.grid.grid[position.row][position.column] = self.current_block.id
