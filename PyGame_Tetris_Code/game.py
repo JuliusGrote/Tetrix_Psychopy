@@ -79,7 +79,7 @@ class Game:
 
 	def exe_visual_control(self):
 		possible_moves = [1, 2, 3, 4, 5, 6, 7]
-		move = visual_rand.choices(possible_moves, weights = ([15, 4, 4, 13 - self.level.value, 5, 3, 3])) [0]
+		move = visual_rand.choices(possible_moves, weights = ([15, 4, 4, 30 - self.level.value * 1.5, 5, 3, 3])) [0]
 		if move == 1:
 			pass
 		elif move == 2:

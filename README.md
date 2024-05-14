@@ -34,7 +34,7 @@
 
 2. watch_Tetris: Control condition to account for basic visual processing not important for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subject participate in the game subconsciously.
 
-3. motor_control: Control condition to account for basic motor activity. Subjects are instructed to press the available buttons as if they continued playing the game (if enabled in "config_paradigm_psychopy.txt" a set visual press rhythm based on current game.speed can be seen on the display).
+3. motor_control: Control condition to account for basic motor activity. Subjects are instructed to press the available buttons as if they continued playing the game (if enabled in [config_paradigm_psychopy](config_paradigm_psychopy.txt) a set visual press rhythm based on current "game.speed" can be seen on the display).
 
 4. fixation_cross: Baseline condition. Subjects are instructed to just look at the fixation cross and do nothing else. 
 

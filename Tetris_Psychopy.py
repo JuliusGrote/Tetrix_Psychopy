@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 14, 2024, at 01:57
+    on Mai 14, 2024, at 03:46
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -156,15 +156,8 @@ def Tetris_Instance(
                         
                     if event.key == pygame_key_3 and game.game_over == False:
                         game.rotate()
-                #checks whether down key is lifted to stop the downmovement in the "accelerate" "down_type"        
-                elif event.type == pygame.KEYUP and game.game_over == False and game.accelerate_down == True:
-                    if event.key == pygame_key_1:
-                        #resets both parameters so the acceleration starts from the same speed each time
-                        game.start_down = None
-                        game.down_interval = game.start_interval
-                
                         
-                 #checks whether its game over or not                               
+                #checks whether its game over or not                               
                 if event.type == GAME_UPDATE and game.game_over == False:
                     game.move_down()
                   
@@ -172,9 +165,15 @@ def Tetris_Instance(
                     if event.type == pygame.KEYDOWN or game.automatic_restart == True:
                         game.game_over = False
                         game.reset()
+              #checks whether down key is lifted to stop the downmovement in the "accelerate" "down_type"
+            if event.type == pygame.KEYUP and game.accelerate_down == True:
+                if event.key == pygame_key_1:
+                    #resets both parameters so the acceleration starts from the same speed each time
+                    game.start_down = None
+                    game.down_interval = game.start_interval
         
         #logic for the accelerate down movement outside of pygame event
-        if game.accelerate_down == True:
+        if game.accelerate_down == True and game.pause == False and game.game_over == False:
             game.accelerate_downwards()
                
         #Create the GUI for score and level     
@@ -1559,8 +1558,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=0.0);
     
     # --- Initialize components for Routine "random_control_condition" ---
-    press_cross = visual.ShapeStim(
-        win=win, name='press_cross', vertices='cross',
+    press_shape = visual.ShapeStim(
+        win=win, name='press_shape', vertices='cross',
         size=(0.075, 0.075),
         ori=0.0, pos=(0, 0), anchor='center',
         lineWidth=1.0,     colorSpace='rgb',  lineColor='white', fillColor='white',
@@ -1572,6 +1571,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
+    press_hand = visual.ImageStim(
+        win=win,
+        name='press_hand', 
+        image='Images/hand.png', mask=None, anchor='center',
+        ori=0.0, pos=(0.01, 0), size=(0.15, 0.15),
+        color=[1,1,1], colorSpace='rgb', opacity=1.0,
+        flipHoriz=False, flipVert=False,
+        texRes=128.0, interpolate=True, depth=-3.0)
     
     # --- Initialize components for Routine "condition_ended" ---
     condition_ended_text = visual.TextStim(win=win, name='condition_ended_text',
@@ -6843,9 +6850,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         #collect start time for logging
         condition_started = globalClock.getTime(format='float')
         
-        press_cross.setOpacity(0.0)
+        press_shape.setOpacity(0.0)
+        press_hand.setOpacity(0.0)
         # keep track of which components have finished
-        random_control_conditionComponents = [press_cross, duration_and_fix]
+        random_control_conditionComponents = [press_shape, duration_and_fix, press_hand]
         for thisComponent in random_control_conditionComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
@@ -6871,40 +6879,46 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             #created a press rhythm if enabled by "config_paradigm_psychopy.txt" by changing the opacity of the cross shape periodically
             if control_condition == "motor_control" and Show_motor_rhythm == True:
                 press_rhythm = core.getTime()
-                if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):   
-                    press_cross.setOpacity(1)
-                else:
-                    press_cross.setOpacity(0)
+                if Motor_symbol == "shape":
+                    if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):  
+                        press_shape.setOpacity(1)
+                    else:
+                        press_shape.setOpacity(0)
+                elif Motor_symbol == "hand":
+                    if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):
+                        press_hand.setOpacity(1)
+                    else:
+                        press_hand.setOpacity(0)
             
-            # *press_cross* updates
+            # *press_shape* updates
             
-            # if press_cross is starting this frame...
-            if press_cross.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if press_shape is starting this frame...
+            if press_shape.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
                 # keep track of start time/frame for later
-                press_cross.frameNStart = frameN  # exact frame index
-                press_cross.tStart = t  # local t and not account for scr refresh
-                press_cross.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(press_cross, 'tStartRefresh')  # time at next scr refresh
+                press_shape.frameNStart = frameN  # exact frame index
+                press_shape.tStart = t  # local t and not account for scr refresh
+                press_shape.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(press_shape, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                press_cross.status = STARTED
-                press_cross.setAutoDraw(True)
+                press_shape.status = STARTED
+                press_shape.setAutoDraw(True)
             
-            # if press_cross is active this frame...
-            if press_cross.status == STARTED:
+            # if press_shape is active this frame...
+            if press_shape.status == STARTED:
                 # update params
                 pass
             
-            # if press_cross is stopping this frame...
-            if press_cross.status == STARTED:
+            # if press_shape is stopping this frame...
+            if press_shape.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > press_cross.tStartRefresh + Targeted_duration-frameTolerance:
+                if tThisFlipGlobal > press_shape.tStartRefresh + Targeted_duration-frameTolerance:
                     # keep track of stop time/frame for later
-                    press_cross.tStop = t  # not accounting for scr refresh
-                    press_cross.tStopRefresh = tThisFlipGlobal  # on global time
-                    press_cross.frameNStop = frameN  # exact frame index
+                    press_shape.tStop = t  # not accounting for scr refresh
+                    press_shape.tStopRefresh = tThisFlipGlobal  # on global time
+                    press_shape.frameNStop = frameN  # exact frame index
                     # update status
-                    press_cross.status = FINISHED
-                    press_cross.setAutoDraw(False)
+                    press_shape.status = FINISHED
+                    press_shape.setAutoDraw(False)
             
             # *duration_and_fix* updates
             
@@ -6936,6 +6950,36 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     duration_and_fix.status = FINISHED
                     duration_and_fix.setAutoDraw(False)
             
+            # *press_hand* updates
+            
+            # if press_hand is starting this frame...
+            if press_hand.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+                # keep track of start time/frame for later
+                press_hand.frameNStart = frameN  # exact frame index
+                press_hand.tStart = t  # local t and not account for scr refresh
+                press_hand.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(press_hand, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                press_hand.status = STARTED
+                press_hand.setAutoDraw(True)
+            
+            # if press_hand is active this frame...
+            if press_hand.status == STARTED:
+                # update params
+                pass
+            
+            # if press_hand is stopping this frame...
+            if press_hand.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > press_hand.tStartRefresh + Targeted_duration-frameTolerance:
+                    # keep track of stop time/frame for later
+                    press_hand.tStop = t  # not accounting for scr refresh
+                    press_hand.tStopRefresh = tThisFlipGlobal  # on global time
+                    press_hand.frameNStop = frameN  # exact frame index
+                    # update status
+                    press_hand.status = FINISHED
+                    press_hand.setAutoDraw(False)
+            
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
                 thisExp.status = FINISHED
@@ -6963,7 +7007,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from execute_codition
         #resets opacity
-        press_cross.setOpacity(0)
+        press_shape.setOpacity(0)
+        press_hand.setOpacity(0)
         #get offset of the condition
         condition_stopped = globalClock.getTime(format='float')
         #if the control condition is "watch_Tetris": pauses Tetris

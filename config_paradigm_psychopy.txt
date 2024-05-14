@@ -36,8 +36,12 @@ Pause_sec = 30
 ### If you only want to use the pretrials (e.g. for Behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetris_psychopy.psyexp" are disabled accordingly)
 N_repeats = 12
 
-### Toggle rhythmic cross during motor_control, frequency based on game.speed
+### Toggle rhythmic shape during motor_control, frequency based on game.speed
 Show_motor_rhythm = True
+
+### Which symbol should be displayed (choose either "hand" or "shape")
+### If you want Motor_symbol = "shape", you can adjust which "shape" in the "press_shape" stimulus in the "random_control_condition" routine in "Tetris_Psychopy.psyexp".
+Motor_symbol = "hand"
 
 ### Play_Tetris settings
 
