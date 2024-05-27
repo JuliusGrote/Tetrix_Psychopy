@@ -7,10 +7,10 @@ class Instructions:
 	def set_instructions(self, language, Targeted_duration, N_repeats):
 		#since "font_explain_trials's" f-string uses interger calculation, if "main_trials" are disabled in the config N_repeats must be "0" instead of "None"...
 		if N_repeats == None:
-			N_repeats  = 0
+			N_repeats = 0
 			
 		if language == 'German':
-			self.font_check_response = 'Bitte pressen Sie jede Taste der Responsebox zwei mal!'
+			self.font_check_response = 'Bitte drücken Sie jede Taste der Responsebox zwei mal!'
 			self.font_check_response_2 = 'Responsebox erfolgreich gecheckt!'
 			self.font_Intro_2 = 'Willkommen zum Tetris-Experiment!'
 			self.font_continue = 'Beliebige Taste drücken, um fortzufahren!'
@@ -25,10 +25,10 @@ class Instructions:
 			self.font_intro_main = 'Jetzt beginnt der Hauptteil des Experiments!'
 			self.font_intro_structure = 'So ist das Experiment aufgebaut:'
 			self.font_Announcement = 'Während des Experiments werden Sie 4 verschiedene Symbole sehen:'
-			self.font_play_Tetris = 'Controller: Spielen Sie Tetris! Konzentrieren Sie sich darauf, die Blöcke beim Spielen MENTAL ZU ROTIEREN! Zwischen zwei Tetris-Teilen wird das Spiel IM HINTERGRUND PAUSIERT!' # <-- Alternative: Versuchen Sie zu VISUALISISEREN, wo der DERZEITIGE Tetris-Block und die NEXT (nächsten) Blöcke am besten hinpassen.
+			self.font_play_Tetris = 'Controller: Spielen Sie Tetris! Versuchen Sie vor Ihrem INNEREN AUGE zu VISUALISISEREN, wo der DERZEITIGE Tetris-Block und die NEXT (nächsten) Blöcke am besten hinpassen! Zwischen zwei Tetris-Teilen wird das Spiel IM HINTERGRUND PAUSIERT!' # <-- Alternative: Konzentrieren Sie sich darauf, die Blöcke beim Spielen MENTAL ZU ROTIEREN! Zwischen zwei Tetris-Teilen wird das Spiel IM HINTERGRUND PAUSIERT.
 			self.font_explain_comp_load = 'Achtung! In jedem Tetris-Teil wird zufällig gewählt, ob es EIN oder DREI "Next-Blöcke" gibt.'
 			self.font_explain_comp_speed = 'Achtung! In jedem Tetris-Teil wird zufällig gewählt, ob in einem HÖHEREN (schnelleren) oder TIEFEREN (langsameren) Level gespielt wird!'
-			self.font_motor = 'Hand: Drücken Sie die Tasten ABWECHSELND zum Rhythmus, der auf dem Bildschirm zu sehen ist!'
+			self.font_motor = 'Tastendruck: Drücken Sie die Tasten ABWECHSELND zum Rhythmus, der auf dem Bildschirm zu sehen ist!'
 			self.font_watch = 'Auge: Schauen Sie Tetris zu! Schauen Sie einfach nur zu, während eine Spiel-Aufzeichnung für Sie gespielt wird. Bitte Drücken Sie KEINE Tasten!'
 			self.font_cross = 'Fixationskreuz: Schauen Sie einfach das Kreuz in der Bildschirmmitte an und machen Sie nichts Anderes!'
 			self.font_explain_trials = f'Jede Wiederholung startet mit einem Teil TETRIS SPIELEN, gefolgt von einem zufällig gewählten Teil TETRIS ZUZUSCHAUEN, TASTENDRÜCKEN oder FIXATIONSKREUZ! Jeder Teil dauert {Targeted_duration} Sekunden und es gibt {int(N_repeats) * 3} Wiederholungen!'
@@ -52,10 +52,10 @@ class Instructions:
 			self.font_intro_main = 'Now the main part of the experiment begins!'
 			self.font_intro_structure = 'This is how the experiment is structured:'
 			self.font_Announcement = 'During the experiment you will encounter 4 different symbols:'
-			self.font_play_Tetris = 'Controller: Play Tetris! Focus on MENTALLY ROTATING the blocks when playing! Between two Tetris parts the game is PAUSED in the BACKGROUND!'# <-- Alternative: Try to VISUALIZE where the CURRENT Tetris block and the NEXTs blocks fit best. 
+			self.font_play_Tetris = "Controller: Play Tetris! Try to VISUALIZE in your MIND'S EYE where the CURRENT Tetris block and the NEXTs blocks fit best! Between two Tetris parts the game is PAUSED in the BACKGROUND!" # <-- Alternative:  Focus on MENTALLY ROTATING the blocks when playing.
 			self.font_explain_comp_load = 'Note! In each Tetris part, it is randomly chosen, whether there will be ONE or THREE "Next" blocks.'
 			self.font_explain_comp_speed = 'Note! In each Tetris part, it is randomly chosen, whether you will play in a HIGHER (faster) or LOWER (slower) level!'
-			self.font_motor = 'Hand: Press the Buttons ALTERNATELY (one after another) to the rhythm displayed on the screen!'
+			self.font_motor = 'Button press: Press the Buttons ALTERNATELY (one after another) to the rhythm displayed on the screen!'
 			self.font_watch = 'Eye: Watch Tetris! Just watch while a game recording is played for you. Please DO NOT press any buttons!'
 			self.font_cross = 'Fixation Cross: Just look at the cross in the middle of the screen and do nothing else!'		
 			self.font_explain_trials = f'Each repetition starts with a round of PLAYING TETRIS followed by a randomly chosen part of WATCHING TETRIS GAMEPLAY, BUTTON PRESSES or FIXATION CROSS! Each part lasts {Targeted_duration} seconds and there are {N_repeats * 3} repetitions!'

@@ -3,6 +3,7 @@ import tkinter as tk
 root = tk.Tk()
 root.withdraw()
 
+# create a simple class that gets all screen size parameters and calculates important scale factors based on it
 class Scale:
 	
 	def __init__(self):

@@ -1,6 +1,11 @@
 from block import Block
 from position import Position
 
+
+# define the different blocks as child classes inhereting from the parent "Block" class in "block.py"
+# with a library containing their possible rotation states as positions in a 2x2, 3x3 or 4x4 matrix
+# the parent class with the specific block id of that block is initialized first
+# additionally the blocks are moved ("self.move") to the middle of the grid (amount of columns moved depends on the block size) when called
 class LBlock(Block):
 	def __init__(self):
 		super().__init__(id = 1)

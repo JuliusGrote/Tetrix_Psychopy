@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 15, 2024, at 00:44
+    on Mai 27, 2024, at 16:10
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -34,35 +34,34 @@ import psychopy.iohub as io
 from psychopy.hardware import keyboard
 
 # Run 'Before Experiment' code from create_processes
-# Here almost all import paradigm functions are defined (keyboard listener in tab "Begin Experiment") 
+# here, almost all important paradigm functions are defined (keyboard listener in tab "Begin Experiment") 
 
-
-#import necessary packages for Tetris and load them
+# import necessary packages for Tetris and load them
 import ctypes
 import pygame
 import time
 from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
-#ensure that all classes can be imported from this folder
+# ensure that all classes can be imported from this folder
 sys.path.append('PyGame_Tetris_Code')
 from game import Game
 from colors import Colors
 from instructions import Instructions
-#Initialize Pygame and Game
+# initialize Pygame and Game
 pygame.init()
 game = Game()
 
-#get config information
+# get config information
 with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
     config_paradigm = c_paradigm.read()
     exec(config_paradigm)
     
-#determine the instruction language
+# determine the instruction language
 Inst = Instructions()
 Inst.set_instructions(Language, Targeted_duration, N_repeats)
 
-#define Tetris game as a global function 
+# define Tetris game as a global function 
 def Tetris_Instance(
             window_name,
             is_control,
@@ -79,7 +78,7 @@ def Tetris_Instance(
             weights
     ):
         
-    #transfer Tetris_Instance() parameters from parent to child process
+    # transfer Tetris_Instance() parameters from parent to child process
     game.visual_control = is_control
     game.pretrial = pretrial
     game.game_over_counter = game_over_counter
@@ -92,22 +91,22 @@ def Tetris_Instance(
     game.regression.y_array = y_array
     game.regression.weights = weights
     
-    #set gamespeed
+    # set gamespeed
     clock = pygame.time.Clock()
     game.calculate_speed()
-    #define the USEREVENTS
+    # define the USEREVENTS
     GAME_UPDATE = pygame.USEREVENT
     VISUAL_CONTROL_CAP = pygame.USEREVENT + 1
     #set "previous" variables to None
     previous_level = None
     previous_three_next_blocks = None
     
-    #name and initialize GUI
+    # name and initialize GUI
     screen = pygame.display.set_mode((game.grid.scale.screen_w, game.grid.scale.screen_h), pygame.FULLSCREEN | pygame.SCALED)
     pygame.display.set_caption(window_name)
     ctypes.windll.user32.ShowCursor(False)
     
-    #create static graphic objects for the game
+    # create static graphic objects for the game
     title_font = pygame.font.Font(None, game.grid.scale.scale_font)
     score_surface = title_font.render("Score", True, Colors.white)
     next_surface = title_font.render("Next", True, Colors.white)
@@ -115,28 +114,28 @@ def Tetris_Instance(
     level_surface = title_font.render("Level", True, Colors.white )    
     score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)
    
-    #Game Loop 
-    #Be catious when changing code in here!
+    # game loop 
+    # be catious when changing code in here!
     while True:
         for event in pygame.event.get():
-        #changes pausing state according to is_paused()
+            # changes pausing state according to is_paused()
             game.pause = pause_state.value
       
-        #defines how to quit the game using ESCAPE
+            # defines how to quit the game using ESCAPE
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: 
                     pygame.quit()
                     sys.exit()
             
             if game.pause == False:  
-                #execute visual control mode
+                # execute visual control mode
                 if game.visual_control == True:
                     if event.type == GAME_UPDATE and game.level.value <= 6: 
                         game.exe_visual_control()
                     if  event.type == VISUAL_CONTROL_CAP and game.level.value > 6:
                         game.exe_visual_control()
                    
-                  #checks forKeyboard input to play the game
+                # checks for keyboard input to play the game and for game over
                 if event.type == pygame.KEYDOWN and game.visual_control == False:
                     if game.game_over == True:
                         game.game_over = False
@@ -146,27 +145,28 @@ def Tetris_Instance(
                     if event.key == pygame_key_4 and game.game_over == False:
                         game.move_right()
                     if event.key == pygame_key_1 and game.game_over == False:
-                        #even if accelerate is enabled this the playing experience is better if you can move the block down one cell manually as well. 
+                        # even if accelerate is enabled this the playing experience is better if you can move the block down one cell manually as well. 
                         game.move_down()
                         if game.accelerate_down == True:
-                            #starts down movement by setting the start time "start_down" here
+                            # starts down movement by setting the start time "start_down" here
                             game.start_down = time.time()
+                        # adds one score point if "move_down()" is used
                         game.update_score(0, 1)
                         
                     if event.key == pygame_key_3 and game.game_over == False:
                         game.rotate()
                         
-                #checks whether its game over or not                               
+                # checks whether its game over or not                               
                 if event.type == GAME_UPDATE and game.game_over == False:
                     game.move_down()
                     
-                #restart automatically or with a keypress depending on config
+                # restart automatically or with a keypress depending on config
                 if event.type == GAME_UPDATE and game.game_over == True:
                     if event.type == pygame.KEYDOWN or game.automatic_restart == True:
                         game.game_over = False
                         game.reset()
                         
-              #checks whether down key is lifted to stop the downmovement in the "accelerate" "down_type"
+            # checks whether down key is lifted to stop the down movement in the "accelerate" "down_type"
             if event.type == pygame.KEYUP and game.accelerate_down == True:
                 if event.key == pygame_key_1:
                     #resets both parameters so the acceleration starts from the same speed each time
@@ -174,59 +174,60 @@ def Tetris_Instance(
                     game.down_interval = game.start_interval
                     
         
-        #logic for the accelerate down movement outside of pygame event
+        # logic for the accelerate down movement outside of pygame event
         if game.accelerate_down == True and game.pause == False and game.game_over == False:
             game.accelerate_downwards()
 
-        #Create the GUI for score and level     
+        # create the GUI for score and level     
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
         level_value_surface = title_font.render(str(game.level.value), True, Colors.white)
                 
-        #checks whether level changed and adjusts speed accordingly
+        # checks whether level changed and adjusts speed accordingly
         if previous_level != game.level.value:
             game.calculate_speed()
             previous_level = game.level.value
             
-        #checks whether game.three_next_blocks.value changed and sets new "height" of rect for NEXT-blocks accordingly
+        # checks whether game.three_next_blocks.value changed and sets new "height" of rect for NEXT-blocks accordingly
         if previous_three_next_blocks != game.three_next_blocks.value:
             if game.three_next_blocks.value == False:
                next_rect_height = 180 
             else:
                next_rect_height = 285
-            #draw next rect
+            # draw next rect
             next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)
             previous_three_next_blocks = game.three_next_blocks.value 
         
-        #creates  GUI for changeable objects
+        # creates  GUI for changeable objects
         screen.fill(Colors.dark_blue)
         screen.blit(score_surface, (386 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 40 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         screen.blit(next_surface, (398 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 200 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         screen.blit(level_surface, (426 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         
-        #displays game over message
+        # displays game over message
         if game.game_over == True:
             screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 540 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         
-        #blit screen elements
+        # blit screen elements
         pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
         screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))
         pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)
         game.draw(screen)
         
-        #if the disply needs to be flipped vertically this function does it
+        # if the disply needs to be flipped vertically this function does it
         if Flip_vertically == True or Flip_horizontally == True:
-            original_surf = pygame.display.get_surface() #collect all different surfaces on the screen to a new one
+            original_surf = pygame.display.get_surface() # collect all different surfaces on the screen to a new one
             flipped_surface = pygame.transform.flip(original_surf, Flip_vertically, Flip_horizontally)
             screen.blit(flipped_surface, dest=(0, 0))
             
-         #updates screen in clock.tick(x) per second
+        # updates screen in clock.tick(x) per second
         pygame.display.update()
         clock.tick(60)
-#checks whether a specific window is created
+        
+# checks whether a specific window is created
 def is_window_open(window_title):        
     hwnd = ctypes.windll.user32.FindWindowW(None, window_title)
-    if hwnd == 0: # Window not found
+    if hwnd == 0: # window not found
         return False  
     else:
         return True 
@@ -238,6 +239,7 @@ def Get_on_top(window_title):
     SWP_NOMOVE = 0x0002
     SWP_NOSIZE = 0x0001
     hwnd = ctypes.windll.user32.FindWindowW(None, window_title)
+    # brings the searched window to foreground
     if hwnd != 0:
         active_window = ctypes.windll.user32.SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)
         # Simulate left mouse button press and release to make window active(only once)
@@ -245,7 +247,7 @@ def Get_on_top(window_title):
         ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
         ctypes.windll.user32.ShowCursor(False)
         
-# Create a countdown timer with a "x"-second duration or speficific for a condition
+# create a countdown timer with a "x"-second duration or speficific for a condition
 def condition_or_wait_timer(name_or_duration): 
     if name_or_duration == "wait":
         t = 1
@@ -254,11 +256,11 @@ def condition_or_wait_timer(name_or_duration):
     else:
         t = float(name_or_duration)
     timer = core.CountdownTimer(t)
-    # Use a while loop to do nothing until the time runs out
+    # use a while loop to do nothing until the time runs out
     while timer.getTime() > 0:
         pass
         
-#define Pause method for each specific process
+# define Pause method for each specific process
 def is_paused(process):
     if str(process) == "play_Tetris":
         game.toggle_play.value = not game.toggle_play.value     
@@ -267,57 +269,56 @@ def is_paused(process):
     elif str(process) == "pretrial_Tetris":
         game.toggle_pretrial.value = not game.toggle_pretrial.value
 
-#define a method to skip a trial that belongs to either to the "pretrial" or "main_trials"
+# define a method to skip a trial that belongs to either to the "pretrial" or "main_trials"
 def skip_if_enabled(part):
     if part == "pretrial" and game.pretrial_rounds == None or part == "main_trials" and N_repeats == None:
-        #return False to set continueRoutine = False
+        # return False to set continueRoutine = False
         return False
     else:
-        #return False to set continueRoutine = True
+        # return False to set continueRoutine = True
         return True
 
-#define the compare between high and low working memory load and speed method
-#define functions that creates a list with shuffled order of "high" and "low" wm_load and speed
-#used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
+# define the compare between high and low working memory load and speed method
+# define functions that creates a list with shuffled order of "high" and "low" wm_load and speed
+# used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
 def comp_wm_load_speed(total_trials, trial_nr):
     global first_trial
     global wm_load_seq
     global speed_seq
     global high_level
     global low_level
-    #create the arrays only on the first trial
+    # create the arrays only on the first trial
     if trial_nr == 0: 
-        #halfs the amount of conditions based on total trials
+        # halfs the amount of conditions based on total trials
         n_per_load = int(total_trials/2)
-        
-        #creates a array of random order for each comparison that defines the order of "high" or "low" conditions in the "play_Tetris" parts.
+        # creates a array of random order for each comparison that defines the order of "high" or "low" conditions in the "play_Tetris" parts.
         if Comp_wm_load == True and Comp_speed == False:
             wm_load_low = 'low_load'
             wm_load_high = 'high_load'
-            wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load #add equal number of "high" and "low"
+            wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load # add equal number of "high" and "low"
             np.random.seed(Load_seed) 
             np.random.shuffle(wm_load_seq)
             print(f'wm_load_seq: {wm_load_seq}')
         if Comp_speed == True and Comp_wm_load == False:
             speed_low = 'low_speed'
             speed_high = 'high_speed'
-            speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load #add equal number of "high" and "low"
+            speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load # add equal number of "high" and "low"
             np.random.seed(Speed_seed) 
             np.random.shuffle(speed_seq)
             print(f'speed_seq: {speed_seq}')
          
-        #if both comparison conditions are enabled, in order to get an equal distribution across all 4 different possible combination a tuple array is created.
+        # if both comparison conditions are enabled, in order to get an equal distribution across all 4 different possible combination a tuple array is created.
         if Comp_speed == True and Comp_wm_load == True:
             combinations = ([('low_load', 'low_speed')] + [('low_load', 'high_speed')] + [('high_load', 'low_speed')] + [('high_load', 'high_speed')]) * int(n_per_load/2) 
             
-            #shuffle the tuple array into a random order
+            # shuffle the tuple array into a random order
             np.random.seed(Comp_all_seed) 
             np.random.shuffle(combinations)
             
-            #unzip the tuple array in to the two part-arrays, which define the condition combinations in the "play_Tetris" parts
+            # unzip the tuple array in to the two part-arrays, which define the condition combinations in the "play_Tetris" parts
             wm_load_seq, speed_seq = zip(*combinations)
             print(f'wm_load_seq: {wm_load_seq} and speed_seq: {speed_seq}')
-          #make sure that high_level and low_level are never equal or below 0 (game crash)  
+          # make sure that high_level and low_level are never equal or below 0 (game crash)  
         if Comp_speed == True:
             if abs(Low_level) >= game.level.value and Low_level < 0:
                 low_level = 1
@@ -327,10 +328,10 @@ def comp_wm_load_speed(total_trials, trial_nr):
                 high_level = 1
             else:
                 high_level = game.level.value + High_level
-        #set this to false and ensure that the array creation is done only once!       
+        # set this to false and ensure that the array creation is done only once!       
         first_trial = False
      
-    #set "high" or "low" for "wm_load" or "speed"
+    # set "high" or "low" for "wm_load" or "speed" in the current trial
     if Comp_wm_load == True:
         print(f'Trial {trial_nr + 1} of {total_trials} - {wm_load_seq[trial_nr]}')
         if wm_load_seq[trial_nr] == 'low_load':
@@ -352,13 +353,13 @@ def comp_wm_load_speed(total_trials, trial_nr):
 
 
 # Run 'Before Experiment' code from code_check_response
-#creates an pygame dummy screen to test the pygame.keys that are used
+# creates an pygame dummy screen to test the pygame.keys that are used
 def create_dummi_screen_responsecheck():
     dummi_screen = pygame.display.set_mode((100, 100), pygame.FULLSCREEN | pygame.SCALED)
     pygame.display.set_caption("check_responsebox")
     handle = ctypes.windll.user32.FindWindowW(None, "check_responsebox")
 
-    # Set the desired window position to be outside of the visible window (e.g., 10000 pixels from the left, 1000 pixels from the top)
+    # set the desired window position to be outside of the visible window (e.g., 10000 pixels from the left, 1000 pixels from the top)
     window_x, window_y = 10000, 10000
     ctypes.windll.user32.SetWindowPos(handle, -1, window_x, window_y, 0, 0, 0x0001)
 # --- Setup global variables (available in all functions) ---
@@ -937,7 +938,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "check_response_box" ---
     # Run 'Begin Experiment' code from code_check_response
-    #variables for responsebox check that are displayed on screen
+    # variables for responsebox check that are displayed on screen
     x_1 = "-"
     x_2 = "-"
     x_3 = "-"
@@ -1223,7 +1224,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     motorcontrol_example_1 = visual.ImageStim(
         win=win,
         name='motorcontrol_example_1', 
-        image='Images/hand.png', mask=None, anchor='center',
+        image='Images/button.png', mask=None, anchor='center',
         ori=0.0, pos=(0.2, -0.2), size=(0.2, 0.2),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
@@ -1257,7 +1258,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='controller_example', 
         image='Images/controller.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0), size=(0.2, 0.2),
+        ori=0.0, pos=(-0.65, 0), size=(0.3, 0.3),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-1.0)
@@ -1286,7 +1287,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='controller_example_2', 
         image='Images/controller.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0), size=(0.2, 0.2),
+        ori=0.0, pos=(-0.65, 0), size=(0.3, 0.3),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-1.0)
@@ -1311,7 +1312,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='controller_example_3', 
         image='Images/controller.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0), size=(0.2, 0.2),
+        ori=0.0, pos=(-0.65, 0), size=(0.3, 0.3),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-1.0)
@@ -1335,8 +1336,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     motorcontrol_example = visual.ImageStim(
         win=win,
         name='motorcontrol_example', 
-        image='Images/hand.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0.0), size=(0.2, 0.2),
+        image='Images/button.png', mask=None, anchor='center',
+        ori=0.0, pos=(-0.65, 0.0), size=(0.3, 0.3),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-1.0)
@@ -1361,7 +1362,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='watch_example', 
         image='Images/eye.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0.0), size=(0.2, 0.2),
+        ori=0.0, pos=(-0.65, 0.0), size=(0.3, 0.3),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-1.0)
@@ -1386,7 +1387,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='baseline_example', 
         image='Images/crosshair.png', mask=None, anchor='center',
-        ori=0.0, pos=(-0.65, 0.0), size=(0.2, 0.2),
+        ori=0.0, pos=(-0.65, 0.0), size=(0.3, 0.3),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-1.0)
@@ -1573,11 +1574,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
-    press_hand = visual.ImageStim(
+    press_button = visual.ImageStim(
         win=win,
-        name='press_hand', 
-        image='Images/hand.png', mask=None, anchor='center',
-        ori=0.0, pos=(0.01, 0), size=(0.15, 0.15),
+        name='press_button', 
+        image='Images/button.png', mask=None, anchor='center',
+        ori=0.0, pos=(0, -0.02), size=(0.2, 0.2),
         color=[1,1,1], colorSpace='rgb', opacity=1.0,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-3.0)
@@ -1654,7 +1655,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from create_processes
-    #creates a seperate process for the Pretrial rounds so that the experiment can continue but only if there are pretrial rounds set
+    # creates a seperate process for the Pretrial rounds so that the experiment can continue but only if there are pretrial rounds set
     if skip_if_enabled("pretrial") == True:    
         pretrial_Tetris = Process(target=Tetris_Instance, args=(
                                   "pretrial_Tetris",
@@ -1691,7 +1692,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                               game.regression.weights
                               ))
         play_Tetris.start()
-    #create a window for the controll visual_control condition
+    # create a window for the controll visual_control condition
         watch_Tetris = Process(target=Tetris_Instance, args=(
                                "watch_Tetris",
                                True,
@@ -1709,11 +1710,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                                ))
         watch_Tetris.start()
     
-    #start keyboard listener
+    # start keyboard listener
     log_trigger = pynput_keyboard.Listener(on_press=check_for_trigger)
     log_trigger.start()
     
-    #hides cursor that appears automatically after processes are created
+    # hides cursor that appears automatically after processes are created
     ctypes.windll.user32.ShowCursor(False)
     # keep track of which components have finished
     load_processesComponents = [load_processes_text]
@@ -1739,7 +1740,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from create_processes
-        #ensures that this condition starts properly
+        # ensures that this condition starts properly
         if is_window_open("pretrial_Tetris") == True:
             continueRoutine = skip_if_enabled("main_trials")
         
@@ -1810,7 +1811,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from code_get_on_top
-    #gets PsychoPy on top initiall
+    # gets PsychoPy on top initiall
     Get_on_top("PsychoPy")
     # keep track of which components have finished
     check_for_processesComponents = [check_Text]
@@ -1925,7 +1926,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_show_pretrial
-        #skips this routine if there are no pretrial rounds set
+        # skips this routine if there are no pretrial rounds set
         continueRoutine = skip_if_enabled("pretrial")
         
         # *check_pretrial* updates
@@ -1994,7 +1995,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from code_show_and_hide_pretrial
-    #skips this routine if there no pretrial rounds set
+    # skips this routine if there no pretrial rounds set
     if game.pretrial_rounds != None:
         Get_on_top("pretrial_Tetris")
     
@@ -2115,7 +2116,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_check_play
-        #skiped if main part should be skipped according to setting in "config_paradigm_psychopy"
+        # skipped if main part should be skipped according to setting in "config_paradigm_psychopy"
         continueRoutine = skip_if_enabled("main_trials")
         
         # *check_play* updates
@@ -2185,7 +2186,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # update component parameters for each repeat
     # Run 'Begin Routine' code from code_play
     if skip_if_enabled("main_trials") == True:
-        #set Tetris to foreground
+        # set Tetris to foreground
         Get_on_top("play_Tetris")
     
     
@@ -2590,7 +2591,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # Run 'Each Frame' code from code_check_response
         continueRoutine = skip_if_enabled("main_trials")
         
-        #checks keys and updated variables accordingly
+        # checks keys and updated variables accordingly
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame_key_1:
@@ -2799,7 +2800,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from code_check_response
-    #ends pygame instance
+    # ends pygame instance
     pygame.quit()
     
     thisExp.nextEntry()
@@ -2957,7 +2958,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_pretrial
-        #skips this routine if there are no pretrial rounds set or there are no main trials
+        # skips this routine if there are no pretrial rounds set or there are no main trials
         continueRoutine = skip_if_enabled("pretrial") and skip_if_enabled("main_trials")
         
         # *explanation_pretrial* updates
@@ -3323,7 +3324,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_staircase
-        #skips this routine if there are no pretrial rounds set or the staircase method is not enabled
+        # skips this routine if there are no pretrial rounds set or the staircase method is not enabled
         continueRoutine = skip_if_enabled("pretrial") and game.pretrial_staircase
         
         
@@ -3587,7 +3588,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_start_pretrial
-        #skips this routine if there are no pretrial rounds set
+        # skips this routine if there are no pretrial rounds set
         continueRoutine = skip_if_enabled("pretrial")
         
         # *text_start_pretrial* updates
@@ -3690,7 +3691,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_wait_pretrial
-        #skips this routine if there are no pretrial rounds set
+        # skips this routine if there are no pretrial rounds set
         skip_if_enabled("pretrial")
         
         # *fix_wait_pretrial* updates
@@ -3760,17 +3761,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # update component parameters for each repeat
     thisExp.addData('play_pretrial.started', globalClock.getTime(format='float'))
     # Run 'Begin Routine' code from Tetris_pretrial
-    #puts preTrial Tetris-Window on top
+    # puts preTrial Tetris-Window on top
     Get_on_top("pretrial_Tetris")
-    #waits one sec
+    # waits one sec
     condition_or_wait_timer("wait")
-    #start Tetris
+    # start Tetris
     is_paused("pretrial_Tetris")
     
     if skip_if_enabled("pretrial") == True:
-        #sets initial level tracking variable
+        # sets initial level tracking variable
         previous_level = game.level.value
-        #log initial start_level
+        # log initial start_level
         thisExp.addData('Condition.info', 'info_preTrial_start')
         thisExp.nextEntry()
         thisExp.addData('pretrial.start_level', game.level.value)
@@ -3800,24 +3801,24 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from Tetris_pretrial
         if skip_if_enabled("pretrial") == True:  
-          #keep track of the level when it increases
+          # keep track of the level when it increases
             if previous_level < game.level.value:
                 previous_level = game.level.value
                 
-            #adds useful parameters to the logfile when the level decreases (only happens when "game over")
+            # adds useful parameters to the logfile when the level decreases (only happens when "game over")
             elif previous_level > game.level.value:    
                 thisExp.addData('Condition.info', f'info_preTrial_round_{game.game_over_counter.value}')
                 thisExp.addData('pretrial.fail_level', previous_level)
                 thisExp.addData('pretrial.score', game.score.value)
                 thisExp.addData('pretrial.round_t', globalClock.getTime(format='float'))
                 thisExp.nextEntry()
-                #adds new start level, except after last "game over "...
+                # adds new start level, except after last "game over "...
                 if game.game_over_counter.value != game.pretrial_rounds:
                     thisExp.addData('pretrial.start_level', game.level.value)
-                #reset previous_level according to new game.level.value
+                # reset previous_level according to new game.level.value
                 previous_level = game.level.value
             
-        #end pretrials if game over counter meets the amount of pretrial rounds set in the config files
+        # end pretrials if game over counter meets the amount of pretrial rounds set in the config files
         if game.game_over_counter.value == game.pretrial_rounds or game.pretrial_rounds == None:
            continueRoutine = False
         
@@ -3895,20 +3896,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             thisComponent.setAutoDraw(False)
     thisExp.addData('play_pretrial.stopped', globalClock.getTime(format='float'))
     # Run 'End Routine' code from Tetris_pretrial
-    #get back to Psychopy window
+    # get back to Psychopy window
     Get_on_top("PsychoPy")
-    #adds the achieved level and score to the data file
+    # adds the achieved level and score to the data file
     thisExp.addData('pretrial.score', game.score.value)
     thisExp.addData('Condition.info', 'info_preTrial_sum')
     
     
-    #execute game.level_for_main.value as defined by "config_tetris_game.txt"
-    #skip automatically if pretrial_rounds are disabled
+    # execute game.level_for_main.value as defined by "config_tetris_game.txt"
+    # skip automatically if pretrial_rounds are disabled
     if game.jnd_regression == True and game.pretrial_rounds != None:
         thisExp.addData('pretrial.level_avg', game.level_for_main.value)
-        #overwrites game.level_for_main.value achieved by averaging with regression results
+        # overwrites game.level_for_main.value achieved by averaging with regression results
         game.level_for_main.value, popt, pcov = game.regression.determine_main_level()
-        #log regression results
+        # log regression results
         thisExp.addData('pretrial.game_speeds', game.regression.x_array[:])
         thisExp.addData('JND', game.level_for_main.value)
         thisExp.addData('pretrial.completion_rate', game.regression.y_array[:])
@@ -3916,7 +3917,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         thisExp.addData('pretrial.optimization_parameters', popt)
         
     else:
-        #do not log regression results if "jnd_regression" is not enabled in config
+        # do not log regression results if "Jnd_regression" is not enabled in config
         thisExp.addData('pretrial.game_speeds', None)
         thisExp.addData('pretrial.level_avg', game.level_for_main.value)
         thisExp.addData('JND', None)
@@ -3924,18 +3925,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         thisExp.addData('pretrial.weights', None)
         thisExp.addData('pretrial.optimization_parameters', None)
         
-    #skip this step if pretrials are disabled
+    # skip this step if pretrials are disabled
     if game.pretrial_rounds != None:
-        #sets new start level for main game (needs to be converted to an int, since this multiprocessing.values type cannot be changed
+        # sets new start level for main game (needs to be converted to an int, since this multiprocessing.values type cannot be changed
         game.level_for_main.value = round(game.level_for_main.value * game.level_for_main_factor)
         game.level.value = int(game.level_for_main.value)
     
-    #resets absolut score
+    # resets absolut score
     game.score.value = 0
-    #prints out the value for control purposes
+    # prints out the value for control purposes
     print(f'Main level: {game.level.value}')
     
-    #ends pretrial pygame
+    # ends pretrial pygame process
     if game.pretrial_rounds != None:
         pretrial_Tetris.terminate()
         pretrial_Tetris.join()
@@ -3974,7 +3975,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_wait_pretrial
-        #skips this routine if there are no pretrial rounds set
+        # skips this routine if there are no pretrial rounds set
         skip_if_enabled("pretrial")
         
         # *fix_wait_pretrial* updates
@@ -4043,7 +4044,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from code_pause_n_sec
-    #creates coutdown
+    # creates coutdown
     pause_timer = core.CountdownTimer(Pause_sec)
     # keep track of which components have finished
     pause_n_secComponents = [text_break, text_pause_n_sec]
@@ -4069,12 +4070,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from code_pause_n_sec
-        #additionally checks whether main_trial or/and pretrial is enabled
+        # additionally checks whether main_trial or/and pretrial is enabled
         continueRoutine = skip_if_enabled("main_trials") and skip_if_enabled("pretrial")
         
-        #lets timer run out
+        # lets timer run out
         if pause_timer.getTime() <= 0:
-            #exits routine
+            # exits routine
             continueRoutine = False
         
         # *text_break* updates
@@ -4086,8 +4087,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             text_break.tStart = t  # local t and not account for scr refresh
             text_break.tStartRefresh = tThisFlipGlobal  # on global time
             win.timeOnFlip(text_break, 'tStartRefresh')  # time at next scr refresh
-            # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 'text_break.started')
             # update status
             text_break.status = STARTED
             text_break.setAutoDraw(True)
@@ -4175,7 +4174,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_intro_main
-        #skips this routine if there are no pretrial rounds or no main_trials set since it is uncessary to introduce the main part here...
+        # skips this routine if there are no pretrial rounds or no main_trials set since it is uncessary to introduce the main part here...
         continueRoutine = skip_if_enabled("pretrial") and skip_if_enabled("main_trials")
         
         # *intro_main_text* updates
@@ -4758,7 +4757,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_comp_load
-        #additionally checks whether main_trials are enabled at all and skips this routine if there no pretrial rounds set
+        # additionally checks whether main_trials are enabled at all and skips this routine if there no pretrial rounds set
         continueRoutine = skip_if_enabled("main_trials") and Comp_wm_load 
             
         
@@ -5883,6 +5882,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from first_trigger
+    # only adds first trigger data if main trials are enabled in "config_paradigm_psychopy"
     if skip_if_enabled("main_trials") == True:
         thisExp.addData('Condition.info', 'first_trigger')
     # keep track of which components have finished
@@ -5909,9 +5909,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from first_trigger
-        #additionally checks whether main_trials are enabled at all
+        # additionally checks whether main_trials are enabled at all
         continueRoutine = skip_if_enabled("main_trials")
         
+        # waits for a keyboard input (that is the trigger signal from the MRI) as defined in the "config_paradigm_psychopy"
         if defaultKeyboard.getKeys(keyList=[Trigger]):
             continueRoutine = False
             
@@ -6057,7 +6058,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from code_three_sec_timer
-    #creates coutdown
+    # creates coutdown
     three_sec_timer = core.CountdownTimer(3)
     # keep track of which components have finished
     three_seconds_timerComponents = [text_three_sec_timer]
@@ -6083,12 +6084,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from code_three_sec_timer
-        #additionally checks whether main_trials are enabled at all
+        # additionally checks whether main_trials are enabled at all
         continueRoutine = skip_if_enabled("main_trials")
         
-        #lets timer run out
+        # lets timer run out
         if three_sec_timer.getTime() <= 0:
-            #exits routine
+            # exits routine
             continueRoutine = False
         
         
@@ -6138,10 +6139,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from code_three_sec_timer
-    
     if skip_if_enabled("main_trials") == False:
        #sets N_repeats to 0 since the upcoming TrialHandler of the loop cannot handle non int-type repeat values
        N_repeats = 0
+       
+    #if pretrials are disabled set the restart level/game.level_for_main.value to the Start_level from "config_tetris_game"
+    if skip_if_enabled("pretrial") == False:
+        game.level_for_main.value = game.level.value
+        print(f'Restart Level set to {game.level_for_main.value}')
     thisExp.nextEntry()
     # the Routine "three_seconds_timer" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -6356,18 +6361,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from execute_play_Tetris
-        #sets "high" or "low" "speed" or "wm_load"
+        # sets "high" or "low" "speed" or "wm_load"
         if Comp_wm_load == True or Comp_speed == True:
             comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)
         
-        #Tetris to foreground
+        # bring Tetris to foreground
         Get_on_top("play_Tetris")
-        #wait one sec
+        # wait one sec
         condition_or_wait_timer("wait")
-        #Tetris begins here
+        # Tetris resumes here
         is_paused("play_Tetris")
         
-        #collect start time for logging
+        # collect start time for logging
         condition_started = globalClock.getTime(format='float')
         
         # keep track of which components have finished
@@ -6450,13 +6455,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from execute_play_Tetris
-        #get offset of the condition
+        # get offset of the condition
         condition_stopped = globalClock.getTime(format='float')
-        #if the control condition is "watch_Tetris": pauses Tetris
+        # if the control condition is "watch_Tetris": pauses Tetris
         is_paused("play_Tetris")
-        #waits one seconds
+        # waits one seconds
         condition_or_wait_timer("wait")
-        #if the control condition is "watch_Tetris": sets Tetris window to background
+        # if the control condition is "watch_Tetris": sets Tetris window to background
         Get_on_top("PsychoPy")
         
         
@@ -6634,7 +6639,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from add_data_play_Tetris
-        #logs on and offsets and condition duration into one line for later processing
+        # logs on-, offsets and condition duration, etc. in one row (in the data file .csv) for later processing
         thisExp.addData('Condition.started', condition_started)
         thisExp.addData('Condition.stopped', condition_stopped)
         thisExp.addData('targeted.duration', Targeted_duration)
@@ -6842,20 +6847,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from execute_codition
-        #if the control condition is "watch_Tetris": set Tetris to foreground
+        # if the control condition is "watch_Tetris": set Tetris to foreground
         Get_on_top(control_condition)
-        #wait one sec
+        # wait one sec
         condition_or_wait_timer("wait")
-        #if the control condition is "watch_Tetris": Tetris begins here
+        # if the control condition is "watch_Tetris": Tetris begins here
         is_paused(control_condition)
         
-        #collect start time for logging
+        # collect start time for logging
         condition_started = globalClock.getTime(format='float')
         
         press_shape.setOpacity(0.0)
-        press_hand.setOpacity(0.0)
+        press_button.setOpacity(0.0)
         # keep track of which components have finished
-        random_control_conditionComponents = [press_shape, duration_and_fix, press_hand]
+        random_control_conditionComponents = [press_shape, duration_and_fix, press_button]
         for thisComponent in random_control_conditionComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
@@ -6878,19 +6883,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             # Run 'Each Frame' code from execute_codition
-            #created a press rhythm if enabled by "config_paradigm_psychopy.txt" by changing the opacity of the cross shape periodically
+            # create a press rhythm if enabled by "config_paradigm_psychopy" by changing the opacity of the shape/image periodically
             if control_condition == "motor_control" and Show_motor_rhythm == True:
                 press_rhythm = core.getTime()
                 if Motor_symbol == "shape":
-                    if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):  
+                    if press_rhythm % (game.speed.value/1000 * 2.5) < (game.speed.value/1000):  
                         press_shape.setOpacity(1)
                     else:
                         press_shape.setOpacity(0)
-                elif Motor_symbol == "hand":
-                    if press_rhythm % (game.speed.value/1000 * 2) < (game.speed.value/2000):
-                        press_hand.setOpacity(1)
+                elif Motor_symbol == "button":
+                    
+                    if press_rhythm % (game.speed.value/1000 * 2.5) < (game.speed.value/1000):
+                        press_button.setOpacity(1)
                     else:
-                        press_hand.setOpacity(0)
+                        press_button.setOpacity(0)
             
             # *press_shape* updates
             
@@ -6952,35 +6958,35 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     duration_and_fix.status = FINISHED
                     duration_and_fix.setAutoDraw(False)
             
-            # *press_hand* updates
+            # *press_button* updates
             
-            # if press_hand is starting this frame...
-            if press_hand.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+            # if press_button is starting this frame...
+            if press_button.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
                 # keep track of start time/frame for later
-                press_hand.frameNStart = frameN  # exact frame index
-                press_hand.tStart = t  # local t and not account for scr refresh
-                press_hand.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(press_hand, 'tStartRefresh')  # time at next scr refresh
+                press_button.frameNStart = frameN  # exact frame index
+                press_button.tStart = t  # local t and not account for scr refresh
+                press_button.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(press_button, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                press_hand.status = STARTED
-                press_hand.setAutoDraw(True)
+                press_button.status = STARTED
+                press_button.setAutoDraw(True)
             
-            # if press_hand is active this frame...
-            if press_hand.status == STARTED:
+            # if press_button is active this frame...
+            if press_button.status == STARTED:
                 # update params
                 pass
             
-            # if press_hand is stopping this frame...
-            if press_hand.status == STARTED:
+            # if press_button is stopping this frame...
+            if press_button.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > press_hand.tStartRefresh + Targeted_duration-frameTolerance:
+                if tThisFlipGlobal > press_button.tStartRefresh + Targeted_duration-frameTolerance:
                     # keep track of stop time/frame for later
-                    press_hand.tStop = t  # not accounting for scr refresh
-                    press_hand.tStopRefresh = tThisFlipGlobal  # on global time
-                    press_hand.frameNStop = frameN  # exact frame index
+                    press_button.tStop = t  # not accounting for scr refresh
+                    press_button.tStopRefresh = tThisFlipGlobal  # on global time
+                    press_button.frameNStop = frameN  # exact frame index
                     # update status
-                    press_hand.status = FINISHED
-                    press_hand.setAutoDraw(False)
+                    press_button.status = FINISHED
+                    press_button.setAutoDraw(False)
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -7008,16 +7014,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from execute_codition
-        #resets opacity
+        # resets opacity
         press_shape.setOpacity(0)
-        press_hand.setOpacity(0)
-        #get offset of the condition
+        press_button.setOpacity(0)
+        # get offset of the condition
         condition_stopped = globalClock.getTime(format='float')
-        #if the control condition is "watch_Tetris": pauses Tetris
+        # if the control condition is "watch_Tetris": pauses Tetris
         is_paused(control_condition)
-        #waits one seconds
+        # waits one seconds
         condition_or_wait_timer("wait")
-        #if the control condition is "watch_Tetris": sets Tetris window to background
+        # if the control condition is "watch_Tetris": sets Tetris window to background
         Get_on_top("PsychoPy")
         
         
@@ -7195,7 +7201,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from add_data_control
-        #logs on and offsets and condition duration into one line for later processing
+        # logs on and offsets and condition duration into one line for later processing
         thisExp.addData('Condition.started', condition_started)
         thisExp.addData('Condition.stopped', condition_stopped)
         thisExp.addData('targeted.duration', Targeted_duration)
@@ -7219,10 +7225,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from wait_10sec_for_trigger_code
-    #set N_repests back to None since "main_trials" is over and N_repeats does not need to be an int anymore
+    # set N_repests back to None since "main_trials" is over and N_repeats does not need to be an int anymore
     if N_repeats == 0:
         N_repeats = None
-    #creates coutdown
+    # creates coutdown
     timer_wait_for_trigger = core.CountdownTimer(10)
     # keep track of which components have finished
     wait_10sec_for_TriggerComponents = [wait_10sec_for_trigger_text]
@@ -7248,13 +7254,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from wait_10sec_for_trigger_code
-        #additionally checks whether main_trials are enabled at all
+        # additionally checks whether main_trials are enabled at all
         continueRoutine = skip_if_enabled("main_trials")
         
-        # Use a while loop to do nothing until the time runs out but can be interuptes by trigger (trigger signal determined by "config_paradigm_psychopy.txt")
+        # use a while loop to do nothing until the time runs out but can be interuptes by trigger (trigger signal determined by "config_paradigm_psychopy.txt")
         if timer_wait_for_trigger.getTime() <= 0:
-            continueRoutine = False # Exit the loop  
-        #reset timer
+            continueRoutine = False # exit the loop  
+        # reset timer
         elif defaultKeyboard.getKeys(keyList=[Trigger]):
            timer_wait_for_trigger.reset()
         
@@ -7311,7 +7317,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from wait_3sec_to_end
-    #creates coutdown
+    # creates coutdown
     timer_wait_3_sec = core.CountdownTimer(3)
     # keep track of which components have finished
     EndComponents = [end_text, Stop_eyetracker]
@@ -7337,10 +7343,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from wait_3sec_to_end
-        #due to the eyetracking component not ending the routine an additional routine breaker is needed
-        # Use a while loop to do nothing until the time runs out 
+        # due to the eyetracking component not ending the routine an additional routine breaker is needed
+        # use a while loop to do nothing until the time runs out 
         if timer_wait_3_sec.getTime() <= 0:
-            continueRoutine = False # Exit the loop and the routine --> paradigm ends
+            continueRoutine = False # exit the loop and the routine --> paradigm ends
             
         
         # *end_text* updates
@@ -7406,7 +7412,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # the Routine "End" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     # Run 'End Experiment' code from create_processes
-    #Terminate game and watch process
+    # Terminate game and watch process
     if skip_if_enabled("main_trials") == True:
         play_Tetris.terminate()
         watch_Tetris.terminate()

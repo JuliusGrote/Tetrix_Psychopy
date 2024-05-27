@@ -1,3 +1,4 @@
+# a class that holds the different colors for background, blocks, grid and labels...
 class Colors:
 	dark_grey = (26, 31, 40)
 	green = (47, 230, 23)
@@ -11,6 +12,7 @@ class Colors:
 	dark_blue = (44, 44, 127)
 	light_blue = (59, 85, 162)
 
+	# add a class decorator that returns the colors for the blocks and grid in the order of cell and block ids
 	@classmethod
 	def get_cell_colors(cls):
 		return [cls.dark_grey, cls.green, cls.red, cls.orange, cls.yellow, cls.purple, cls.cyan, cls.pink]
