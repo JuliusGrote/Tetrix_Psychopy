@@ -3,14 +3,14 @@
 - - -  
 ## Getting Started:
 
-- Make sure you downloaded at least Version: "Psychopy 2024.1.1" or higher
+- Make sure you downloaded at least Version: "Psychopy 2024.1.1" or higher.
  ([download here](https://www.psychopy.org/download.html))
 
-- Open the [Tetris_Psychopy.psyexp](Tetris_Psychopy.psyexp) file
+- Open the [Tetris_Psychopy.psyexp](Tetris_Psychopy.psyexp) file.
 
-- Check whether pynput is installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput" and install if necessary)
+- Check whether pynput is installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput" and install if necessary).
  
-- To start, press "run"/green startbutton and enter the current subject id
+- To start, press "run"/green startbutton and enter the current subject id.
 
 - - -
 ## General Structure:
