@@ -3,8 +3,8 @@
 - - -  
 ## Getting Started:
 
-- Make sure you downloaded at least Version: "Psychopy 2024.1.1" or higher.
- ([download here](https://www.psychopy.org/download.html))
+- Make sure you downloaded at least Version: "Psychopy 2024.1.1" or higher
+ ([download here](https://www.psychopy.org/download.html)).
 
 - Open the [Tetris_Psychopy.psyexp](Tetris_Psychopy.psyexp) file.
 
