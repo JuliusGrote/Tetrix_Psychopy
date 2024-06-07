@@ -47,7 +47,7 @@ Targeted_duration = 20
 ### Intertrial Interval Variation
 
 ### Should the intertrial interval vary? (better sampling of the HRF)
-### Here the intertrial interval relates to the time between "play_Tetris" and the random "control_condition" as well as between the "control_condition" and the next "play_Tetris"!
+### Here the intertrial interval relates to the time in between "play_Tetris" and the random "control_condition" as well as between the "control_condition" and the next "play_Tetris"!
 ### Default and recommended: True
 
 #------
