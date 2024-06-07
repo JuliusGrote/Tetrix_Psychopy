@@ -11,6 +11,6 @@ class Scale:
 		self.scale_factor = round((root.winfo_screenheight() / 600 - 0.1), 1)
 		self.scale_font = round(46 * self.scale_factor)
 		self.x_displacement = (self.screen_w -(13/15 * self.screen_h + 5)) / 2
-
+# create a new meth
         
 

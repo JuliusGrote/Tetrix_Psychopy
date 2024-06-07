@@ -14,18 +14,64 @@ Language = "German"
 ### How many Pre-Trial rounds should be played or what Pre-Trial design?
 ### --> see "config_tetris_game.txt"
 
-### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
-### Default: None; if you want to use that function set "main_trials_seed" to any number.
+### By default (and recommended), all control conditions are included.
+### If you want to exclude a specific control condition, you can remove its entry in "main_trials.py" (make sure to also exclude routines in "Tetris_Psychopy.psyexp" that explain the excluded control condition(s))
+
+### How often should each (control) condition occur?
+
+### Also sets the number of trials! 
+### Each trial consists of "play_Tetris" followed by a randomly chosen "control_condition"!
+### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
+### If you want to use both "Comp_wm_load" and "Comp_speed" (--> 4 total combinations) this number should be dividable by 4 (e.g. 12)!
+### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetris_psychopy.psyexp" are disabled accordingly)
 
 #------
-Main_trials_seed = 5
+N_repeats = 10
+#------
+
+### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
+### The same condition is at max. chosen two times in a row.
+### Default: None; if you want to use that function set "Main_trials_seed" to any number.
+
+#------
+Main_trials_seed = 11
 #------
 
 ### Duration for all conditions in sec.
-### Default: 20 (strongly recommended: 20-30)
+### Default: 20 (strongly recommended: 20-30, no more than 50)
 
 #------
 Targeted_duration = 20
+#------
+
+### Intertrial Interval Variation
+
+### Should the intertrial interval vary? (better sampling of the HRF)
+### Default and recommended: True
+
+#------
+ITI_variation = True
+#------
+
+### Do you want to use a random seed for the "ITI_variation" so that the random choice of is the same for each participant/each time running the experiment?
+### Here the intertrial interval relates to the time between "play_Tetris" and the random "control_condition" as well as between the "control_condition" and the next "play_Tetris"!
+### Default: None; if you want to use that function set "ITI_seed" to any number.
+
+#------
+ITI_seed = None
+#------
+
+### If "ITI_variation = True", what should the upper/lower limit of the variation be?
+### ITI_variation adds a random value (in 0.1sec increments) between "ITI_lower" and "ITI_upper" to the already 7sec-default ITI (all routines between two conditions combined).
+### Default lower: -1.0
+### Default upper: 1
+
+#------
+ITI_lower = -1.0
+#------
+
+#------
+ITI_upper = 1.0
 #------
 
 ### Pause 
@@ -38,19 +84,6 @@ Pause_sec = 30
 #------
 
 ### Control condition settings
-
-### By default (and recommended), all control conditions are included. If you to exclude a specific control condition, you can remove its line from the excel table in "main_trials_template.xlsx" (make sure to also exclude routines in "Tetris_Psychopy.psyexp" that explain the excluded control condition(s))
-
-### How often should each control condition occur?
-### Also sets the number of Trials! 
-### Each trial consists of "play_Tetris" followed by a randomly chosen "control_condition"!
-### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
-### If you want to use both "Comp_wm_load" and "Comp_speed" (--> 4 total combinations) this number should be dividable by 4 (e.g. 12)!
-### If you only want to use the pretrials (e.g. for Behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetris_psychopy.psyexp" are disabled accordingly)
-
-#------
-N_repeats = 10
-#------
 
 ### Toggle rhythmic shape during "motor_control", frequency based on "game.speed"
 

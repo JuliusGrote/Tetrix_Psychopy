@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Mai 27, 2024, at 16:10
+    on Juni 07, 2024, at 20:26
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -43,11 +43,14 @@ import time
 from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
+
 # ensure that all classes can be imported from this folder
 sys.path.append('PyGame_Tetris_Code')
 from game import Game
 from colors import Colors
 from instructions import Instructions
+from main_trials import create_trials
+
 # initialize Pygame and Game
 pygame.init()
 game = Game()
@@ -56,8 +59,12 @@ game = Game()
 with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
     config_paradigm = c_paradigm.read()
     exec(config_paradigm)
-    
-# determine the instruction language
+
+if N_repeats != None:
+    # create the main_trials-order for the main part
+    create_trials(N_repeats, Main_trials_seed)
+
+# set language according to setting in config file
 Inst = Instructions()
 Inst.set_instructions(Language, Targeted_duration, N_repeats)
 
@@ -831,9 +838,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "load_processes" ---
     # Run 'Begin Experiment' code from create_processes
-    #very important: define N_repeats as global otherwise it seems it cannot be accessed by the TrialHandler in the "main_trials" loop
-    global N_repeats
-    
     #checks whether display orientation is altered (defined in "config_paradigm_psychopy.txt")
     if Flip_vertically == True or Flip_horizontally == True:
         
@@ -875,7 +879,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "show_pretrial" ---
     check_pretrial = visual.TextStim(win=win, name='check_pretrial',
-        text=' check pretrial\n',
+        text='check pretrial\n',
         font='Open Sans',
         pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -1532,7 +1536,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=0.0);
     
-    # --- Initialize components for Routine "wait_3s_after_play_tetris" ---
+    # --- Initialize components for Routine "wait_ITI_after_play_tetris" ---
     fix_after_play_Tetris = visual.TextStim(win=win, name='fix_after_play_Tetris',
         text='+',
         font='Open Sans',
@@ -1592,14 +1596,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=0.0);
     
-    # --- Initialize components for Routine "wait_3s_after_control" ---
+    # --- Initialize components for Routine "wait_ITI_after_control" ---
     fix_after_control = visual.TextStim(win=win, name='fix_after_control',
         text='+',
         font='Open Sans',
         pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=0.0);
+        depth=-1.0);
     
     # --- Initialize components for Routine "wait_10sec_for_Trigger" ---
     wait_10sec_for_trigger_text = visual.TextStim(win=win, name='wait_10sec_for_trigger_text',
@@ -6139,23 +6143,27 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from code_three_sec_timer
-    if skip_if_enabled("main_trials") == False:
-       #sets N_repeats to 0 since the upcoming TrialHandler of the loop cannot handle non int-type repeat values
-       N_repeats = 0
-       
     #if pretrials are disabled set the restart level/game.level_for_main.value to the Start_level from "config_tetris_game"
     if skip_if_enabled("pretrial") == False:
         game.level_for_main.value = game.level.value
         print(f'Restart Level set to {game.level_for_main.value}')
+        
+    # set main_trial repeats to 0 if its disabled in config
+    if skip_if_enabled("main_trials") == False:
+        n_repeats = 0
+    
+    # or set it to 1 if N_repeats is not None in config
+    else:
+        n_repeats = 1
     thisExp.nextEntry()
     # the Routine "three_seconds_timer" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
-    main_trials = data.TrialHandler(nReps=N_repeats, method='fullRandom', 
+    main_trials = data.TrialHandler(nReps=n_repeats, method='sequential', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('main_trials_template.xlsx'),
-        seed=Main_trials_seed, name='main_trials')
+        trialList=data.importConditions('main_trials.csv'),
+        seed=None, name='main_trials')
     thisExp.addLoop(main_trials)  # add the loop to the experiment
     thisMain_trial = main_trials.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisMain_trial.rgb)
@@ -6556,12 +6564,29 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         else:
             routineTimer.addTime(-1.000000)
         
-        # --- Prepare to start Routine "wait_3s_after_play_tetris" ---
+        # --- Prepare to start Routine "wait_ITI_after_play_tetris" ---
         continueRoutine = True
         # update component parameters for each repeat
+        # Run 'Begin Routine' code from add_data_play_Tetris
+        # check whether iti variation is enabled in config and set the iti accordingly
+        if ITI_variation == True:
+            # if a random seed is used for the iti variation make sure it is only used in the first trial
+            # (or iti will be the same for each trial)
+            if main_trials.thisN == 0:
+                # create the intertrial interval variation array for "main_trials"
+                # create an array of floats between ITI_lower and ITI_upper with 0.1 increments as extension variations of the intertrial interval
+                itis = np.arange(ITI_lower, ITI_upper, 0.1)
+                # apply seed if enabled in paradigm config
+                np.random.seed(ITI_seed)
+                
+            # choose a random iti from the available "itis" range
+            iti_add = np.random.choice(itis)
+        else:
+            iti_add = 0
+        
         # keep track of which components have finished
-        wait_3s_after_play_tetrisComponents = [fix_after_play_Tetris]
-        for thisComponent in wait_3s_after_play_tetrisComponents:
+        wait_ITI_after_play_tetrisComponents = [fix_after_play_Tetris]
+        for thisComponent in wait_ITI_after_play_tetrisComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -6573,9 +6598,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "wait_3s_after_play_tetris" ---
+        # --- Run Routine "wait_ITI_after_play_tetris" ---
         routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 3.0:
+        while continueRoutine:
             # get current time
             t = routineTimer.getTime()
             tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -6604,7 +6629,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if fix_after_play_Tetris is stopping this frame...
             if fix_after_play_Tetris.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > fix_after_play_Tetris.tStartRefresh + 3-frameTolerance:
+                if tThisFlipGlobal > fix_after_play_Tetris.tStartRefresh + 3 + iti_add-frameTolerance:
                     # keep track of stop time/frame for later
                     fix_after_play_Tetris.tStop = t  # not accounting for scr refresh
                     fix_after_play_Tetris.tStopRefresh = tThisFlipGlobal  # on global time
@@ -6625,7 +6650,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in wait_3s_after_play_tetrisComponents:
+            for thisComponent in wait_ITI_after_play_tetrisComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -6634,8 +6659,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "wait_3s_after_play_tetris" ---
-        for thisComponent in wait_3s_after_play_tetrisComponents:
+        # --- Ending Routine "wait_ITI_after_play_tetris" ---
+        for thisComponent in wait_ITI_after_play_tetrisComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from add_data_play_Tetris
@@ -6659,17 +6684,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             thisExp.addData('game.speed_condition', None)
         
         thisExp.nextEntry()
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if routineForceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-3.000000)
+        # the Routine "wait_ITI_after_play_tetris" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         
         # --- Prepare to start Routine "show_next_control" ---
         continueRoutine = True
         # update component parameters for each repeat
         Icon_for_next_cond.setSize((0.5, 0.5))
-        Icon_for_next_cond.setImage(Images_next_cond)
+        Icon_for_next_cond.setImage(images_next_cond)
         # keep track of which components have finished
         show_next_controlComponents = [Icon_for_next_cond]
         for thisComponent in show_next_controlComponents:
@@ -7118,12 +7140,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         else:
             routineTimer.addTime(-1.000000)
         
-        # --- Prepare to start Routine "wait_3s_after_control" ---
+        # --- Prepare to start Routine "wait_ITI_after_control" ---
         continueRoutine = True
         # update component parameters for each repeat
+        # Run 'Begin Routine' code from add_data_control
+        # check whether iti variation is enabled in config
+        if ITI_variation == True:    
+            iti_add = np.random.choice(itis)
+        else:
+            iti_add = 0
+        
+        
         # keep track of which components have finished
-        wait_3s_after_controlComponents = [fix_after_control]
-        for thisComponent in wait_3s_after_controlComponents:
+        wait_ITI_after_controlComponents = [fix_after_control]
+        for thisComponent in wait_ITI_after_controlComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -7135,9 +7165,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "wait_3s_after_control" ---
+        # --- Run Routine "wait_ITI_after_control" ---
         routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 3.0:
+        while continueRoutine:
             # get current time
             t = routineTimer.getTime()
             tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -7166,7 +7196,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if fix_after_control is stopping this frame...
             if fix_after_control.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > fix_after_control.tStartRefresh + 3-frameTolerance:
+                if tThisFlipGlobal > fix_after_control.tStartRefresh + 3 + iti_add-frameTolerance:
                     # keep track of stop time/frame for later
                     fix_after_control.tStop = t  # not accounting for scr refresh
                     fix_after_control.tStopRefresh = tThisFlipGlobal  # on global time
@@ -7187,7 +7217,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in wait_3s_after_controlComponents:
+            for thisComponent in wait_ITI_after_controlComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -7196,8 +7226,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "wait_3s_after_control" ---
-        for thisComponent in wait_3s_after_controlComponents:
+        # --- Ending Routine "wait_ITI_after_control" ---
+        for thisComponent in wait_ITI_after_controlComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         # Run 'End Routine' code from add_data_control
@@ -7208,26 +7238,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         thisExp.addData('Condition.duration', condition_stopped - condition_started)
         thisExp.addData('Condition.info', f'info_{control_condition}')
         
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if routineForceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-3.000000)
+        # the Routine "wait_ITI_after_control" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         thisExp.nextEntry()
         
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-    # completed N_repeats repeats of 'main_trials'
+    # completed n_repeats repeats of 'main_trials'
     
     
     # --- Prepare to start Routine "wait_10sec_for_Trigger" ---
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from wait_10sec_for_trigger_code
-    # set N_repests back to None since "main_trials" is over and N_repeats does not need to be an int anymore
-    if N_repeats == 0:
-        N_repeats = None
     # creates coutdown
     timer_wait_for_trigger = core.CountdownTimer(10)
     # keep track of which components have finished
