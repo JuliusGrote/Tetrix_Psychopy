@@ -21,7 +21,7 @@ Pretrial = True
 ### Default: >= 3 (normal) <-> >= 6 (regression, the more values the more precise the regression...)
 
 #------
-Pretrial_rounds = 1
+Pretrial_rounds = 3
 #------
 
 ### Pretrial design: Staircase or Normal
