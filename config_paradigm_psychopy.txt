@@ -47,6 +47,7 @@ Targeted_duration = 20
 ### Intertrial Interval Variation
 
 ### Should the intertrial interval vary? (better sampling of the HRF)
+### Here the intertrial interval relates to the time between "play_Tetris" and the random "control_condition" as well as between the "control_condition" and the next "play_Tetris"!
 ### Default and recommended: True
 
 #------
@@ -54,7 +55,6 @@ ITI_variation = True
 #------
 
 ### Do you want to use a random seed for the "ITI_variation" so that the random choice of is the same for each participant/each time running the experiment?
-### Here the intertrial interval relates to the time between "play_Tetris" and the random "control_condition" as well as between the "control_condition" and the next "play_Tetris"!
 ### Default: None; if you want to use that function set "ITI_seed" to any number.
 
 #------
