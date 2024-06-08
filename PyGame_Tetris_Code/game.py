@@ -141,8 +141,8 @@ class Game:
 
 	# here, the level updates are managed
 	def update_level(self):
-		# works only if the level progression in the main trials is enabled or the the pretrial is played
-		if Level_progression_main == True or self.pretrial == True:		
+		# works only if the level progression in the main trials or pretrials is enabled depending on the current tetris process
+		if Level_progression_main == True and self.pretrial == False or self.pretrial == True and Level_progression_pre == True:		
 			if self.total_lines_cleared >= Lines_for_levelup:
 				# add 1 to y_array[old_level] if Jnd_regression is enabled in config
 				if self.jnd_regression == True and self.pretrial == True:

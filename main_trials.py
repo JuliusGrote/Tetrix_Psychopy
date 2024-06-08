@@ -1,7 +1,7 @@
 import csv
 import random
 
-def create_trials(n_trials, trials_seed): #function to create the main trials
+def create_trials(n_trials, trials_seed): # function to create the main trials
 
 	# set a random seed if enabled in the config
 	random.seed(trials_seed)
@@ -41,11 +41,17 @@ def create_trials(n_trials, trials_seed): #function to create the main trials
 				remaining_rows = rows[i:]
 				random.shuffle(remaining_rows)
 				rows[i:] = remaining_rows
-			row_type = rows[i]
+				# get the current row type
+				row_type = rows[i]
+		
+			# for debugging purposes print the row type
+			print(row_type)
+			
+			# write the row to the CSV file
+			writer.writerow(row_type)
 
-		# write the row to the CSV file
-		writer.writerow(row_type)
+			# update the last two row types
+			second_last_row_type = last_row_type
+			last_row_type = row_type
 
-		# update the last two row types
-		second_last_row_type = last_row_type
-		last_row_type = row_type
+create_trials(10, 1) # create the main trials with 10 trials and a seed of 1

@@ -15,13 +15,13 @@ Pretrial = True
 
 ### How many rounds of Pre-Trial should be played? This is not overwritten in "Tetris_Psychopy" and important for your experimental design!
 ### If you want to use the "JND_regression", make sure that you have enough pretrial rounds, otherwise you the "curve_fit" function might not be able to estimate the function parameters!
-### If you do not want to make use of the PreTrials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
+### If you do not want to make use of the Pre-Trials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
 ### --> The level for the "main_trials" is then set by the "Start_level" parameter in this file. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
 ### Conversly, if you just want to use the paradigm as a behavioral experiment you can set "main_trials" to "None" in "config_paradigm_psychopy.txt".
 ### Default: >= 3 (normal) <-> >= 6 (regression, the more values the more precise the regression...)
 
 #------
-Pretrial_rounds = 3
+Pretrial_rounds = None
 #------
 
 ### Pretrial design: Staircase or Normal
@@ -92,11 +92,19 @@ Start_level = 1
 Lines_for_levelup = 3
 #------
 
-### Do you want to keep the level progression for the "main_Trials"?
-### Should be "False" if you want to use "Comp_speed" in "config_paradigm_psychopy.txt"!
+### Do you want to enable the level progression for the "pretrial"?
+### Default: True
 
 #------
-Level_progression_main = False
+Level_progression_pre = True
+#------
+
+### Do you want to keep the level progression for the "main_Trials"?
+### Should be "False" if you want to use "Comp_speed" in "config_paradigm_psychopy.txt"!
+### Default: False
+
+#------
+Level_progression_main = True
 #------
 
 
