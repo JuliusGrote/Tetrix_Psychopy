@@ -18,8 +18,8 @@ def create_trials(n_trials, trials_seed): # function to create the main trials
 		writer = csv.writer(file)
 		writer.writerow(["control_condition", "images_next_cond"])
 
-		# create a list of row types repeated n//len(row_types) times
-		rows = row_types * (n_trials)
+		# create a list of row types repeated row_types * n_trials times
+		rows = row_types * n_trials
 
 		# randomly shuffle the rows
 		random.shuffle(rows)
@@ -44,14 +44,9 @@ def create_trials(n_trials, trials_seed): # function to create the main trials
 				# get the current row type
 				row_type = rows[i]
 		
-			# for debugging purposes print the row type
-			print(row_type)
-			
 			# write the row to the CSV file
 			writer.writerow(row_type)
 
 			# update the last two row types
 			second_last_row_type = last_row_type
 			last_row_type = row_type
-
-create_trials(10, 1) # create the main trials with 10 trials and a seed of 1
