@@ -1,5 +1,6 @@
 import csv
 import random
+from venv import create
 
 def create_trials(n_trials, trials_seed): # function to create the main trials
 
@@ -27,12 +28,9 @@ def create_trials(n_trials, trials_seed): # function to create the main trials
 		# initialize variables to ensure no row type occurs more than twice in a row
 		last_row_type = None
 		second_last_row_type = None
-
-		# the total number of trials should be n_trials * len(row_types)
-		n = n_trials * len(row_types)
 			
 		# create a loop that ensures each trials does not occur more than two times in a row
-		for i in range(n):
+		for i in range(len(rows)):
 			row_type = rows[i]
 
 			# check if the row type is the same as the last two row types

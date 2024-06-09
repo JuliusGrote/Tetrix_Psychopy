@@ -3,6 +3,7 @@ import random
 import pygame
 from multiprocessing import Value
 import ctypes
+
 # import classes from the other game files
 from blocks import *
 from grid import Grid
@@ -14,9 +15,8 @@ with open("PyGame_Tetris_Code/config_tetris_game.txt", "r") as c_tetris:
 	config_tetris = c_tetris.read()
 	exec(config_tetris)
 
+# initialize pygame
 pygame.init()
-
-
 
 # apply seeds for random.choice() function defined in "config_tetris_game.txt"
 random.seed(Visual_seed)
@@ -43,13 +43,14 @@ class Game:
 				# since they need to be synchronized between the main process of "Tetris_Psychopy" and all the different Tetris processes!
 				# some variables are defined as class variables ("self.") 
 				# because they are imported and used in "Tetris_psychopy"
+
 		## regression variables 
 		self.regression.weights[Start_level - 1] += 1
 		self.jnd_regression = Jnd_regression
 		## game over state at game start
 		self.game_over = False
 		## pretrial design variables
-		self.pretrial = Pretrial
+		self.pretrial = None
 		self.pretrial_staircase = Pretrial_staircase
 		self.pretrial_rounds = Pretrial_rounds
 		self.game_over_counter = Value('i', 0)

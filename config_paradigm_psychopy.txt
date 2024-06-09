@@ -15,7 +15,7 @@ Language = "German"
 ### --> see "config_tetris_game.txt"
 
 ### By default (and recommended), all control conditions are included.
-### If you want to exclude a specific control condition, you can remove its entry in "main_trials.py" (make sure to also exclude routines in "Tetris_Psychopy.psyexp" that explain the excluded control condition(s))
+### If you want to exclude a specific control condition, you can remove its entry in "main_trials.py" (make sure to also exclude routines in "Tetrix_PsychoPy.psyexp" that explain the excluded control condition(s))
 
 ### How often should each (control) condition occur?
 
@@ -23,7 +23,7 @@ Language = "German"
 ### Each trial consists of "play_Tetris" followed by a randomly chosen "control_condition"!
 ### Default: 10; 3 control conditions ("watch_Tetris", "motor_control", "fixation_cross") --> 10 * 3 = 30 trials
 ### If you want to use both "Comp_wm_load" and "Comp_speed" (--> 4 total combinations) this number should be dividable by 4 (e.g. 12)!
-### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetris_psychopy.psyexp" are disabled accordingly)
+### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 
 #------
 N_repeats = 10
@@ -44,34 +44,34 @@ Main_trials_seed = 11
 Targeted_duration = 20
 #------
 
-### Intertrial Interval Variation
+### Interstimulus Interval Variation
 
-### Should the intertrial interval vary? (better sampling of the HRF)
-### Here the intertrial interval relates to the time in between "play_Tetris" and the random "control_condition" as well as between the "control_condition" and the next "play_Tetris"!
+### Should the interstimulus interval vary? (better sampling of the HRF)
+### Here the interstimulus interval relates to the time in between "play_Tetris" and the random "control_condition" as well as between the "control_condition" and the next "play_Tetris"!
 ### Default and recommended: True
 
 #------
-ITI_variation = True
+ISI_variation = True
 #------
 
-### Do you want to use a random seed for the "ITI_variation" so that the random choice of is the same for each participant/each time running the experiment?
-### Default: None; if you want to use that function set "ITI_seed" to any number.
+### Do you want to use a random seed for the "ISI_variation" so that the random choice of is the same for each participant/each time running the experiment?
+### Default: None; if you want to use that function set "ISI_seed" to any number.
 
 #------
-ITI_seed = None
+ISI_seed = None
 #------
 
-### If "ITI_variation = True", what should the upper/lower limit of the variation be?
-### ITI_variation adds a random value (in 0.1sec increments) between "ITI_lower" and "ITI_upper" to the already 7sec-default ITI (all routines between two conditions combined).
+### If "ISI_variation = True", what should the upper/lower limit of the variation be?
+### ISI_variation adds a random value (in 0.1sec increments) between "ISI_lower" and "ISI_upper" to the already 7sec-default ISI (all routines between two conditions combined).
 ### Default lower: -1.0
 ### Default upper: 1
 
 #------
-ITI_lower = -1.0
+ISI_lower = -1.0
 #------
 
 #------
-ITI_upper = 1.0
+ISI_upper = 1.0
 #------
 
 ### Pause 
@@ -92,7 +92,7 @@ Show_motor_rhythm = True
 #------
 
 ### Which symbol should be displayed (choose either "button" -  this is the icon from the instructions - or "shape")
-### If you want "Motor_symbol = shape", you can adjust which shape in the "press_shape" stimulus in the "random_control_condition" routine in "Tetris_Psychopy.psyexp".
+### If you want "Motor_symbol = shape", you can adjust which shape in the "press_shape" stimulus in the "random_control_condition" routine in "Tetrix_PsychoPy.psyexp".
 
 #------
 Motor_symbol = "button"
@@ -100,7 +100,7 @@ Motor_symbol = "button"
 
 ### Play_Tetris settings
 
-### Would you like to compare "high_load" working memory load (wm_load) against "low_load" working memory load (one "NEXT" Block vs. three "NEXT" BLocks)? 
+### Would you like to compare "high_load" working memory load (wm_load) against "low_load" working memory load (one "NEXT" Tetris-block  vs. three "NEXT" Tetris-block s)? 
 ### In each "play_Tetris" condition it is randomly chosen whether "wm_load" is "high_load" or "low_load"!
 ### Uses the same mechanic as the "three_next_blocks" setting from "config_tetris_game.txt"
 
@@ -162,21 +162,21 @@ Test_keys = True
 #------
 if Test_keys == True: ### Do not change this line of code!
 	### Test keys:
-	pygame_key_1 = pygame.K_DOWN # Move Tetris Block down
-	pygame_key_2 = pygame.K_LEFT # Move Tetris Block left 
-	pygame_key_3 = pygame.K_UP # Rotate Tetris Block
-	pygame_key_4 = pygame.K_RIGHT # Move Tetris Block right
+	pygame_key_1 = pygame.K_DOWN # Move Tetris-block down
+	pygame_key_2 = pygame.K_LEFT # Move Tetris-block left 
+	pygame_key_3 = pygame.K_UP # Rotate Tetris-block 
+	pygame_key_4 = pygame.K_RIGHT # Move Tetris-block right
 	pygame_key_5 = pygame.K_0 # Spare key
 else: 	### Do not change this line of code!
 	### Keys to use in the actual experiment:
-	pygame_key_1 = pygame.K_6 # Move Tetris Block down
-	pygame_key_2 = pygame.K_7 # Move Tetris Block left 
-	pygame_key_3 = pygame.K_8 # Rotate Tetris Block
-	pygame_key_4 = pygame.K_9 # Move Tetris Block right
+	pygame_key_1 = pygame.K_6 # Move Tetris-block down
+	pygame_key_2 = pygame.K_7 # Move Tetris-block left 
+	pygame_key_3 = pygame.K_8 # Rotate Tetris-block 
+	pygame_key_4 = pygame.K_9 # Move Tetris-block right
 	pygame_key_5 = pygame.K_0 # Spare key
 #------
 
-### Define which keys to use in Psychopy to use "press_continue" (continue to next routine) in "Tetris_Psychopy.psyexp", should be according to the keys used above for pygame!
+### Define which keys to use in Psychopy to use "press_continue" (continue to next routine) in "Tetrix_PsychoPy.psyexp", should be according to the keys used above for pygame!
 
 #------
 psychopy_key_1 = '6'
@@ -218,8 +218,8 @@ Flip_horizontally = False
 
 ## Toggle eye tracking
 
-### Feature not fully developed yet, you might want to add ROIs, etc. in "Tetris_Psychopy.psyexp"!
-### Eye tracker is started in the "play_pretrial" routine in "Tetris_Psychopy.psyexp" and stopped in the "end" routine.
+### Feature not fully developed yet, you might want to add ROIs, etc. in "Tetrix_PsychoPy.psyexp"!
+### Eye tracker is started in the "play_pretrial" routine in "Tetrix_PsychoPy.psyexp" and stopped in the "end" routine.
 
 #------
 Eye_tracking = False

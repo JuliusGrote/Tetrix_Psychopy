@@ -5,23 +5,16 @@
 
 ## Pre-Trial
 
-### Pretrial? Note: When using the "Tetris_Psychopy.psyexp" Experiment, this setting will be overwritten when the experiment starts.
-### For more Info see in "Tetris_Psychopy.psyexp": "load_processes" Routine --> "create_processes" code --> "Before Experiment" tab --> "Tetris_Instance()" function 
-### Default: True
+### How many rounds of Pre-Trial should be played? This is not overwritten in "Tetrix_PsychoPy" and important for your experimental design!
 
-#------
-Pretrial = True
-#------
-
-### How many rounds of Pre-Trial should be played? This is not overwritten in "Tetris_Psychopy" and important for your experimental design!
 ### If you want to use the "JND_regression", make sure that you have enough pretrial rounds, otherwise you the "curve_fit" function might not be able to estimate the function parameters!
 ### If you do not want to make use of the Pre-Trials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
-### --> The level for the "main_trials" is then set by the "Start_level" parameter in this file. Explanatory routines in "Tetris_Psychopy.psyexp" are skipped accordingly.
+### --> The level for the "main_trials" is then set by the "Start_level" parameter in this file. Explanatory routines in "Tetrix_PsychoPy.psyexp" are skipped accordingly.
 ### Conversly, if you just want to use the paradigm as a behavioral experiment you can set "main_trials" to "None" in "config_paradigm_psychopy.txt".
 ### Default: >= 3 (normal) <-> >= 6 (regression, the more values the more precise the regression...)
 
 #------
-Pretrial_rounds = None
+Pretrial_rounds = 3
 #------
 
 ### Pretrial design: Staircase or Normal
@@ -41,6 +34,7 @@ Stair_factor = 2/3
 #------
 
 ### Restart Pre-Trial rounds from "Start_level" each "Restart_round" (only makes sense if "Pretrial_staircase = True").
+### I.e. if you set Pretrial_rounds = 6 and Restart_round = 3, the level would start from "Start_level" in round 1 and then again in round 4. 
 ### If you want to disable this feature set "Restart_round" to "None".
 ### Default: None, but adjust for your desired design.
 
@@ -50,7 +44,7 @@ Restart_round = 3
 
 ### JND Regression
 
-### Based on a logistic regression the JND (Just Noticable Difference, here for the parameter "game.speed") is determined - correlating with the strongest neural activity (design adopted from Baker et al. 2018).
+### Based on a logistic regression the JND (Just Noticable Difference, here for the parameter "game.speed") is determined - at the JND "game.speed" the strongest neural activity is evoked (design adopted from Baker et al. 2018).
 ### After regression the level nearest to the JND is the new level for the "main_trials".
 ### If "Jnd_regression = False", level for "main_trials" will be determined by averaging!
 
@@ -78,7 +72,7 @@ Level_for_main_factor = 0.75
 ## General Level Design
 
 ### Determines at which level to start.
-### Overwritten if you use the "Pretrial_Rounds" setting, but if "Pretrial_rounds = None" this sets the "game.level" for the "main_trials" in "Tetris_Psychopy.psyexp".
+### Overwritten if you use the "Pretrial_Rounds" setting, but if "Pretrial_rounds = None" this sets the "game.level" for the "main_trials" in "Tetrix_PsychoPy.psyexp".
 ### Default: 1
 
 #------
@@ -108,9 +102,9 @@ Level_progression_main = True
 #------
 
 
-## Game speed
+# Game speed
 
-## Speed in "ms/line" in the grid: time that a block needs to move down one cell on the grid, correlates to game difficulty.
+## Speed in "ms/line" in the grid: time that a Tetris-block  needs to move down one cell on the grid, correlates to game difficulty.
 ## Speed per level described by this formula in "ms": self.speed = round((Start_speed/1250 - ((level - 1) * Speed_slope)) ** (level - 1) * 1000) mimicking the original Tetris game physics.
 
 ### Start_speed determines how fast game difficulty progresses. 
@@ -139,7 +133,7 @@ Speed_slope = 0.007
 Visual_seed = 1
 #------
 
-### 2. The block that is chosen each time a new block is needed so that the choice is the same for each participant/each time running the experiment? 
+### 2. The Tetris-block that is chosen each time a new Tetris-block is needed so that the choice is the same for each participant/each time running the experiment? 
 ### Default: None; if you want to use that function set "block_seed" to any number.
 
 #------
@@ -168,7 +162,7 @@ Restart_automatically = True
 ### Down
 
 ### Do you want to add an "accelerated" downwards movement?
-### By default, a set key press moves the block one cell. Additionally - if "Accelerate_down = True" -  if the Key is held down, the blocks move the cells down automatically and with increased speed over time.
+### By default, a set key press moves the Tetris-block one cell. Additionally - if "Accelerate_down = True" -  if the Key is held down, the Tetris-block moves down automatically and with increased speed over time.
 ### Default: True, if you disable that option, you might want to change the "explain_controls.png" overview in the "Images/" folder as well.
 
 #------
@@ -199,8 +193,8 @@ Cutoff_down = 1/45
 
 ## Pause handling
 
-### Determines whether game/"Tetris_Instance()" (in "Tetris_Psychopy.psyexp") starts paused or not.
-### Default and strongly recommended for "Tetris_Psychopy.psyexp": True
+### Determines whether game/"Tetris_Instance()" (in "Tetrix_PsychoPy.psyexp") starts paused or not.
+### Default and strongly recommended for "Tetrix_PsychoPy.psyexp": True
 
 #------
 Start_Pause = True
@@ -211,22 +205,22 @@ Start_Pause = True
 
 ### Determines whether game starts in fullscreen or not
 ### Default: False 
-### Overwritten, if you use the "Tetris_Psychopy" Experiment!
+### Overwritten, if you use the "Tetrix_PsychoPy" Experiment!
 
 #------
 Start_Fullscreen = False
 #------
 
 
-### Setting for visual control purposes, blocks get deleted when reaching the bottom of the grid, no stacking. Blocks move in a random pattern simulation actual gameplay.
-### Similar to the "Pretrial = True/False" setting, when using "Tetris_Psychopy.psyexp", this setting will be overwritten at the start of the experiment.
+### Setting for visual control purposes, Tetris-blocks get deleted when reaching the bottom of the grid, no stacking. Tetris-blocks move in a random pattern simulation actual gameplay.
+### Similar to the "Pretrial = True/False" setting, when using "Tetrix_PsychoPy.psyexp", this setting will be overwritten at the start of the experiment.
 
 #------
 Visual_control = False
 #------
 
-### Invisible "next" blocks in "Visual_control"
-### Should the next blocks be visible during the visual control condition? (decrease visual stimulus load of the control condition)
+### Invisible "next" Tetris-blocks in "Visual_control"
+### Should the next Tetris-blocks be visible during the visual control condition? (decrease visual stimulus load of the control condition)
 ### Default: True
 
 
@@ -234,9 +228,9 @@ Visual_control = False
 Hide_next_visual = True
 #------
 
-### Should there be three "next" blocks instead of one on the screen?
+### Should there be three "next" Tetris-blocks instead of one on the screen?
 ### If you enabled the "toggle_wm_load" option in the "config_paradigm_psyhopy.txt", this option here only relates to the "Pre-Trials"
-### With reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" blocks and in the "level mode" there is only one "next" block.
+### With reference to the current Tetris mobile app and online game, in "marathon mode", there are three "next" Tetris-blocks and in the "level mode" there is only one "next" Tetris-block.
 
 #------
 Toggle_three_next_blocks = True

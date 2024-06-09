@@ -1,19 +1,25 @@
-# Tetris Experiment for Psychopy 2024.1.1:
+# Tetrix: Tetris Experiment for PsychoPy 2024.1.1
 
-- - -  
-## Getting Started:
+This is a PsychoPy implementation of the Tetris game designed to run as an fMRI experiment but can also be used to solely gather behavioral data. The fMRI-paradigm follows a block-design including an optional training phase and a testing phase where participants play Tetris via a controller in the scanner.
+
+## Citation
+
+When using Tetrix, please include the following citation:
+
+**Grote, J., Stocker, J. E., & Jansen, A. (2024, June 9). Tetrix: A novel paradigm for investigating cognitive functions associated with the computer game Tetris. Retrieved from osf.io/6hzbj**
+
+## Getting Started
 
 - Make sure you downloaded at least Version: "Psychopy 2024.1.1" or higher
  ([download here](https://www.psychopy.org/download.html)).
 
-- Open the [Tetris_Psychopy.psyexp](Tetris_Psychopy.psyexp) file.
+- Open the [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) file.
 
 - Check whether pynput is installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput" and install if necessary).
- 
+
 - To start, press "run"/green startbutton and enter the current subject id.
 
-- - -
-## General Structure:
+## General Structure
 
 &rarr; This Paradigm is designed to be highly customizable. All follwoing aspects can be - at least in some way - adjusted to your specific needs.
 
@@ -21,69 +27,72 @@
 
 &rarr; By default, the Paradigm consists of a:
 
-1. "Pre-Trial" part, in which the individual skill of a participant is determined by playing "Pretrial_rounds" rounds. Afterwards the level for the "Main-Part" is calculated. Additionally, you can choose how this level is calculated - either by averaging or determining the Just Noticable Difference via weighted logistic regression. (JND: level/game speed at which participants fail 50% of the time, adopted and modified from [Baker et al. 2018](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0201486). "Objective" treshold at which the highest neural activity is observed). This is (also) backed up by the Neural Efficiency Hypothesis suggesting that more skilled subjects need less neuronal resources for the same taks difficulty compared to less skilled individuals, but utilize a similar amount of resources at the same **subjective** task difficulty, see [Rietschel et al. 2012](https://pubmed.ncbi.nlm.nih.gov/22410264/) and [Nussbaumer et al. 2015](https://www.sciencedirect.com/science/article/pii/S0160289615000513). For more information on settings, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
+1. "Pre-Trial" part, in which the individual skill of a participant is determined by playing "Pretrial_rounds". Afterwards the level for the "Main-Part" is calculated. Additionally, you can choose how this level is calculated - either by averaging the levels reached or by determining the *Just Noticable Difference* via weighted logistic regression (adopted and modified from [Baker et al. 2018](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0201486)).
 
-&rarr; Note that this part of the experiment (with all explanatory routines) can be disabled in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt), set "Pretrial_rounds" to "None" (for more information, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)).
+&rarr; JND: level/game speed at which participants fail 50% of the time. JND describes an "objective" sensory threshold at which the highest neural activity is observed. This is (also) backed up by the *Neural Efficiency Hypothesis* suggesting that more skilled subjects need less neuronal resources for the same taks difficulty compared to less skilled individuals, but utilize a similar amount of resources at the same **subjective** task difficulty, see [Rietschel et al. 2012](https://pubmed.ncbi.nlm.nih.gov/22410264/) and [Nussbaumer et al. 2015](https://www.sciencedirect.com/science/article/pii/S0160289615000513). For more information on settings, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
 
-2. The "Main-Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial lasting 20sec (default) each with 
-30 (default) trials in total (settings can be altered, in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
+&rarr; Note that this part of the experiment (with all explanatory routines) can be disabled in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt), set "Pretrial_rounds" to "None" (for more information, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)). I.e. if you want to use a set "Start_level" for all participants in the fMRI "main-part".
+
+2. The "Main-Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial (playing Tetris followed by a random control condition) lasting 20sec (default) each with 30 (default) trials in total (settings can be altered, in [config_paradigm_psychopy](config_paradigm_psychopy.txt)). Between each condition block the interstimulus interval, ISI, varies between 6sec and 8sec (default).
 
 &rarr; Note that this part of the experiment (with all explanatory routines) can also be disabled. In [config_paradigm_psychopy](config_paradigm_psychopy.txt), set "N_repeats" to "None". I.e. if you are only interested into the behavioral data generated by the paradigm. Then the "Pre-Trials" would actually serve as the core part of the experiment (for more information, see [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
 
-### Conditions ("Main-Part"):
+### Conditions ("Main-Part")
 
-1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z                    )). Additionally, the "wm_load" can be analyzed using randomized "high_load"- and "low_load"-"play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information! In between trials the game is just paused and the window is brought to the background. In each new "play_Tetris" condition, the "play_Tetris" window is first brought to the foreground and after one second (in order to give subjects time to reorient) the game resumes (this process is the same for the "watch_Tetris").
+1. play_Tetris: Subjects play the game normally while beeing instructed to focus on mental rotation/imagery (adopted from [Agren et al. 2021](https://link.springer.com/article/10.1007/s12144-021-02081-z                    )). Additionally, the "wm_load" (working memory load) can be analyzed using randomized "high_load"- and "low_load"-"play_Tetris" trials. Similarly, "speed" can be investigated: "high_speed" (increased game level) vs. "low_speed" (decreased game level). See [config_paradigm_psychopy](config_paradigm_psychopy.txt) for more information! In between trials the game is just paused and the window is brought to the background. In each new "play_Tetris" condition, the "play_Tetris" window is first brought to the foreground and after one second (in order to give subjects time to reorient) the game resumes (this process is the same for the "watch_Tetris").
 
-3. watch_Tetris: Control condition to account for basic visual processing potentially not relevant for VSWM functions, mental imagery or planning. Subjects are instructed to just watch so automatic gameplay. Blocks do not stack in this condition to avoid that subjects participate in the game subconsciously. 
+2. watch_Tetris: Control condition to account for basic visual processing of moving stimuli, potentially not relevant for VSWM functions, mental imagery or planning. Subjects are instructed to just watch an automatic gameplay. Blocks do not stack in this condition to avoid that subjects participate in the game subconsciously.
 
-4. motor_control: Control condition to account for basic motor activity. Subjects are instructed to press the available buttons alternately (if enabled in [config_paradigm_psychopy](config_paradigm_psychopy.txt): a set visual press rhythm based on the current "game.speed" can be seen on the display).
+3. motor_control: Control condition to account for basic motor activity. Subjects are instructed to press the available buttons alternately (if enabled in [config_paradigm_psychopy](config_paradigm_psychopy.txt): a set visual press rhythm based on the current "game.speed" can be seen on the display).
 
-5. fixation_cross: Baseline condition. subjects are instructed to just look at the fixation cross and do nothing else. 
+4. fixation_cross: Baseline condition. Subjects are instructed to just look at the fixation cross and do nothing else.
 
-### Timeline 
+### Procedure
 
-#### Pre-Trial (if enabled) and Instructions:
-1. All enabled processes are checked ("pretrial_Tetris", "play_Tetris", "watch_Tetris") are checked and then the subject is asked to press the required buttons on the responsebox twice (adjust your settings in [config_paradigm_psychopy].(config_paradigm_psychopy.txt))
+1. All enabled processes are checked ("pretrial_Tetris", "play_Tetris", "watch_Tetris"). The subject is asked to press the required buttons on the responsebox twice (adjust your settings in [config_paradigm_psychopy].(config_paradigm_psychopy.txt))
+
+#### "Pre-Trial" Structure (if enabled)
 
 2. Instuctions for playing Tetris on how to play the game (for fMRI: with one responsebox using the right hand) follow.
 
-3. To determine how skilled a subject is in playing Tetris, the participant plays 3 rounds of Tetris starting from the lowest and slowest level 1 (default, can be altered in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)). Afterwards, the level for the actual MRI measurement is calculated based on options in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
+3. To determine how skilled a subject is in playing Tetris, the participant plays 3 rounds of Tetris.The starting level differs based on the level reached in the previous round (staircase design and using default parameters, can be altered in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)). Afterwards, the level for the actual MRI measurement is calculated based on options in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
 
-4. An optional break of 30sec in between the parts (30s is default and can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
+4. An optional break of 30sec in between the "pre-trial" and "main-part" (30s is default and can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
+
+#### "Main-Part" Structure (if enabled)
 
 5. The 4 conditions of the "Main-Part" are explained.
 
-#### Main Structure (if enabled):
-6. Each trial begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repeat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "n_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)). The order of control condition is defined in [main_trials.csv](main_trials.csv) and is produced by [main_trials.py](main_trials.py).
-
+6. Each trial begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repeat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "N_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)). The order of control condition is defined in [main_trials.csv](main_trials.csv) and is produced by [main_trials.py](main_trials.py).
 
 7. The paradigm waits for remaining triggers and then ends.
 
 ### .psyexp file
-&rarr; If you want to change the core structure of the Paradigm or adjust more specific things, check out the "Flow" of the experiment in [Tetris_Psychopy.psyexp](Tetris_Psychopy.psyexp) with all its routines. "Routines" and "Components" are named according to their function and as described in the config files / this README.md. Keep in mind that Tetris' game mechanics are stored in the [PyGame_Tetris_Code](./PyGame_Tetris_Code/) folder and instructions for each routine can be found in [instructions.py](instructions.py).
 
-- - - 
-## Config:
+&rarr; If you want to change the core structure of the Paradigm or adjust more specific things, check out the "Flow" of the experiment in [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) with all its routines. "Routines" and "Components" are named according to their function and as described in the config files/this README.md. Keep in mind that Tetris' game mechanics are stored in the [PyGame_Tetris_Code](./PyGame_Tetris_Code/) folder and instructions for each routine can be found in [instructions.py](instructions.py).
+
+## Config
+
 1. Config of the general experiment: [config_paradigm_psychopy](config_paradigm_psychopy.txt)
 
 2. Config of game specifics: [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)
 
-- - - 
-## Languages:
-&rarr; This Experiment is available in **English** and **German**, see [config_paradigm_psychopy](config_paradigm_psychopy.txt).
+## Languages
 
+&rarr; This Experiment is available in **English** and **German**, see [config_paradigm_psychopy](config_paradigm_psychopy.txt).
 
 &rarr; Note that this refers to the instructions for participants only, to edit information go to [instructions.py](instructions.py).
 
-- - -
-## Game Code:
+## Game Code
+
 For further information on game code read the [README.md](PyGame_Tetris_Code/README.md) file in the [PyGame_Tetris_Code](./PyGame_Tetris_Code/) folder.
 
-- - -
-## Log Files:
-Are collected in the [data](./data/) folder (will be created in the first run) as a **csv** file named "subject{subjectnumber}_Tetris_Psychopy.csv" (not the .log!, those are automatically generated by PsychoPy and do not specific information for this paradigm).
+## Log Files
 
-### Structure:
+Are collected in the [data](./data/) folder (will be created in the first run) as a **csv** file named "subject{subjectnumber}_Tetrix_PsychoPy.csv" (not the .log!, those are automatically generated by PsychoPy and do not specific information for this paradigm).
+
+### Structure
+
 - **By default**, Psychopy adds the predefined "Exp.info" as columns to the data logfile containing information such as subject_id, date and time stamps as well as trial information, etc. 
 - For **analysis purposes**, the file contains the following data:
 	- "trigger.t": Time stamp for each arriving MRI trigger.
@@ -91,7 +100,7 @@ Are collected in the [data](./data/) folder (will be created in the first run) a
 	- "Condition.started": Onset of each condition block.
 	- "Condition.stopped": Offset of each condition block.
 	- "Condition.duration": Duration of each condition block.
-	- "Condition.info": Serves as pointer to indicate the specific and important information of each condition/experiment part.
+	- "Condition.info": Serves as pointer to indicate specific information of each condition/experiment part.
 	- "game.score" : Score obtained after each "play_Tetris" condition.
     - "game.level" : Level of the finished "play_Tetris" condition.
     - "game.speed" : Speed of the falling Blocks, similar to "game.level" but correlated linearly to game difficulty (for more info see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)).\
@@ -114,17 +123,14 @@ Are collected in the [data](./data/) folder (will be created in the first run) a
 **If you use either of the "Comp_wm_load" and/or "Comp_speed" from [config_paradigm_psychopy ](config_paradigm_psychopy.txt), you will get additional parameters:**
 	- game.wm_load_condition: indicates the "wm_load" of that "play_Tetris" condition.
 	- game.speed_condition: indicates the "speed" of that "play_Tetris" condition.
- 
- 
-- - -
-## Version Compatibility:
+
+## Version Compatibility
 
 The Experiment is constructed for PsychoPy 2024.1.1. You can set which Psychopy Version to use in the "Basic" tab of the experiment settings (gear-symbol). By default, this is not enabled due to a bug in the PsychoPy-2024.1.1-builder marking any experiment using this set version as incompatible with Python 3.8 (this issue seems to be fixed in Psychopy 2024.1.2).
 
-- - -
-## .py File:
+## .py File
 
-The experiment is available as python script as well. Make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput". 
+The experiment is available as a python script as well. Make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput".
 
 &rarr; When not using the PsychoPy standalone version, the paradigm only works with Python installed: [Download here!](https://www.python.org/downloads/). Additionally, make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput".
 
@@ -133,9 +139,9 @@ The experiment is available as python script as well. Make sure to install the c
 pip install {your package}
 ```
 
-### Potential Errors:
+### Potential Errors
 
-*if this message occurs:* 
+*if this message occurs:*
 
 ```shell
 'File "C:\Users\Julius\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 1456, in _execute_child:
@@ -149,11 +155,29 @@ FileNotFoundError: [WinError 2] Das System kann die angegebene Datei nicht finde
 ```python
 psychopy.useVersion('your version') 
 ```
-- - -
-## Eye Tracking:
+
+## Eye Tracking
 
 *currently under development*, *no ROIs defined yet!*
 
 Eyetracking can be activated in [config_paradigm_psychopy](config_paradigm_psychopy.txt).
 
 In order to set which eye tracker to use go to: Setting (gear symbol) &rarr; go to the "Eyetracking" tab &rarr; select your "Eyetracking Device".
+
+## Additional Material
+
+In addition to the actual paradigm resources we created instruction material and questionaires. Those are available from our [OSF-Preregistration](https://osf.io/6hzbj/?view_only=f3d734306e2d47c2b9ff41e5da0caf47).
+
+## Software Licence
+
+Tetrix adheres to the general licensing guidelines of the [Neuro4Enthusiasts](https://fb20.pages.uni-marburg.de/ag-multimodale-neurobildgebung/open-science/) community.
+
+Copyright (c) 2024, Julius Grote (Tetrix Developers).
+
+Tetrix is licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+## Acknowledgement
+
+Funding goes here!
