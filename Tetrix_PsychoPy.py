@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juni 09, 2024, at 19:59
+    on Juni 10, 2024, at 01:44
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -49,7 +49,7 @@ sys.path.append('PyGame_Tetris_Code')
 from game import Game
 from colors import Colors
 from instructions import Instructions
-from main_trials import create_trials
+from main_trials import create_trial_list, shuffle_trials
 
 # initialize Pygame and Game
 pygame.init()
@@ -60,9 +60,10 @@ with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
     config_paradigm = c_paradigm.read()
     exec(config_paradigm)
 
+# if N_repeats is None the function produces an error
 if N_repeats != None:
     # create the main_trials-order for the main part
-    create_trials(N_repeats, Main_trials_seed)
+    create_trial_list(N_repeats, Main_trials_seed)
 
 # set language according to setting in config file
 Inst = Instructions()
@@ -304,14 +305,14 @@ def comp_wm_load_speed(total_trials, trial_nr):
             wm_load_high = 'high_load'
             wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load # add equal number of "high" and "low"
             np.random.seed(Load_seed) 
-            np.random.shuffle(wm_load_seq)
+            wm_load_seq = shuffle_trials(wm_load_seq)
             print(f'wm_load_seq: {wm_load_seq}')
         if Comp_speed == True and Comp_wm_load == False:
             speed_low = 'low_speed'
             speed_high = 'high_speed'
             speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load # add equal number of "high" and "low"
             np.random.seed(Speed_seed) 
-            np.random.shuffle(speed_seq)
+            speed_seq = shuffle_trials(speed_seq)
             print(f'speed_seq: {speed_seq}')
          
         # if both comparison conditions are enabled, in order to get an equal distribution across all 4 different possible combination a tuple array is created.
@@ -320,7 +321,7 @@ def comp_wm_load_speed(total_trials, trial_nr):
             
             # shuffle the tuple array into a random order
             np.random.seed(Comp_all_seed) 
-            np.random.shuffle(combinations)
+            combinations = shuffle_trials(combinations)
             
             # unzip the tuple array in to the two part-arrays, which define the condition combinations in the "play_Tetris" parts
             wm_load_seq, speed_seq = zip(*combinations)
