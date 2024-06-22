@@ -23,6 +23,7 @@ def create_trial_list(n_trials, trials_seed):
 
 		# create a list of row types repeated row_types * n_trials times
 		rows = row_types * n_trials
+		print(rows)
 		rows = shuffle_trials(rows)
 
 		for i in range(len(rows)):
@@ -43,18 +44,33 @@ def shuffle_trials(rows):
 		# create a loop that ensures each trials does not occur more than two times in a row
 		for i in range(len(rows)):
 			row_type = rows[i]
-			
-			# check if the row type is the same as the last two row types
-			while row_type == last_row_type and row_type == second_last_row_type:
-				# if it is, shuffle the remaining unprocessed elements in the list
-				remaining_rows = rows[i:]
-				random.shuffle(remaining_rows)
-				rows[i:] = remaining_rows
-				# set the new row type
+
+			# Check if the row type is the same as the last two row types
+			if row_type == last_row_type and row_type == second_last_row_type:
+				swapped = False
+
+				# Look for a different element to swap with
+				for j in range(i+1, len(rows)):
+					# Look for a different element to swap with
+					if rows[j] != row_type:
+						# Swap the elements
+						rows[i], rows[j] = rows[j], rows[i]
+						swapped = True
+						break
+				 
+				# Execute if no different element is found
+				if not swapped:
+					# If no different element is found, shuffle the remaining elements
+					# This is a fallback and should rarely happen with a diverse enough input list
+					remaining_rows = rows[i:]
+					random.shuffle(remaining_rows)
+					rows[i:] = remaining_rows
+
+				# After swapping or shuffling, set the new row type
 				row_type = rows[i]
 
-			# update the last two row types
+			# Update the last two row types
 			second_last_row_type = last_row_type
 			last_row_type = row_type
-
+		
 		return rows

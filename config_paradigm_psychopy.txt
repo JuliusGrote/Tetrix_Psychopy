@@ -26,7 +26,7 @@ Language = "German"
 ### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 
 #------
-N_repeats = 10
+N_repeats = 7
 #------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
@@ -41,7 +41,7 @@ Main_trials_seed = 11
 ### Default: 20 (strongly recommended: 20-30, no more than 50)
 
 #------
-Targeted_duration = 20
+Targeted_duration = 30
 #------
 
 ### Interstimulus Interval Variation

@@ -6,7 +6,7 @@ This is a PsychoPy implementation of the Tetris game designed to run as an fMRI 
 
 When using Tetrix, please include the following citation:
 
-**Grote, J., Stocker, J. E., & Jansen, A. (2024, June 9). Tetrix: A novel paradigm for investigating cognitive functions associated with the computer game Tetris. Retrieved from osf.io/6hzbj**
+**Grote, J., Hamm, A.-M., Stocker, J. E., Jansen, A., & Kessler, H. (2024, June 21). Tetrix: A novel paradigm for investigating cognitive functions associated with the computer game Tetris. Retrieved from osf.io/6hzbj**
 
 ## Getting Started
 
@@ -63,7 +63,7 @@ When using Tetrix, please include the following citation:
 
 5. The 4 conditions of the "Main-Part" are explained.
 
-6. Each trial begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repeat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 10 times (default, "N_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)). The order of control condition is defined in [main_trials.csv](main_trials.csv) and is produced by [main_trials.py](main_trials.py).
+6. Each trial begins with one block of "play_Tetris" and is followed by one control condition that is selected randomly &rarr; repeat &rarr; loops until each control condition ("watch_Tetris", "motor_control", "fixation_cross") has been played for 7 times (default, "N_repeats" can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)). The order of control condition is defined in [main_trials.csv](main_trials.csv) and is produced by [main_trials.py](main_trials.py).
 
 7. The paradigm waits for remaining triggers and then ends.
 
