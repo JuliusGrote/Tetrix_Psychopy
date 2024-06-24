@@ -98,7 +98,7 @@ Level_progression_pre = True
 ### Default: False
 
 #------
-Level_progression_main = True
+Level_progression_main = False
 #------
 
 

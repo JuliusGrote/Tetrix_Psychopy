@@ -23,7 +23,6 @@ def create_trial_list(n_trials, trials_seed):
 
 		# create a list of row types repeated row_types * n_trials times
 		rows = row_types * n_trials
-		print(rows)
 		rows = shuffle_trials(rows)
 
 		for i in range(len(rows)):
