@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juni 10, 2024, at 01:44
+    on Juni 24, 2024, at 12:21
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -43,6 +43,13 @@ import time
 from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
+
+# By default this python file is executed from the "PsychoPy" folder but the woking directory is c:/Users/...
+# To ensure that the script can be executed from any folder the working directory is set to the script's directory!
+# Get the absolute directory path of the script
+script_directory = os.path.dirname(os.path.abspath(__file__))
+# Change the current working directory to the script's directory
+os.chdir(script_directory)
 
 # ensure that all classes can be imported from this folder
 sys.path.append('PyGame_Tetris_Code')
@@ -153,7 +160,7 @@ def Tetris_Instance(
                     if event.key == pygame_key_4 and game.game_over == False:
                         game.move_right()
                     if event.key == pygame_key_1 and game.game_over == False:
-                        # even if accelerate is enabled this the playing experience is better if you can move the block down one cell manually as well. 
+                        # even if accelerate down is enabled the playing experience is better if you can move the block down one cell manually as well. 
                         game.move_down()
                         if game.accelerate_down == True:
                             # starts down movement by setting the start time "start_down" here
@@ -222,7 +229,7 @@ def Tetris_Instance(
         pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)
         game.draw(screen)
         
-        # if the disply needs to be flipped vertically this function does it
+        # if the display needs to be flipped vertically this function does it
         if Flip_vertically == True or Flip_horizontally == True:
             original_surf = pygame.display.get_surface() # collect all different surfaces on the screen to a new one
             flipped_surface = pygame.transform.flip(original_surf, Flip_vertically, Flip_horizontally)
@@ -255,7 +262,7 @@ def Get_on_top(window_title):
         ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
         ctypes.windll.user32.ShowCursor(False)
         
-# create a countdown timer with a "x"-second duration or speficific for a condition
+# create a countdown timer with a "x"-second duration or specific for a condition
 def condition_or_wait_timer(name_or_duration): 
     if name_or_duration == "wait":
         t = 1
@@ -464,7 +471,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='G:\\Meine Ablage\\Studium\\Github\\Tetris_Psychopy\\Tetrix_PsychoPy.py',
+        originPath='G:\\Meine Ablage\\Studium\\Github\\Tetrix_Psychopy\\Tetrix_PsychoPy.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='priority'
     )
