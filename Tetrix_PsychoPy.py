@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juni 24, 2024, at 12:21
+    on Juni 27, 2024, at 01:27
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -43,13 +43,6 @@ import time
 from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
-
-# By default this python file is executed from the "PsychoPy" folder but the woking directory is c:/Users/...
-# To ensure that the script can be executed from any folder the working directory is set to the script's directory!
-# Get the absolute directory path of the script
-script_directory = os.path.dirname(os.path.abspath(__file__))
-# Change the current working directory to the script's directory
-os.chdir(script_directory)
 
 # ensure that all classes can be imported from this folder
 sys.path.append('PyGame_Tetris_Code')
@@ -115,7 +108,7 @@ def Tetris_Instance(
     #set "previous" variables to None
     previous_level = None
     previous_three_next_blocks = None
-    
+
     # name and initialize GUI
     screen = pygame.display.set_mode((game.grid.scale.screen_w, game.grid.scale.screen_h), pygame.FULLSCREEN | pygame.SCALED)
     pygame.display.set_caption(window_name)
@@ -147,7 +140,7 @@ def Tetris_Instance(
                 if game.visual_control == True:
                     if event.type == GAME_UPDATE and game.level.value <= 6: 
                         game.exe_visual_control()
-                    if  event.type == VISUAL_CONTROL_CAP and game.level.value > 6:
+                    if  event.type == VISUAL_CONTROL_CAP and game.level.value >= 6:
                         game.exe_visual_control()
                    
                 # checks for keyboard input to play the game and for game over
@@ -160,7 +153,7 @@ def Tetris_Instance(
                     if event.key == pygame_key_4 and game.game_over == False:
                         game.move_right()
                     if event.key == pygame_key_1 and game.game_over == False:
-                        # even if accelerate down is enabled the playing experience is better if you can move the block down one cell manually as well. 
+                        # even if accelerate is enabled this the playing experience is better if you can move the block down one cell manually as well. 
                         game.move_down()
                         if game.accelerate_down == True:
                             # starts down movement by setting the start time "start_down" here
@@ -174,21 +167,27 @@ def Tetris_Instance(
                 # checks whether its game over or not                               
                 if event.type == GAME_UPDATE and game.game_over == False:
                     game.move_down()
-                    
+
+                                    
                 # restart automatically or with a keypress depending on config
                 if event.type == GAME_UPDATE and game.game_over == True:
                     if event.type == pygame.KEYDOWN or game.automatic_restart == True:
                         game.game_over = False
                         game.reset()
                         
-            # checks whether down key is lifted to stop the down movement in the "accelerate" "down_type"
-            if event.type == pygame.KEYUP and game.accelerate_down == True:
-                if event.key == pygame_key_1:
-                    #resets both parameters so the acceleration starts from the same speed each time
-                    game.start_down = None
-                    game.down_interval = game.start_interval
-                    
-        
+            # checks whether down key is lifted or pressed again to stop the down movement
+            if game.accelerate_down == True and game.start_down != None:
+                # checks whether the key is lifted and enabled to stops the acceleration when the key is pressed again
+                if event.type == pygame.KEYUP and event.key == pygame_key_1 and game.accelerate_type == "double_press":
+                    game.acceleration_started = True
+                   
+                # checks whether the key is lifted or pressed again to stop the acceleration or if block was locked (indicated by "start_interval" == "down_interval")
+                elif (event.type == pygame.KEYUP and game.accelerate_type == "hold" and event.key == pygame_key_1) or (event.type == pygame.KEYDOWN and event.key == pygame_key_1 and game.accelerate_type == "double_press" and game.acceleration_started == True):
+                       
+                    # resets both parameters so the acceleration starts from the same speed each time
+                    game.start_down = None                       
+                    game.acceleration_started = False
+
         # logic for the accelerate down movement outside of pygame event
         if game.accelerate_down == True and game.pause == False and game.game_over == False:
             game.accelerate_downwards()
@@ -229,7 +228,7 @@ def Tetris_Instance(
         pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)
         game.draw(screen)
         
-        # if the display needs to be flipped vertically this function does it
+        # if the disply needs to be flipped vertically this function does it
         if Flip_vertically == True or Flip_horizontally == True:
             original_surf = pygame.display.get_surface() # collect all different surfaces on the screen to a new one
             flipped_surface = pygame.transform.flip(original_surf, Flip_vertically, Flip_horizontally)
@@ -262,7 +261,7 @@ def Get_on_top(window_title):
         ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
         ctypes.windll.user32.ShowCursor(False)
         
-# create a countdown timer with a "x"-second duration or specific for a condition
+# create a countdown timer with a "x"-second duration or speficific for a condition
 def condition_or_wait_timer(name_or_duration): 
     if name_or_duration == "wait":
         t = 1

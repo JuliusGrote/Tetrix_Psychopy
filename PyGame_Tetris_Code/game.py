@@ -72,6 +72,8 @@ class Game:
 		## control variables
 		self.automatic_restart = Restart_automatically
 		self.accelerate_down = Accelerate_down
+		self.accelerate_type = Accelerate_type
+		self.acceleration_started = None
 		self.start_down = None
 		self.start_interval = Down_interval
 		self.down_interval = Down_interval
@@ -212,12 +214,14 @@ class Game:
 		# resets down acceleration if enabled 
 		if self.accelerate_down == True and self.start_down != None:
 			self.start_down = None
+			
 			# adds points depending on the level to the score if down accelaration was used to lock block
-			if self.down_interval <= 0.05:
+			if self.down_interval <= self.start_interval/2:
 				self.update_score(0, self.level.value)
 			# reset interval
 			self.down_interval = self.start_interval
-
+			if self.accelerate_type == "double_press":
+				self.acceleration_started = False
 		# check where the block was positioned in the grid and add those tiles as "barriers"/immovable parts of the grid
 		tiles = self.current_block.get_cell_positions()
 		# fill the grid at all cell positions the block occupies with its block id
