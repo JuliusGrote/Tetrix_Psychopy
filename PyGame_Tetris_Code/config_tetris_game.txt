@@ -162,15 +162,26 @@ Restart_automatically = True
 ### Down
 
 ### Do you want to add an "accelerated" downwards movement?
-### By default, a set key press moves the Tetris-block one cell. Additionally - if "Accelerate_down = True" -  if the Key is held down, the Tetris-block moves down automatically and with increased speed over time.
+### By default, a set key press moves the Tetris-block one cell.
+### Additionally - if "Accelerate_down = True" -  if the Key is held down or pressed again (depending on options below), the Tetris-block moves down automatically and with increased speed over time.
 ### Default: True, if you disable that option, you might want to change the "explain_controls.png" overview in the "Images/" folder as well.
 
 #------
 Accelerate_down = True
 #------
 
+### Which type of key control should be used for the "move_down()" function?
+### Accelerate_type = "hold" means that the key needs to be held down to accelerate the downwards movement.
+### "double_press" means that the key needs to be pressed again to stop the accelerated the downwards movement.
+### Most response boxes are not able to detect key holding, because they are optimized for reaction time measurements, so "double_press" is recommended.
+
+#------
+Accelerate_type = "double_press"
+#------
+
 ### If you use "Accelerate_down = True" at which "Down_Interval" (in sec) Interval should the time in between two "move_down()" movements start?
 ### Default = 0.1 (the higher the longer it takes for the down movement and acceleration)
+### Should be higher when using "double_press" (more movement required)
 
 #------
 Down_interval = 0.1
@@ -178,16 +189,18 @@ Down_interval = 0.1
 
 ### If you use "Accelerate_down = True" by which factor should the time in between "move_down()" movements be decreased per iteration?
 ### Default: 0.6 - for exponential speed increase it should be between 0 and 1 (the lower the faster)
+### Should be higher when using "double_press" (more movement required)
 
 #------
-Down_factor = 0.6
+Down_factor = 0.7
 #------
 
 ### What should be the cutoff for the maximum speed (in sec) - max "1/60" (Iterations per second of the game loop)?
-### Default = 1/45
+### Default = 1/45, should be higher when using "double_press" (more movement required)
+
 
 #------
-Cutoff_down = 1/45
+Cutoff_down = 1/40
 #------
 
 
