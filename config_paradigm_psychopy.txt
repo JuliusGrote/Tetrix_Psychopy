@@ -219,7 +219,7 @@ Flip_horizontally = False
 ## Toggle eye tracking
 
 ### Feature not fully developed yet, you might want to add ROIs, etc. in "Tetrix_PsychoPy.psyexp"!
-### Eye tracker is started in the "play_pretrial" routine in "Tetrix_PsychoPy.psyexp" and stopped in the "end" routine.
+### The Eye tracking component is started in the "play_pretrial" routine in "Tetrix_PsychoPy.psyexp" and stopped in the "end" routine.
 
 #------
 Eye_tracking = False
