@@ -5,8 +5,6 @@
 
 ## Pre-Trial
 
-### How many rounds of Pre-Trial should be played? This is not overwritten in "Tetrix_PsychoPy" and important for your experimental design!
-
 ### If you want to use the "JND_regression", make sure that you have enough pretrial rounds, otherwise you the "curve_fit" function might not be able to estimate the function parameters!
 ### If you do not want to make use of the Pre-Trials, you can set it to  "None". Make sure to adjust the instruction in the "instructions.py" file! 
 ### --> The level for the "main_trials" is then set by the "Start_level" parameter in this file. Explanatory routines in "Tetrix_PsychoPy.psyexp" are skipped accordingly.
@@ -39,7 +37,7 @@ Stair_factor = 2/3
 ### Default: None, but adjust for your desired design.
 
 #------
-Restart_round = 3
+Restart_round = None
 #------
 
 ### JND Regression
@@ -172,31 +170,30 @@ Accelerate_down = True
 
 ### Which type of key control should be used for the "move_down()" function?
 ### Accelerate_type = "hold" means that the key needs to be held down to accelerate the downwards movement.
-### "double_press" means that the key needs to be pressed again to stop the accelerated the downwards movement.
-### Most response boxes are not able to detect key holding, because they are optimized for reaction time measurements, so "double_press" is recommended.
+### "drop" means that the key needs to be pressed only once to accelerate the downwards movement and cannot be stopped until the Tetris-block reaches the bottom.
+### Default: "drop", since most response boxes are not able to detect key holding, because they are optimized for reaction time measurements
+
 
 #------
-Accelerate_type = "double_press"
+Accelerate_type = "drop"
 #------
 
 ### If you use "Accelerate_down = True" at which "Down_Interval" (in sec) Interval should the time in between two "move_down()" movements start?
 ### Default = 0.1 (the higher the longer it takes for the down movement and acceleration)
-### Should be higher when using "double_press" (more movement required)
-
+ 
 #------
 Down_interval = 0.1
 #------
 
 ### If you use "Accelerate_down = True" by which factor should the time in between "move_down()" movements be decreased per iteration?
 ### Default: 0.6 - for exponential speed increase it should be between 0 and 1 (the lower the faster)
-### Should be higher when using "double_press" (more movement required)
 
 #------
 Down_factor = 0.7
 #------
 
 ### What should be the cutoff for the maximum speed (in sec) - max "1/60" (Iterations per second of the game loop)?
-### Default = 1/45, should be higher when using "double_press" (more movement required)
+### Default = 1/45 (the lower the faster)
 
 
 #------
@@ -206,7 +203,7 @@ Cutoff_down = 1/40
 
 ## Pause handling
 
-### Determines whether game/"Tetris_Instance()" (in "Tetrix_PsychoPy.psyexp") starts paused or not.
+### Determines whether game/"Tetris_Instance()" (in "tetris_instance.py") starts paused or not.
 ### Default and strongly recommended for "Tetrix_PsychoPy.psyexp": True
 
 #------
@@ -222,14 +219,6 @@ Start_Pause = True
 
 #------
 Start_Fullscreen = False
-#------
-
-
-### Setting for visual control purposes, Tetris-blocks get deleted when reaching the bottom of the grid, no stacking. Tetris-blocks move in a random pattern simulation actual gameplay.
-### Similar to the "Pretrial = True/False" setting, when using "Tetrix_PsychoPy.psyexp", this setting will be overwritten at the start of the experiment.
-
-#------
-Visual_control = False
 #------
 
 ### Invisible "next" Tetris-blocks in "Visual_control"
