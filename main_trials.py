@@ -1,7 +1,7 @@
+# this file creates the main_trials.csv file that contains the conditions for the main trials
+
 import csv
 import numpy.random as random
-
-# two handy methods to create the main_trials and shuffle a speciefied array of conditions
 
 # create a method that creates the main_trials
 def create_trial_list(n_trials, trials_seed):
@@ -72,4 +72,4 @@ def shuffle_trials(rows):
 			second_last_row_type = last_row_type
 			last_row_type = row_type
 		
-		return rows
+		return rows  

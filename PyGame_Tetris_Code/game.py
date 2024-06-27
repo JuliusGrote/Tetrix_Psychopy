@@ -63,7 +63,7 @@ class Game:
 		self.toggle_fullpretrial = Value('b', Start_Fullscreen)
 		self.toggle_fullplay = Value('b', Start_Fullscreen)
 		self.toggle_fullwatch = Value('b', Start_Fullscreen)
-		self.visual_control = Visual_control
+		self.visual_control = None
 		## game level and score variables
 		self.level_for_main = Value('f', 0)
 		self.level_for_main_factor = Level_for_main_factor
@@ -73,7 +73,6 @@ class Game:
 		self.automatic_restart = Restart_automatically
 		self.accelerate_down = Accelerate_down
 		self.accelerate_type = Accelerate_type
-		self.acceleration_started = None
 		self.start_down = None
 		self.start_interval = Down_interval
 		self.down_interval = Down_interval
@@ -220,8 +219,6 @@ class Game:
 				self.update_score(0, self.level.value)
 			# reset interval
 			self.down_interval = self.start_interval
-			if self.accelerate_type == "double_press":
-				self.acceleration_started = False
 		# check where the block was positioned in the grid and add those tiles as "barriers"/immovable parts of the grid
 		tiles = self.current_block.get_cell_positions()
 		# fill the grid at all cell positions the block occupies with its block id

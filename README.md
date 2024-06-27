@@ -69,7 +69,7 @@ When using Tetrix, please include the following citation:
 
 ### .psyexp file
 
-&rarr; If you want to change the core structure of the Paradigm or adjust more specific things, check out the "Flow" of the experiment in [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) with all its routines. "Routines" and "Components" are named according to their function and as described in the config files/this README.md. Keep in mind that Tetris' game mechanics are stored in the [PyGame_Tetris_Code](./PyGame_Tetris_Code/) folder and instructions for each routine can be found in [instructions.py](instructions.py).
+&rarr; If you want to change the core structure of the paradigm or adjust more specific things, check out the "Flow" of the experiment in [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) with all its routines. "Routines" and "Components" are named according to their function and as described in the config files/this README.md. Keep in mind that Tetris' game mechanics (with game loop, etc.) are stored in the [PyGame_Tetris_Code](./PyGame_Tetris_Code/) folder and instructions for each routine can be found in [instructions.py](instructions.py). Functions interacting with Windows are stored in [utils.py](utils.py). Nonetheless, some funnctions difficult to outsource to other modules are still stored in the [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) file.
 
 ## Config
 

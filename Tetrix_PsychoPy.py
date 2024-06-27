@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juni 27, 2024, at 01:27
+    on Juni 27, 2024, at 23:56
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -34,31 +34,37 @@ import psychopy.iohub as io
 from psychopy.hardware import keyboard
 
 # Run 'Before Experiment' code from create_processes
-# here, almost all important paradigm functions are defined (keyboard listener in tab "Begin Experiment") 
-
-# import necessary packages for Tetris and load them
+# import necessary packages and load them
 import ctypes
-import pygame
 import time
 from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
 
+# Change the current working directory to the script's directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
+
 # ensure that all classes can be imported from this folder
 sys.path.append('PyGame_Tetris_Code')
-from game import Game
-from colors import Colors
-from instructions import Instructions
-from main_trials import create_trial_list, shuffle_trials
 
-# initialize Pygame and Game
-pygame.init()
-game = Game()
+# import tetris classes/methods
+from game import Game
+from tetris_instance import Tetris_Instance
+
+# import paradigm modules in other files
+from instructions import Instructions
+from utils import *
+from main_trials import *
 
 # get config information
 with open("config_paradigm_psychopy.txt", "r") as c_paradigm:
     config_paradigm = c_paradigm.read()
     exec(config_paradigm)
+
+# initialize Pygame and Game
+pygame.init()
+game = Game()
 
 # if N_repeats is None the function produces an error
 if N_repeats != None:
@@ -68,235 +74,13 @@ if N_repeats != None:
 # set language according to setting in config file
 Inst = Instructions()
 Inst.set_instructions(Language, Targeted_duration, N_repeats)
-
-# define Tetris game as a global function 
-def Tetris_Instance(
-            window_name,
-            is_control,
-            pretrial,
-            pause_state,
-            game_over_counter,
-            score,
-            level,
-            speed,
-            level_for_main,
-            three_next_blocks,
-            x_array,
-            y_array,
-            weights
-    ):
-        
-    # transfer Tetris_Instance() parameters from parent to child process
-    game.visual_control = is_control
-    game.pretrial = pretrial
-    game.game_over_counter = game_over_counter
-    game.score = score
-    game.level = level
-    game.speed = speed
-    game.level_for_main = level_for_main
-    game.three_next_blocks = three_next_blocks
-    game.regression.x_array = x_array
-    game.regression.y_array = y_array
-    game.regression.weights = weights
-    
-    # set gamespeed
-    clock = pygame.time.Clock()
-    game.calculate_speed()
-    # define the USEREVENTS
-    GAME_UPDATE = pygame.USEREVENT
-    VISUAL_CONTROL_CAP = pygame.USEREVENT + 1
-    #set "previous" variables to None
-    previous_level = None
-    previous_three_next_blocks = None
-
-    # name and initialize GUI
-    screen = pygame.display.set_mode((game.grid.scale.screen_w, game.grid.scale.screen_h), pygame.FULLSCREEN | pygame.SCALED)
-    pygame.display.set_caption(window_name)
-    ctypes.windll.user32.ShowCursor(False)
-    
-    # create static graphic objects for the game
-    title_font = pygame.font.Font(None, game.grid.scale.scale_font)
-    score_surface = title_font.render("Score", True, Colors.white)
-    next_surface = title_font.render("Next", True, Colors.white)
-    game_over_surface = title_font.render("GAME OVER", True, Colors.white)
-    level_surface = title_font.render("Level", True, Colors.white )    
-    score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)
-   
-    # game loop 
-    # be catious when changing code in here!
-    while True:
-        for event in pygame.event.get():
-            # changes pausing state according to is_paused()
-            game.pause = pause_state.value
       
-            # defines how to quit the game using ESCAPE
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: 
-                    pygame.quit()
-                    sys.exit()
-            
-            if game.pause == False:  
-                # execute visual control mode
-                if game.visual_control == True:
-                    if event.type == GAME_UPDATE and game.level.value <= 6: 
-                        game.exe_visual_control()
-                    if  event.type == VISUAL_CONTROL_CAP and game.level.value >= 6:
-                        game.exe_visual_control()
-                   
-                # checks for keyboard input to play the game and for game over
-                if event.type == pygame.KEYDOWN and game.visual_control == False:
-                    if game.game_over == True:
-                        game.game_over = False
-                        game.reset()
-                    if event.key == pygame_key_2 and game.game_over == False:
-                        game.move_left()
-                    if event.key == pygame_key_4 and game.game_over == False:
-                        game.move_right()
-                    if event.key == pygame_key_1 and game.game_over == False:
-                        # even if accelerate is enabled this the playing experience is better if you can move the block down one cell manually as well. 
-                        game.move_down()
-                        if game.accelerate_down == True:
-                            # starts down movement by setting the start time "start_down" here
-                            game.start_down = time.time()
-                        # adds one score point if "move_down()" is used
-                        game.update_score(0, 1)
-                        
-                    if event.key == pygame_key_3 and game.game_over == False:
-                        game.rotate()
-                        
-                # checks whether its game over or not                               
-                if event.type == GAME_UPDATE and game.game_over == False:
-                    game.move_down()
-
-                                    
-                # restart automatically or with a keypress depending on config
-                if event.type == GAME_UPDATE and game.game_over == True:
-                    if event.type == pygame.KEYDOWN or game.automatic_restart == True:
-                        game.game_over = False
-                        game.reset()
-                        
-            # checks whether down key is lifted or pressed again to stop the down movement
-            if game.accelerate_down == True and game.start_down != None:
-                # checks whether the key is lifted and enabled to stops the acceleration when the key is pressed again
-                if event.type == pygame.KEYUP and event.key == pygame_key_1 and game.accelerate_type == "double_press":
-                    game.acceleration_started = True
-                   
-                # checks whether the key is lifted or pressed again to stop the acceleration or if block was locked (indicated by "start_interval" == "down_interval")
-                elif (event.type == pygame.KEYUP and game.accelerate_type == "hold" and event.key == pygame_key_1) or (event.type == pygame.KEYDOWN and event.key == pygame_key_1 and game.accelerate_type == "double_press" and game.acceleration_started == True):
-                       
-                    # resets both parameters so the acceleration starts from the same speed each time
-                    game.start_down = None                       
-                    game.acceleration_started = False
-
-        # logic for the accelerate down movement outside of pygame event
-        if game.accelerate_down == True and game.pause == False and game.game_over == False:
-            game.accelerate_downwards()
-
-        # create the GUI for score and level     
-        score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
-        level_value_surface = title_font.render(str(game.level.value), True, Colors.white)
-                
-        # checks whether level changed and adjusts speed accordingly
-        if previous_level != game.level.value:
-            game.calculate_speed()
-            previous_level = game.level.value
-            
-        # checks whether game.three_next_blocks.value changed and sets new "height" of rect for NEXT-blocks accordingly
-        if previous_three_next_blocks != game.three_next_blocks.value:
-            if game.three_next_blocks.value == False:
-               next_rect_height = 180 
-            else:
-               next_rect_height = 285
-            # draw next rect
-            next_rect = pygame.Rect(346 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 230  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, next_rect_height * game.grid.scale.scale_factor)
-            previous_three_next_blocks = game.three_next_blocks.value 
-        
-        # creates  GUI for changeable objects
-        screen.fill(Colors.dark_blue)
-        screen.blit(score_surface, (386 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 40 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
-        screen.blit(next_surface, (398 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 200 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
-        screen.blit(level_surface, (426 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
-        screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
-        
-        # displays game over message
-        if game.game_over == True:
-            screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 540 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
-        
-        # blit screen elements
-        pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
-        screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery))
-        pygame.draw.rect(screen, Colors.light_blue, next_rect, 0 , 10)
-        game.draw(screen)
-        
-        # if the disply needs to be flipped vertically this function does it
-        if Flip_vertically == True or Flip_horizontally == True:
-            original_surf = pygame.display.get_surface() # collect all different surfaces on the screen to a new one
-            flipped_surface = pygame.transform.flip(original_surf, Flip_vertically, Flip_horizontally)
-            screen.blit(flipped_surface, dest=(0, 0))
-            
-        # updates screen in clock.tick(x) per second
-        pygame.display.update()
-        clock.tick(60)
-        
-# checks whether a specific window is created
-def is_window_open(window_title):        
-    hwnd = ctypes.windll.user32.FindWindowW(None, window_title)
-    if hwnd == 0: # window not found
-        return False  
-    else:
-        return True 
-
-# define function to bring the window with a specific title to the foreground
-def Get_on_top(window_title):
-    active_window = None
-    HWND_TOPMOST = -1
-    SWP_NOMOVE = 0x0002
-    SWP_NOSIZE = 0x0001
-    hwnd = ctypes.windll.user32.FindWindowW(None, window_title)
-    # brings the searched window to foreground
-    if hwnd != 0:
-        active_window = ctypes.windll.user32.SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)
-        # Simulate left mouse button press and release to make window active(only once)
-        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
-        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
-        ctypes.windll.user32.ShowCursor(False)
-        
-# create a countdown timer with a "x"-second duration or speficific for a condition
-def condition_or_wait_timer(name_or_duration): 
-    if name_or_duration == "wait":
-        t = 1
-    elif name_or_duration == "Tetris":
-        t = 30
-    else:
-        t = float(name_or_duration)
-    timer = core.CountdownTimer(t)
-    # use a while loop to do nothing until the time runs out
-    while timer.getTime() > 0:
-        pass
-        
-# define Pause method for each specific process
-def is_paused(process):
-    if str(process) == "play_Tetris":
-        game.toggle_play.value = not game.toggle_play.value     
-    elif str(process) == "watch_Tetris":
-        game.toggle_watch.value = not game.toggle_watch.value
-    elif str(process) == "pretrial_Tetris":
-        game.toggle_pretrial.value = not game.toggle_pretrial.value
-
-# define a method to skip a trial that belongs to either to the "pretrial" or "main_trials"
-def skip_if_enabled(part):
-    if part == "pretrial" and game.pretrial_rounds == None or part == "main_trials" and N_repeats == None:
-        # return False to set continueRoutine = False
-        return False
-    else:
-        # return False to set continueRoutine = True
-        return True
-
 # define the compare between high and low working memory load and speed method
 # define functions that creates a list with shuffled order of "high" and "low" wm_load and speed
 # used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
+# unfortunately it is less comlicated to define the function here compared to importing it from another module
+
 def comp_wm_load_speed(total_trials, trial_nr):
-    global first_trial
     global wm_load_seq
     global speed_seq
     global high_level
@@ -313,7 +97,7 @@ def comp_wm_load_speed(total_trials, trial_nr):
             np.random.seed(Load_seed) 
             wm_load_seq = shuffle_trials(wm_load_seq)
             print(f'wm_load_seq: {wm_load_seq}')
-        if Comp_speed == True and Comp_wm_load == False:
+        elif Comp_speed == True and Comp_wm_load == False:
             speed_low = 'low_speed'
             speed_high = 'high_speed'
             speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load # add equal number of "high" and "low"
@@ -322,7 +106,7 @@ def comp_wm_load_speed(total_trials, trial_nr):
             print(f'speed_seq: {speed_seq}')
          
         # if both comparison conditions are enabled, in order to get an equal distribution across all 4 different possible combination a tuple array is created.
-        if Comp_speed == True and Comp_wm_load == True:
+        elif Comp_speed == True and Comp_wm_load == True:
             combinations = ([('low_load', 'low_speed')] + [('low_load', 'high_speed')] + [('high_load', 'low_speed')] + [('high_load', 'high_speed')]) * int(n_per_load/2) 
             
             # shuffle the tuple array into a random order
@@ -359,23 +143,23 @@ def comp_wm_load_speed(total_trials, trial_nr):
             game.level_for_main.value = low_level
         else:
             game.level.value = high_level
-            game.level_for_main.value = high_level        
+            game.level_for_main.value = high_level
+
+
+# define a method to skip a trial that belongs to either to the "pretrial" or "main_trials" if those are disabled by config
+def skip_if_enabled(part):
+    if part == "pretrial" and game.pretrial_rounds == None or part == "main_trials" and N_repeats == None:
+        # return False to set continueRoutine = False
+        return False
+    else:
+        # return False to set continueRoutine = True
+        return True
 # Run 'Before Experiment' code from code_play
 
 
 # Run 'Before Experiment' code from code_watch
 
 
-# Run 'Before Experiment' code from code_check_response
-# creates an pygame dummy screen to test the pygame.keys that are used
-def create_dummi_screen_responsecheck():
-    dummi_screen = pygame.display.set_mode((100, 100), pygame.FULLSCREEN | pygame.SCALED)
-    pygame.display.set_caption("check_responsebox")
-    handle = ctypes.windll.user32.FindWindowW(None, "check_responsebox")
-
-    # set the desired window position to be outside of the visible window (e.g., 10000 pixels from the left, 1000 pixels from the top)
-    window_x, window_y = 10000, 10000
-    ctypes.windll.user32.SetWindowPos(handle, -1, window_x, window_y, 0, 0, 0x0001)
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
 deviceManager = hardware.DeviceManager()
@@ -948,19 +732,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=0.0);
     
     # --- Initialize components for Routine "check_response_box" ---
-    # Run 'Begin Experiment' code from code_check_response
-    # variables for responsebox check that are displayed on screen
-    x_1 = "-"
-    x_2 = "-"
-    x_3 = "-"
-    x_4 = "-"
-    x_5 = "-"
-    x_1_1 =  "-"
-    x_2_2 =  "-"
-    x_3_3 =  "-"
-    x_4_4 =  "-"
-    x_5_5 =  "-"
-    all_checked = False
     text_check_response = visual.TextStim(win=win, name='text_check_response',
         text=Inst.font_check_response,
         font='Open Sans',
@@ -1681,7 +1452,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                                   game.three_next_blocks,
                                   game.regression.x_array,
                                   game.regression.y_array,
-                                  game.regression.weights
+                                  game.regression.weights,
+                                  Flip_horizontally,
+                                  Flip_vertically,
+                                  Pygame_key_1,
+                                  Pygame_key_2,
+                                  Pygame_key_3,
+                                  Pygame_key_4,
                                   ))
         pretrial_Tetris.start()
     
@@ -1700,7 +1477,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                               game.three_next_blocks,
                               game.regression.x_array,
                               game.regression.y_array,
-                              game.regression.weights
+                              game.regression.weights,
+                              Flip_horizontally,
+                              Flip_vertically,
+                              Pygame_key_1,
+                              Pygame_key_2,
+                              Pygame_key_3,
+                              Pygame_key_4,
                               ))
         play_Tetris.start()
     # create a window for the controll visual_control condition
@@ -1717,7 +1500,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                                game.three_next_blocks,
                                game.regression.x_array,
                                game.regression.y_array,
-                               game.regression.weights
+                               game.regression.weights,
+                               Flip_horizontally,
+                               Flip_vertically,
+                               Pygame_key_1,
+                               Pygame_key_2,
+                               Pygame_key_3,
+                               Pygame_key_4,
                                ))
         watch_Tetris.start()
     
@@ -2573,6 +2362,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Run 'Begin Routine' code from code_check_response
     create_dummi_screen_responsecheck()
     
+    # variables for responsebox check that are displayed on screen
+    x_1 = "-"
+    x_2 = "-"
+    x_3 = "-"
+    x_4 = "-"
+    x_5 = "-"
+    x_1_1 =  "-"
+    x_2_2 =  "-"
+    x_3_3 =  "-"
+    x_4_4 =  "-"
+    x_5_5 =  "-"
+    all_checked = False
     key_resp_return_response.keys = []
     key_resp_return_response.rt = []
     _key_resp_return_response_allKeys = []
@@ -2605,27 +2406,27 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # checks keys and updated variables accordingly
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame_key_1:
+                if event.key == Pygame_key_1:
                     if x_1 == '-':
                         x_1 = '1'
                     elif x_1 == '1':
                         x_1_1 = '1'
-                if event.key == pygame_key_2:
+                if event.key == Pygame_key_2:
                     if x_2 == '-':
                         x_2 = '2'
                     elif x_2 == '2':
                         x_2_2 = '2'
-                if event.key == pygame_key_3:
+                if event.key == Pygame_key_3:
                     if x_3 == '-':
                         x_3 = '3'
                     elif x_3 == '3':
                         x_3_3 = '3'
-                if event.key == pygame_key_4:
+                if event.key == Pygame_key_4:
                     if x_4 == '-':
                         x_4 = '4'
                     elif x_4 == '4':
                         x_4_4 = '4'
-                if event.key == pygame_key_5:
+                if event.key == Pygame_key_5:
                     if x_5 == '-':
                         x_5 = '5'
                     elif x_5 == '5':
@@ -3776,8 +3577,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     Get_on_top("pretrial_Tetris")
     # waits one sec
     condition_or_wait_timer("wait")
-    # start Tetris
-    is_paused("pretrial_Tetris")
+    
+    if skip_if_enabled("pretrial") == True:  
+        # start Tetris pretrial
+        game.toggle_pretrial.value = not game.toggle_pretrial.value
     
     if skip_if_enabled("pretrial") == True:
         # sets initial level tracking variable
@@ -6098,6 +5901,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # additionally checks whether main_trials are enabled at all
         continueRoutine = skip_if_enabled("main_trials")
         
+        
+        
+        
         # lets timer run out
         if three_sec_timer.getTime() <= 0:
             # exits routine
@@ -6376,16 +6182,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from execute_play_Tetris
-        # sets "high" or "low" "speed" or "wm_load"
-        if Comp_wm_load == True or Comp_speed == True:
-            comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)
-        
+        # sets "high" or "low" "speed" or "wm_load" if enabled in config
+        comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)
+            
         # bring Tetris to foreground
         Get_on_top("play_Tetris")
+        
         # wait one sec
         condition_or_wait_timer("wait")
+        
         # Tetris resumes here
-        is_paused("play_Tetris")
+        game.toggle_play.value = not game.toggle_play.value
         
         # collect start time for logging
         condition_started = globalClock.getTime(format='float')
@@ -6472,8 +6279,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # Run 'End Routine' code from execute_play_Tetris
         # get offset of the condition
         condition_stopped = globalClock.getTime(format='float')
-        # if the control condition is "watch_Tetris": pauses Tetris
-        is_paused("play_Tetris")
+        
+        #pauses Tetris
+        game.toggle_play.value = not game.toggle_play.value
+        
         # waits one seconds
         condition_or_wait_timer("wait")
         # if the control condition is "watch_Tetris": sets Tetris window to background
@@ -6881,7 +6690,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # wait one sec
         condition_or_wait_timer("wait")
         # if the control condition is "watch_Tetris": Tetris begins here
-        is_paused(control_condition)
+        if control_condition == "watch_Tetris":
+            # watch Tetris resumes here
+            game.toggle_watch.value = not game.toggle_watch.value
         
         # collect start time for logging
         condition_started = globalClock.getTime(format='float')
@@ -7048,8 +6859,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         press_button.setOpacity(0)
         # get offset of the condition
         condition_stopped = globalClock.getTime(format='float')
+        
         # if the control condition is "watch_Tetris": pauses Tetris
-        is_paused(control_condition)
+        if control_condition == "watch_Tetris":
+            # watch_Tetris pauses here
+            game.toggle_watch.value = not game.toggle_watch.value
+            
         # waits one seconds
         condition_or_wait_timer("wait")
         # if the control condition is "watch_Tetris": sets Tetris window to background

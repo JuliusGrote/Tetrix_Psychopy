@@ -162,18 +162,19 @@ Test_keys = True
 #------
 if Test_keys == True: ### Do not change this line of code!
 	### Test keys:
-	pygame_key_1 = pygame.K_DOWN # Move Tetris-block down
-	pygame_key_2 = pygame.K_LEFT # Move Tetris-block left 
-	pygame_key_3 = pygame.K_UP # Rotate Tetris-block 
-	pygame_key_4 = pygame.K_RIGHT # Move Tetris-block right
-	pygame_key_5 = pygame.K_0 # Spare key
+	Pygame_key_1 = pygame.K_DOWN # Move Tetris-block down
+	Pygame_key_2 = pygame.K_LEFT # Move Tetris-block left 
+	Pygame_key_3 = pygame.K_UP # Rotate Tetris-block 
+	Pygame_key_4 = pygame.K_RIGHT # Move Tetris-block right
+	Pygame_key_5 = pygame.K_0 # Spare key
+	
 else: 	### Do not change this line of code!
 	### Keys to use in the actual experiment:
-	pygame_key_1 = pygame.K_6 # Move Tetris-block down
-	pygame_key_2 = pygame.K_7 # Move Tetris-block left 
-	pygame_key_3 = pygame.K_8 # Rotate Tetris-block 
-	pygame_key_4 = pygame.K_9 # Move Tetris-block right
-	pygame_key_5 = pygame.K_0 # Spare key
+	Pygame_key_1 = pygame.K_6 # Move Tetris-block down
+	Pygame_key_2 = pygame.K_7 # Move Tetris-block left 
+	Pygame_key_3 = pygame.K_8 # Rotate Tetris-block 
+	Pygame_key_4 = pygame.K_9 # Move Tetris-block right
+	Pygame_key_5 = pygame.K_0# Spare key
 #------
 
 ### Define which keys to use in Psychopy to use "press_continue" (continue to next routine) in "Tetrix_PsychoPy.psyexp", should be according to the keys used above for pygame!
