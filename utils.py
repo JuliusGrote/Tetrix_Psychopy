@@ -1,5 +1,5 @@
 # import libraries
-import ctypes, time
+import ctypes, time,wmi
 import pygame
 
 # checks whether a specific window is created

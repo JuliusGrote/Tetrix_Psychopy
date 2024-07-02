@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juli 02, 2024, at 14:13
+    on Juli 02, 2024, at 14:27
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -1516,6 +1516,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # start keyboard listener
     log_trigger = pynput_keyboard.Listener(on_press=check_for_trigger)
     log_trigger.start()
+    
     
     # hides cursor that appears automatically after processes are created
     ctypes.windll.user32.ShowCursor(False)
