@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juni 27, 2024, at 23:56
+    on Juli 02, 2024, at 14:13
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -74,8 +74,11 @@ if N_repeats != None:
 # set language according to setting in config file
 Inst = Instructions()
 Inst.set_instructions(Language, Targeted_duration, N_repeats)
-      
-# define the compare between high and low working memory load and speed method
+
+# check in which order the keyboards were registered fordebugging purposes
+list_keyboards()
+
+# define a function to compare between high and low working memory load and speed / game difficulty
 # define functions that creates a list with shuffled order of "high" and "low" wm_load and speed
 # used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
 # unfortunately it is less comlicated to define the function here compared to importing it from another module
@@ -343,7 +346,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1707, 960], fullscr=_fullScr, screen=0,
+            size=[1280, 720], fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='Home_test', color=[-0.6549, -0.6549, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
