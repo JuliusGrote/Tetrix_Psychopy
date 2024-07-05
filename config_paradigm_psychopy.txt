@@ -8,6 +8,15 @@
 Language = "German"
 #------
 
+## Explanation settings
+
+### Should explanations be included in the experiment? (includes explanations
+### You might want to disable them for testing or if you want to use Tetrix for a different purpose)
+### Default: True
+
+#------
+Include_explanations = True
+#------
 
 ## Trial settings
 
@@ -37,11 +46,21 @@ N_repeats = 7
 Main_trials_seed = 11
 #------
 
-### Duration for all conditions in sec.
-### Default: 20 (strongly recommended: 20-30, no more than 50)
+### Durations for each conditions in sec.
+### It is recommended to keep the durations of the conditions the same (except the baseline), but you can adjust them if you want to.
+### Default: 30 (strongly recommended: 20-30, not more than 50)
+### Baseline/fixation_cross: 15 (half the duration of the other conditions)
+
+
 
 #------
-Targeted_duration = 30
+Play_Tetris_duration = 30
+
+Watch_Tetris_duration = 30
+
+Motor_control_duration = 30
+
+Fixation_cross_duration = 15
 #------
 
 ### Interstimulus Interval Variation

@@ -4,22 +4,29 @@ import csv
 import numpy.random as random
 
 # create a method that creates the main_trials
-def create_trial_list(n_trials, trials_seed):
+def create_trial_list(
+					  n_trials,
+					  trials_seed,
+					  motor_control_duration,
+					  watch_Tetris_duration,
+					  fixation_cross_duration
+					  ):
+	
+	row_headers = ["control_condition", "images_next_cond", "control_duration"]
+	# define the row types
+	row_types = [
+		("motor_control", "Images/button.png", motor_control_duration),
+		("watch_Tetris", "Images/eye.png", watch_Tetris_duration),
+		("fixation_cross", "Images/crosshair.png", fixation_cross_duration)
+		]
 
 	# set a random seed if enabled in the config
 	random.seed(trials_seed)
-	# define the row types
-	row_types = [
-		("motor_control", "Images/button.png"),
-		("watch_Tetris", "Images/eye.png"),
-		("fixation_cross", "Images/crosshair.png")
-	]
-
 
 	# initialize the CSV file
 	with open('main_trials.csv', 'w', newline='') as file:
 		writer = csv.writer(file)
-		writer.writerow(["control_condition", "images_next_cond"])
+		writer.writerow(row_headers)
 
 		# create a list of row types repeated row_types * n_trials times
 		rows = row_types * n_trials

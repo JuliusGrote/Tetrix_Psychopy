@@ -14,26 +14,26 @@ from colors import Colors
 game = Game()
 
 def Tetris_Instance(
-            window_name,
-            is_control,
-            pretrial,
-            pause_state,
-            game_over_counter,
-            score,
-            level,
-            speed,
-            level_for_main,
-            three_next_blocks,
-            x_array,
-            y_array,
-            weights,
-            flip_vertically,
-            flip_horizontally,
-            pygame_key_1,
-            pygame_key_2,
-            pygame_key_3,
-            pygame_key_4        
-            ):
+                    window_name,
+                    is_control,
+                    pretrial,
+                    pause_state,
+                    game_over_counter,
+                    score,
+                    level,
+                    speed,
+                    level_for_main,
+                    three_next_blocks,
+                    x_array,
+                    y_array,
+                    weights,
+                    flip_vertically,
+                    flip_horizontally,
+                    pygame_key_1,
+                    pygame_key_2,
+                    pygame_key_3,
+                    pygame_key_4        
+):
 
     # transfer Tetris_Instance() parameters from parent to child process
     game.visual_control = is_control

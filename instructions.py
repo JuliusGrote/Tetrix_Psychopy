@@ -4,7 +4,13 @@
 class Instructions:
 	## Check what is given in the config files and set instuctions accordingly.
 	## naming is so that a "font" is used in a text stimulus in PsychoPy while stimuli that are used as images are "img" here
-	def set_instructions(self, language, Targeted_duration, N_repeats):
+	def set_instructions(self,
+					     language,
+						 N_repeats,
+						 play_Tetris_Duration,
+						 motor_control_duration,
+					  	 watch_Tetris_duration,
+					  	 fixation_cross_duration):
 		#since "font_explain_trials's" f-string uses interger calculation, if "main_trials" are disabled in the config N_repeats must be "0" instead of "None"...
 		if N_repeats == None:
 			N_repeats = 0
@@ -16,7 +22,9 @@ class Instructions:
 			self.font_continue = 'Beliebige Taste drücken, um fortzufahren!'
 			self.font_explanation_pretrial = 'Während diesem ersten Teil des Experiments werden Sie Tetris spielen und sich an das Setup gewöhnen! Die Level, die Sie in diesen ersten Runden erreichen, legen fest, welches Level Sie im Hauptteil spielen!'
 			self.font_how_to_play = 'Wie man Tetris spielt:'
-			self.img_explain_game_mechanics = 'Images/explain_game_mechanics_de.png'
+			self.img_explain_game_mechanics_1 = 'Images/explain_game_mechanics_1_de.png'
+			self.img_explain_game_mechanics_2 = 'Images/explain_game_mechanics_2_de.png'
+			self.img_explain_game_mechanics_3 = 'Images/explain_game_mechanics_3_de.png'
 			self.font_explain_staircase = 'Bitte beachten Sie, dass in diesen ersten Runden das LEVEL, auf das Sie nach GAME OVER zurückgesetzt werden VARIIERT!'
 			self.img_explain_controls = 'Images/explain_controls_de.png'
 			self.font_Controls = 'So bewegen Sie die Tetris-Blöcke:'
@@ -31,7 +39,11 @@ class Instructions:
 			self.font_motor = 'Tastendruck: Drücken Sie die Tasten ABWECHSELND zum Rhythmus, der auf dem Bildschirm zu sehen ist!'
 			self.font_watch = 'Auge: Schauen Sie Tetris zu! Schauen Sie einfach nur zu, während eine Spiel-Aufzeichnung für Sie gespielt wird. Bitte Drücken Sie KEINE Tasten!'
 			self.font_cross = 'Fixationskreuz: Schauen Sie einfach das Kreuz in der Bildschirmmitte an und machen Sie nichts Anderes!'
-			self.font_explain_trials = f'Jede Wiederholung startet mit einem Teil TETRIS SPIELEN, gefolgt von einem zufällig gewählten Teil TETRIS ZUZUSCHAUEN, TASTENDRÜCKEN oder FIXATIONSKREUZ! Jeder Teil dauert {Targeted_duration} Sekunden und es gibt {int(N_repeats) * 3} Wiederholungen!'
+			if play_Tetris_Duration == watch_Tetris_duration == motor_control_duration == fixation_cross_duration:
+				self.font_explain_trials = f'Jede Wiederholung startet mit einem Teil TETRIS SPIELEN, gefolgt von einem zufällig gewählten Teil TETRIS ZUZUSCHAUEN, TASTENDRÜCKEN oder FIXATIONSKREUZ! Jeder Teil dauert {play_Tetris_Duration} Sekunden und es gibt {int(N_repeats) * 3} Wiederholungen!'
+			elif not all(duration == play_Tetris_Duration for duration in [watch_Tetris_duration, motor_control_duration, fixation_cross_duration]):
+				self.font_explain_trials = f'Jede Wiederholung startet mit einem Teil TETRIS SPIELEN\n({play_Tetris_Duration} Sekunden), gefolgt von einem zufällig gewählten Teil TETRIS ZUZUSCHAUEN ({watch_Tetris_duration} Sekunden), TASTENDRÜCKEN\n({motor_control_duration} Sekunden) oder FIXATIONSKREUZ ({fixation_cross_duration} Sekunden)! Es gibt {int(N_repeats) * 3} Wiederholungen!'
+			
 			self.font_start = 'Jetzt beginnt das Experiment!'
 			self.font_condition_ended = 'Teil beendet'
 			self.font_end = 'Vielen Dank für Ihre Teilnahme!'
@@ -43,7 +55,9 @@ class Instructions:
 			self.font_continue = 'Press any button to continue!'
 			self.font_explanation_pretrial = 'During this first part of the experiment, you will play Tetris and get used to the setup! The levels you reach in these first rounds will determine the level you play in the main part of the experiment!'
 			self.font_how_to_play = 'Here is how to play Tetris:'
-			self.img_explain_game_mechanics = 'Images/explain_game_mechanics_en.png'
+			self.img_explain_game_mechanics_1 = 'Images/explain_game_mechanics_1_en.png'
+			self.img_explain_game_mechanics_2 = 'Images/explain_game_mechanics_2_en.png'
+			self.img_explain_game_mechanics_3 = 'Images/explain_game_mechanics_3_en.png'
 			self.font_explain_staircase = 'Please note that in these first rounds, the LEVEL that you will be put back to after GAME OVER VARIES!'
 			self.img_explain_controls = 'Images/explain_controls_en.png'
 			self.font_Controls = 'This is how you move the Tetris-Blocks:'
@@ -57,8 +71,11 @@ class Instructions:
 			self.font_explain_comp_speed = 'Note! In each Tetris part, it is randomly chosen, whether you will play in a HIGHER (faster) or LOWER (slower) level!'
 			self.font_motor = 'Button press: Press the Buttons ALTERNATELY (one after another) to the rhythm displayed on the screen!'
 			self.font_watch = 'Eye: Watch Tetris! Just watch while a game recording is played for you. Please DO NOT press any buttons!'
-			self.font_cross = 'Fixation Cross: Just look at the cross in the middle of the screen and do nothing else!'		
-			self.font_explain_trials = f'Each repetition starts with a round of PLAYING TETRIS followed by a randomly chosen part of WATCHING TETRIS GAMEPLAY, BUTTON PRESSES or FIXATION CROSS! Each part lasts {Targeted_duration} seconds and there are {N_repeats * 3} repetitions!'
+			self.font_cross = 'Fixation Cross: Just look at the cross in the middle of the screen and do nothing else!'
+			if play_Tetris_Duration == watch_Tetris_duration == motor_control_duration == fixation_cross_duration:
+				self.font_explain_trials = f'Each repetition starts with a round of PLAYING TETRIS followed by a randomly chosen part of WATCHING TETRIS GAMEPLAY, BUTTON PRESSES or FIXATION CROSS! Each part lasts {play_Tetris_Duration} seconds and there are {N_repeats * 3} repetitions!'
+			elif not all(duration == play_Tetris_Duration for duration in [watch_Tetris_duration, motor_control_duration, fixation_cross_duration]):
+				self.font_explain_trials = f'Each repetition starts with a round of PLAYING TETRIS\n({play_Tetris_Duration} seconds) followed by a randomly chosen part of WATCHING TETRIS GAMEPLAY ({watch_Tetris_duration} seconds), BUTTON PRESSES\n({motor_control_duration} seconds) or FIXATION CROSS ({fixation_cross_duration} seconds)! There are {N_repeats * 3} repetitions!'
 			self.font_start = 'Now, the experiment starts!'
 			self.font_condition_ended = 'Part ended'
 			self.font_end = 'Thank you for your Participation!'
