@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juli 05, 2024, at 13:42
+    on Juli 05, 2024, at 15:55
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -852,14 +852,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=0.0);
+        depth=-1.0);
     Text_continue_2_1 = visual.TextStim(win=win, name='Text_continue_2_1',
         text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.4), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
+        depth=-2.0);
     press_continue_2_1 = keyboard.Keyboard(deviceName='press_continue_2_1')
     
     # --- Initialize components for Routine "explain_tetris_1" ---
@@ -867,17 +867,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         win=win,
         name='explain_game_mechanics_1', 
         image=Inst.img_explain_game_mechanics_1, mask=None, anchor='center',
-        ori=0.0, pos=(0, 0.03), size=(0.84, 0.88),
+        ori=0.0, pos=(0, 0.03), size=(0.84, 0.91),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=0.0)
+        texRes=128.0, interpolate=True, depth=-1.0)
     Text_continue_3 = visual.TextStim(win=win, name='Text_continue_3',
         text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
+        depth=-2.0);
     press_continue_3 = keyboard.Keyboard(deviceName='press_continue_3')
     
     # --- Initialize components for Routine "explain_tetris_2" ---
@@ -888,14 +888,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=(0, 0.03), size=(0.9, 0.9),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=0.0)
+        texRes=128.0, interpolate=True, depth=-1.0)
     Text_continue_3_1 = visual.TextStim(win=win, name='Text_continue_3_1',
         text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
+        depth=-2.0);
     press_continue_3_1 = keyboard.Keyboard(deviceName='press_continue_3_1')
     
     # --- Initialize components for Routine "explain_tetris_3" ---
@@ -906,14 +906,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=(0, 0.03), size=(1.25, 0.9),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=0.0)
+        texRes=128.0, interpolate=True, depth=-1.0)
     Text_continue_3_3 = visual.TextStim(win=win, name='Text_continue_3_3',
         text=Inst.font_continue,
         font='Open Sans',
         pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
+        depth=-2.0);
     press_continue_3_3 = keyboard.Keyboard(deviceName='press_continue_3_3')
     
     # --- Initialize components for Routine "explain_staircase" ---
@@ -941,21 +941,21 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=(0, 0), size=(1.25, 0.8),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=0.0)
+        texRes=128.0, interpolate=True, depth=-1.0)
     Controls = visual.TextStim(win=win, name='Controls',
         text=Inst.font_Controls,
         font='Open Sans',
         pos=(0, 0.45), height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
+        depth=-2.0);
     Text_continue_4 = visual.TextStim(win=win, name='Text_continue_4',
         text=Inst.font_continue,
         font='Open Sans',
         pos=(0.0, -0.45), height=0.05, wrapWidth=2.0, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-2.0);
+        depth=-3.0);
     press_continue_4 = keyboard.Keyboard(deviceName='press_continue_4')
     
     # --- Initialize components for Routine "start_pretrial" ---
@@ -2723,7 +2723,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Intro_2* updates
         
         # if Intro_2 is starting this frame...
-        if Intro_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if Intro_2.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Intro_2.frameNStart = frameN  # exact frame index
             Intro_2.tStart = t  # local t and not account for scr refresh
@@ -2741,7 +2741,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Text_continue_1* updates
         
         # if Text_continue_1 is starting this frame...
-        if Text_continue_1.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if Text_continue_1.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Text_continue_1.frameNStart = frameN  # exact frame index
             Text_continue_1.tStart = t  # local t and not account for scr refresh
@@ -2760,7 +2760,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         waitOnFlip = False
         
         # if press_continue_1 is starting this frame...
-        if press_continue_1.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if press_continue_1.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             press_continue_1.frameNStart = frameN  # exact frame index
             press_continue_1.tStart = t  # local t and not account for scr refresh
@@ -2842,7 +2842,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_pretrial
         # skips this routine if there are no pretrial rounds set or there are no main trials
-        continueRoutine = skip_if_enabled("pretrial") and skip_if_enabled("main_trials") or Include_explanations
+        continueRoutine = skip_if_enabled("pretrial") and skip_if_enabled("main_trials") and Include_explanations
         
         # *explanation_pretrial* updates
         
@@ -2964,11 +2964,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from skip_explanations
+        continueRoutine = Include_explanations
         
         # *text_how_to_play* updates
         
         # if text_how_to_play is starting this frame...
-        if text_how_to_play.status == NOT_STARTED and Include_explanations:
+        if text_how_to_play.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             text_how_to_play.frameNStart = frameN  # exact frame index
             text_how_to_play.tStart = t  # local t and not account for scr refresh
@@ -2986,7 +2988,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Text_continue_2_1* updates
         
         # if Text_continue_2_1 is starting this frame...
-        if Text_continue_2_1.status == NOT_STARTED and Include_explanations:
+        if Text_continue_2_1.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Text_continue_2_1.frameNStart = frameN  # exact frame index
             Text_continue_2_1.tStart = t  # local t and not account for scr refresh
@@ -3005,7 +3007,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         waitOnFlip = False
         
         # if press_continue_2_1 is starting this frame...
-        if press_continue_2_1.status == NOT_STARTED and include_explanations:
+        if press_continue_2_1.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             press_continue_2_1.frameNStart = frameN  # exact frame index
             press_continue_2_1.tStart = t  # local t and not account for scr refresh
@@ -3085,11 +3087,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from skip_explanations_1
+        continueRoutine = Include_explanations
         
         # *explain_game_mechanics_1* updates
         
         # if explain_game_mechanics_1 is starting this frame...
-        if explain_game_mechanics_1.status == NOT_STARTED and Include_explanations:
+        if explain_game_mechanics_1.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             explain_game_mechanics_1.frameNStart = frameN  # exact frame index
             explain_game_mechanics_1.tStart = t  # local t and not account for scr refresh
@@ -3107,7 +3111,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Text_continue_3* updates
         
         # if Text_continue_3 is starting this frame...
-        if Text_continue_3.status == NOT_STARTED and Include_explanations:
+        if Text_continue_3.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Text_continue_3.frameNStart = frameN  # exact frame index
             Text_continue_3.tStart = t  # local t and not account for scr refresh
@@ -3126,7 +3130,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         waitOnFlip = False
         
         # if press_continue_3 is starting this frame...
-        if press_continue_3.status == NOT_STARTED and Include_explanations:
+        if press_continue_3.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             press_continue_3.frameNStart = frameN  # exact frame index
             press_continue_3.tStart = t  # local t and not account for scr refresh
@@ -3206,11 +3210,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from skip_explanations_2
+        continueRoutine = Include_explanations
         
         # *explain_game_mechanics_2* updates
         
         # if explain_game_mechanics_2 is starting this frame...
-        if explain_game_mechanics_2.status == NOT_STARTED and Include_explanations:
+        if explain_game_mechanics_2.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             explain_game_mechanics_2.frameNStart = frameN  # exact frame index
             explain_game_mechanics_2.tStart = t  # local t and not account for scr refresh
@@ -3228,7 +3234,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Text_continue_3_1* updates
         
         # if Text_continue_3_1 is starting this frame...
-        if Text_continue_3_1.status == NOT_STARTED and Include_explanations:
+        if Text_continue_3_1.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Text_continue_3_1.frameNStart = frameN  # exact frame index
             Text_continue_3_1.tStart = t  # local t and not account for scr refresh
@@ -3247,7 +3253,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         waitOnFlip = False
         
         # if press_continue_3_1 is starting this frame...
-        if press_continue_3_1.status == NOT_STARTED and Include_explanations:
+        if press_continue_3_1.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             press_continue_3_1.frameNStart = frameN  # exact frame index
             press_continue_3_1.tStart = t  # local t and not account for scr refresh
@@ -3327,11 +3333,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from skip_explanations_3
+        continueRoutine = Include_explanations
         
         # *explain_game_mechanics_3* updates
         
         # if explain_game_mechanics_3 is starting this frame...
-        if explain_game_mechanics_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if explain_game_mechanics_3.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             explain_game_mechanics_3.frameNStart = frameN  # exact frame index
             explain_game_mechanics_3.tStart = t  # local t and not account for scr refresh
@@ -3349,7 +3357,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Text_continue_3_3* updates
         
         # if Text_continue_3_3 is starting this frame...
-        if Text_continue_3_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if Text_continue_3_3.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Text_continue_3_3.frameNStart = frameN  # exact frame index
             Text_continue_3_3.tStart = t  # local t and not account for scr refresh
@@ -3368,7 +3376,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         waitOnFlip = False
         
         # if press_continue_3_3 is starting this frame...
-        if press_continue_3_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if press_continue_3_3.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             press_continue_3_3.frameNStart = frameN  # exact frame index
             press_continue_3_3.tStart = t  # local t and not account for scr refresh
@@ -3450,7 +3458,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_staircase
         # skips this routine if there are no pretrial rounds set or the staircase method is not enabled
-        continueRoutine = skip_if_enabled("pretrial") and game.pretrial_staircase
+        continueRoutine = skip_if_enabled("pretrial") and game.pretrial_staircase and Include_explanations
         
         
         # *text_explain_staircase* updates
@@ -3573,11 +3581,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from skip_explanations_4
+        continueRoutine = Include_explanations
         
         # *explain_controls* updates
         
         # if explain_controls is starting this frame...
-        if explain_controls.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if explain_controls.status == NOT_STARTED and Include_explanations:
             # keep track of start time/frame for later
             explain_controls.frameNStart = frameN  # exact frame index
             explain_controls.tStart = t  # local t and not account for scr refresh
@@ -3595,7 +3605,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Controls* updates
         
         # if Controls is starting this frame...
-        if Controls.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if Controls.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Controls.frameNStart = frameN  # exact frame index
             Controls.tStart = t  # local t and not account for scr refresh
@@ -3613,7 +3623,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *Text_continue_4* updates
         
         # if Text_continue_4 is starting this frame...
-        if Text_continue_4.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if Text_continue_4.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             Text_continue_4.frameNStart = frameN  # exact frame index
             Text_continue_4.tStart = t  # local t and not account for scr refresh
@@ -3632,7 +3642,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         waitOnFlip = False
         
         # if press_continue_4 is starting this frame...
-        if press_continue_4.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if press_continue_4.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
             # keep track of start time/frame for later
             press_continue_4.frameNStart = frameN  # exact frame index
             press_continue_4.tStart = t  # local t and not account for scr refresh
@@ -4431,7 +4441,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_intro
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials") and Include_explanations
         
         # *text_intro_structure* updates
         
@@ -4554,7 +4564,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_basic_structure
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials") and Include_explanations
         
         # *controller_example_1* updates
         
@@ -4749,7 +4759,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_play
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials")and Include_explanations
         
         # *controller_example* updates
         
@@ -4891,7 +4901,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_comp_load
         # additionally checks whether main_trials are enabled at all and skips this routine if there no pretrial rounds set
-        continueRoutine = skip_if_enabled("main_trials") and Comp_wm_load 
+        continueRoutine = skip_if_enabled("main_trials") and Comp_wm_load and Include_explanations
             
         
         
@@ -5035,7 +5045,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_comp_speed
         #additionally checks whether main_trials are enabled at all or skips this routine if there no pretrial rounds set
-        continueRoutine = skip_if_enabled("main_trials") and Comp_speed
+        continueRoutine = skip_if_enabled("main_trials") and Comp_speed and Include_explanations
         
         # *controller_example_3* updates
         
@@ -5176,7 +5186,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_motor
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials") and Include_explanations
         
         # *motorcontrol_example* updates
         
@@ -5317,7 +5327,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_watch
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials") and Include_explanations
         
         # *watch_example* updates
         
@@ -5458,7 +5468,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_cross
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials") and Include_explanations
         
         # *baseline_example* updates
         
@@ -5599,7 +5609,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_explain_trials
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials") and Include_explanations
         
         # *img_explain_trials* updates
         
@@ -5740,7 +5750,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from skip_start
-        continueRoutine = skip_if_enabled("main_trials")
+        continueRoutine = skip_if_enabled("main_trials") and Include_explanations
         
         # *Start* updates
         
