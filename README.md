@@ -15,7 +15,7 @@ When using Tetrix, please include the following citation:
 
 - Open the [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) file.
 
-- Check whether pynput is installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput" and install if necessary).
+- Check whether pynput ans wmi are installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput"/"WMI" and install if necessary).
 
 - To start, press "run"/green startbutton and enter the current subject id.
 
@@ -130,9 +130,9 @@ The Experiment is constructed for PsychoPy 2024.1.1. You can set which Psychopy 
 
 ## .py File
 
-The experiment is available as a python script as well. Make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput".
+The experiment is available as a python script as well. Make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame", "WMI" and "pynput".
 
-&rarr; When not using the PsychoPy standalone version, the paradigm only works with Python installed: [Download here!](https://www.python.org/downloads/). Additionally, make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput".
+&rarr; When not using the PsychoPy standalone version, the paradigm only works with Python installed: [Download here!](https://www.python.org/downloads/) Additionally, make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput".
 
 ```shell
 #Install a package
@@ -158,7 +158,7 @@ psychopy.useVersion('your version')
 
 ## Eye Tracking
 
-*currently under development*, *no ROIs defined yet!*
+*currently under development!*
 
 Eyetracking can be activated in [config_paradigm_psychopy](config_paradigm_psychopy.txt).
 
@@ -177,7 +177,3 @@ Copyright (c) 2024, Julius Grote (Tetrix Developers).
 Tetrix is licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-## Acknowledgement
-
-Funding goes here!

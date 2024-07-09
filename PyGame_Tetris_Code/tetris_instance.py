@@ -107,8 +107,6 @@ def Tetris_Instance(
                         if game.accelerate_down == True:
                             # starts down movement by setting the start time "start_down" here
                             game.start_down = time.time()
-                        # adds one score point if "move_down()" is used
-                        game.update_score(0, 1)
                         
                     if event.key == pygame_key_3 and game.game_over == False:
                         game.rotate()
