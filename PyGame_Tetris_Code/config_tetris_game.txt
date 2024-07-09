@@ -138,13 +138,41 @@ Visual_seed = 1
 Block_seed = 1
 #------
 
+## Scoring
+
+### Score for clearing lines
+### How many points should be awarded for clearing one line, two lines, three lines, and four lines, respectively?
+### Default: 100, 300, 500, 800 - inspired by current mobile game version (note that the score is multiplied by the current level)
+
+#------
+One_line_cleared = 100
+
+Two_lines_cleared = 300
+
+Three_lines_cleared = 500
+
+Four_lines_cleared = 800
+#------
+
+### Score for dropping a Tetris-block
+### How many points should be awarded for using the accelerated downwards movement to lock the Tetris-block in place?
+### Default: 1 (note that the score is multiplied by the current level)
+
+#------
+Lock_score = 1
+#------
 
 ## Game Over
 
-### Should the score be kept after "game_over"?
+### Should the score be kept after "game_over" in the pretrial rounds and/or the main trials?
+### Default: True
 
 #------
-Keep_score = True
+Keep_score_pre = True
+#------
+
+#------
+Keep_score_main = True
 #------
 
 ### Should the game restart automatically after "game_over"?
@@ -178,21 +206,21 @@ Accelerate_type = "hold"
 #------
 
 ### If you use "Accelerate_down = True" at which "Down_Interval" (in sec) Interval should the time in between two "move_down()" movements start?
-### Default = 0.1 (the higher the longer it takes for the down movement and acceleration)
+### Default = 0.05 (the higher the longer it takes for the down movement and acceleration)
  
 #------
 Down_interval = 0.05
 #------
 
 ### If you use "Accelerate_down = True" by which factor should the time in between "move_down()" movements be decreased per iteration?
-### Default: 0.6 - for exponential speed increase it should be between 0 and 1 (the lower the faster)
+### Default: 1 (constant) - for exponential speed increase it should be between 0 and 1 (the lower the faster)
 
 #------
 Down_factor = 1
 #------
 
 ### What should be the cutoff for the maximum speed (in sec) - max "1/60" (Iterations per second of the game loop)?
-### Default = 1/45 (the lower the faster)
+### Default = 1/45 (the lower the faster, not relevant if "Down_factor" is set to 1)
 
 #------
 Cutoff_down = 1/45
@@ -211,18 +239,9 @@ Start_Pause = True
 
 ## GUI
 
-### Determines whether game starts in fullscreen or not
-### Default: False 
-### Overwritten, if you use the "Tetrix_PsychoPy" Experiment!
-
-#------
-Start_Fullscreen = False
-#------
-
 ### Invisible "next" Tetris-blocks in "Visual_control"
 ### Should the next Tetris-blocks be visible during the visual control condition? (decrease visual stimulus load of the control condition)
 ### Default: True
-
 
 #------
 Hide_next_visual = True

@@ -60,9 +60,6 @@ class Game:
 		self.toggle_play = Value('b', Start_Pause)
 		self.toggle_watch = Value('b', Start_Pause)
 		self.pause = Start_Pause
-		self.toggle_fullpretrial = Value('b', Start_Fullscreen)
-		self.toggle_fullplay = Value('b', Start_Fullscreen)
-		self.toggle_fullwatch = Value('b', Start_Fullscreen)
 		self.visual_control = None
 		## game level and score variables
 		self.level_for_main = Value('f', 0)
@@ -87,10 +84,6 @@ class Game:
 		# if game.speed exeeds level 7 use a linear incease for movements of "Visual_Control"
 		pygame.time.set_timer(pygame.USEREVENT + 1, round(260 * 8/ self.level.value))
 
-	# check whether score keeping is enabled
-	def check_for_Keep_score(self):
-		if Keep_score == False:
-			self.score.value = 0
 
 	# here the visual control randomizer is defined 
 	def exe_visual_control(self):
@@ -124,16 +117,16 @@ class Game:
 	def update_score(self, lines_cleared, move_down_points):
 		# depending on how much lines were cleared increase score
 		if lines_cleared == 1:
-			self.score.value += (100 * self.level.value)
+			self.score.value += (One_line_cleared * self.level.value)
 			self.total_lines_cleared += 1
 		elif lines_cleared == 2:
-			self.score.value += (300 * self.level.value)
+			self.score.value += (Two_lines_cleared * self.level.value)
 			self.total_lines_cleared += 2
 		elif lines_cleared == 3:
-			self.score.value += (500 * self.level.value)
+			self.score.value += (Three_lines_cleared * self.level.value)
 			self.total_lines_cleared += 3
 		elif lines_cleared == 4:
-			self.score.value += (800 * self.level.value)
+			self.score.value += (Four_lines_cleared * self.level.value)
 			self.total_lines_cleared += 4
 		if self.pause == False:
 			# add move down points
@@ -199,7 +192,6 @@ class Game:
 			
 	# mediates speed increase of down acceleration
 	def accelerate_downwards(self):
-	
 		if self.start_down != None and time.time() - self.start_down > self.down_interval:
 			# reset time stamp
 			self.start_down = time.time()
@@ -212,13 +204,12 @@ class Game:
 	def lock_block(self):
 		# resets down acceleration if enabled 
 		if self.accelerate_down == True and self.start_down != None:
+			# adds score points if down accelaration was used to lock block
+			self.update_score(0, Lock_score * self.level.value)
+			# reset interval and start_down
 			self.start_down = None
-			
-			# adds points depending on the level to the score if down accelaration was used to lock block
-			if self.down_interval <= self.start_interval/2:
-				self.update_score(0, self.level.value)
-			# reset interval
 			self.down_interval = self.start_interval
+			
 		# check where the block was positioned in the grid and add those tiles as "barriers"/immovable parts of the grid
 		tiles = self.current_block.get_cell_positions()
 		# fill the grid at all cell positions the block occupies with its block id
@@ -252,14 +243,17 @@ class Game:
 	def reset(self):
 		# reset the grid
 		self.grid.reset()
+		
 		# get new blocks
 		self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
 		self.current_block = self.get_random_block()
 		self.next_block = self.get_random_block()
 		self.next_next_block = self.get_random_block()
 		self.next_next_next_block = self.get_random_block()	
+		
 		# check for score keeping
-		self.check_for_Keep_score()
+		if Keep_score_pre == False and self.pretrial == True or Keep_score_main == False and self.pretrial == False:
+			self.score.value = 0
 
 		# during pretrials additional mechanics are called
 		if self.pretrial == True:

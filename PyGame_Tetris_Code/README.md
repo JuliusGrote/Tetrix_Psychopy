@@ -1,10 +1,9 @@
 # The game code in this folder is a modified version of a "pygame" Tetris game, available from [here](https://github.com/educ8s/Python-Tetris-Game-Pygame).
 
 ## Important to check before playing
-
 - The game only works on windows!
 - When not using the PsychoPy standalone version, only works with Python installed: [Download here](https://www.python.org/downloads/)
-- Needs "Pygame" package installed:
+- And needs "Pygame" package installed:
   
   ```shell
   pip install pygame
@@ -18,6 +17,8 @@
 - 2 lines cleared = 300 score points * level
 - 3 lines cleared = 500 score points * level
 - 4 lines cleared = 800 score points * level
+
+&rarr; The score points can be adjusted in [config_tetris_game](config_tetris_game.txt)
 
 ## Level progression
 

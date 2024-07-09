@@ -10,7 +10,7 @@ Language = "German"
 
 ## Explanation settings
 
-### Should explanations be included in the experiment? (includes explanations
+### Should the explanations be included in the experiment? (includes explanation routines in "Tetrix_PsychoPy")
 ### You might want to disable them for testing or if you want to use Tetrix for a different purpose)
 ### Default: True
 
@@ -36,7 +36,6 @@ Include_explanations = True
 
 #------
 N_repeats = 7
-#------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
 ### The same condition is at max. chosen two times in a row.
