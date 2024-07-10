@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juli 10, 2024, at 11:59
+    on Juli 10, 2024, at 13:35
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -7089,7 +7089,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if press_shape is stopping this frame...
             if press_shape.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > press_shape.tStartRefresh + control_condition-frameTolerance:
+                if tThisFlipGlobal > press_shape.tStartRefresh + control_duration-frameTolerance:
                     # keep track of stop time/frame for later
                     press_shape.tStop = t  # not accounting for scr refresh
                     press_shape.tStopRefresh = tThisFlipGlobal  # on global time
@@ -7149,7 +7149,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if press_button is stopping this frame...
             if press_button.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > press_button.tStartRefresh + Targeted_duration-frameTolerance:
+                if tThisFlipGlobal > press_button.tStartRefresh + control_duration-frameTolerance:
                     # keep track of stop time/frame for later
                     press_button.tStop = t  # not accounting for scr refresh
                     press_button.tStopRefresh = tThisFlipGlobal  # on global time
