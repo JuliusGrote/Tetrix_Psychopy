@@ -1,0 +1,3 @@
+[submodule "tetrix_analysis/02_material_and_methods/02_code_Psychopy"]
+	path = tetrix_analysis/02_material_and_methods/02_code_Psychopy
+	url = https://gitlab.uni-marburg.de/groteju/tetrix_analysis.git

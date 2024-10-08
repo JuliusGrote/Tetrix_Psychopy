@@ -1,5 +1,5 @@
 # import libraries
-import ctypes, time, wmi
+import ctypes, time
 import pygame
 
 # checks whether a specific window is created
@@ -48,11 +48,3 @@ def create_dummi_screen_responsecheck():
     # set the desired window position to be outside of the visible window (e.g., 10000 pixels from the left, 1000 pixels from the top)
     window_x, window_y = 10000, 10000
     ctypes.windll.user32.SetWindowPos(handle, -1, window_x, window_y, 0, 0, 0x0001)
-    
-def list_keyboards():
-    c = wmi.WMI()
-    # Query for keyboards
-    print("\n--------------------\nConnected Keyboards:")
-    for index, item in enumerate(c.Win32_Keyboard(), start=1):  # start=1 begins the index from 1 instead of 0
-        print(f"Nr. {index} ID: {item.DeviceID}, Description: {item.Description}")
-    print("--------------------\n")

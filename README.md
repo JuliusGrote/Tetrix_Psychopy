@@ -6,16 +6,20 @@ This is a PsychoPy implementation of the Tetris game designed to run as an fMRI 
 
 When using Tetrix, please include the following citation:
 
-**Grote, J., Hamm, A.-M., Stocker, J. E., Jansen, A., & Kessler, H. (2024, June 21). Tetrix: A novel paradigm for investigating cognitive functions associated with the computer game Tetris. Retrieved from osf.io/6hzbj**
+**Grote, J., Hamm, A.-M., Stocker, J. E., Jansen, A., & Kessler, H. (2024, July 12). Tetrix: A novel paradigm for investigating cognitive functions associated with the computer game Tetris. Retrieved from osf.io/6hzbj**
 
 ## Getting Started
+
+- This paradigm only works with Windows OS.
+
+- Use only one monitor or if you have multiple, make sure to set them to duplicate mode.
 
 - Make sure you downloaded at least Version: "Psychopy 2024.1.1" or higher
  ([download here](https://www.psychopy.org/download.html)).
 
 - Open the [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) file.
 
-- Check whether pynput ans wmi are installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput"/"WMI" and install if necessary).
+- Check whether pynput and wmi are installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput"/"WMI" and install if necessary).
 
 - To start, press "run"/green startbutton and enter the current subject id.
 
@@ -27,15 +31,15 @@ When using Tetrix, please include the following citation:
 
 &rarr; By default, the Paradigm consists of a:
 
-1. "Pre-Trial" part, in which the individual skill of a participant is determined by playing "Pretrial_rounds". Afterwards the level for the "Main-Part" is calculated. Additionally, you can choose how this level is calculated - either by averaging the levels reached or by determining the *Just Noticable Difference* via weighted logistic regression (adopted and modified from [Baker et al. 2018](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0201486)).
+1. "Pre-Trial" part, in which the individual skill of a participant is determined by playing "Pretrial_rounds". Afterwards the level for the "Main-Part" is calculated. Additionally, you can choose how this level is calculated - either by averaging the levels reached or by determining a subjective item difficulty of 0.5 via weighted logistic regression.
 
-&rarr; JND: level/game speed at which participants fail 50% of the time. JND describes an "objective" sensory threshold at which the highest neural activity is observed. This is (also) backed up by the *Neural Efficiency Hypothesis* suggesting that more skilled subjects need less neuronal resources for the same taks difficulty compared to less skilled individuals, but utilize a similar amount of resources at the same **subjective** task difficulty, see [Rietschel et al. 2012](https://pubmed.ncbi.nlm.nih.gov/22410264/) and [Nussbaumer et al. 2015](https://www.sciencedirect.com/science/article/pii/S0160289615000513). For more information on settings, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
+	&rarr; Item difficulty<sub>0.5</sub>: level/game speed at which participants fail 50% of the time, correlationg with particularly high neural activity. Calculationwise, it is determined similarly to the Just Noticable Difference (JND) and is thus referred to in the setting as "JND_regression" (regression adopted and modified from [Baker et al. 2018](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0201486)). Either way, setting a subject specfic difficulty is backed up by the *Neural Efficiency Hypothesis* suggesting that more skilled subjects need less neuronal resources for the same taks difficulty compared to less skilled individuals, but utilize a similar amount of resources at the same **subjective** task difficulty, see [Rietschel et al. 2012](https://pubmed.ncbi.nlm.nih.gov/22410264/) and [Nussbaumer et al. 2015](https://www.sciencedirect.com/science/article/pii/S0160289615000513). For more information on settings, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
 
-&rarr; Note that this part of the experiment (with all explanatory routines) can be disabled in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt), set "Pretrial_rounds" to "None" (for more information, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)). I.e. if you want to use a set "Start_level" for all participants in the fMRI "main-part".
+	&rarr; This part of the experiment (with all explanatory routines) can be disabled in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt), set "Pretrial_rounds" to "None" (for more information, see [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)). I.e. if you want to use a set "Start_level" for all participants in the fMRI "main-part".
 
 2. The "Main-Part" holds the actual fMRI related experiment. There are 2 condition blocks in one trial (playing Tetris followed by a random control condition) lasting 20sec (default) each with 30 (default) trials in total (settings can be altered, in [config_paradigm_psychopy](config_paradigm_psychopy.txt)). Between each condition block the interstimulus interval, ISI, varies between 6sec and 8sec (default).
 
-&rarr; Note that this part of the experiment (with all explanatory routines) can also be disabled. In [config_paradigm_psychopy](config_paradigm_psychopy.txt), set "N_repeats" to "None". I.e. if you are only interested into the behavioral data generated by the paradigm. Then the "Pre-Trials" would actually serve as the core part of the experiment (for more information, see [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
+	&rarr; This section (with all explanatory routines) can also be disabled. In [config_paradigm_psychopy](config_paradigm_psychopy.txt), set "N_repeats" to "None". I.e. if you are only interested into the behavioral data generated by the paradigm. Then the "Pre-Trials" would actually serve as the core part of the experiment (for more information, see [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
 
 ### Conditions ("Main-Part")
 
@@ -144,10 +148,10 @@ pip install {your package}
 *if this message occurs:*
 
 ```shell
-'File "C:\Users\Julius\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 1456, in _execute_child:
+'File "C:\Users\___\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 1456, in _execute_child:
 hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
 
-FileNotFoundError: [WinError 2] Das System kann die angegebene Datei nicht finden
+FileNotFoundError: [WinError 2] The system cannot find the file specified'
 ```
 
 *remove this line from the code:*

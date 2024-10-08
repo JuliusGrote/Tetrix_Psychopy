@@ -15,7 +15,7 @@ Language = "German"
 ### Default: True
 
 #------
-Include_explanations = True
+Include_explanations = False
 #------
 
 ## Trial settings
