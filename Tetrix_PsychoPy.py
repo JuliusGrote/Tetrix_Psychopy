@@ -88,9 +88,6 @@ Inst.set_instructions(
                       Fixation_cross_duration
                       )
 
-# check in which order the keyboards were registered fordebugging purposes
-list_keyboards()
-
 # define a function to compare between high and low working memory load and speed / game difficulty
 # define functions that creates a list with shuffled order of "high" and "low" wm_load and speed
 # used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed

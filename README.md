@@ -19,7 +19,7 @@ When using Tetrix, please include the following citation:
 
 - Open the [Tetrix_PsychoPy.psyexp](Tetrix_PsychoPy.psyexp) file.
 
-- Check whether pynput and wmi are installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput"/"WMI" and install if necessary).
+- Check whether pynput is installed ("Tools" &rarr; "Plugin/package manager" &rarr; "Plugins" &rarr; search "pynput" and install if necessary).
 
 - To start, press "run"/green startbutton and enter the current subject id.
 
@@ -134,9 +134,9 @@ The Experiment is constructed for PsychoPy 2024.1.1. You can set which Psychopy 
 
 ## .py File
 
-The experiment is available as a python script as well. Make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame", "WMI" and "pynput".
+The experiment is available as a python script as well. Make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput".
 
-&rarr; When not using the PsychoPy standalone version, the paradigm only works with Python installed: [Download here!](https://www.python.org/downloads/) Additionally, make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages "pygame" and "pynput".
+&rarr; When not using the PsychoPy standalone version, the paradigm only works with Python installed: [Download here!](https://www.python.org/downloads/) Additionally, make sure to install the correct "psychopy --version {your version}" in cmd and add the additional packages listed above.
 
 ```shell
 #Install a package
