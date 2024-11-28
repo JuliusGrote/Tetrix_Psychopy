@@ -53,7 +53,7 @@ When using Tetrix, please include the following citation:
 
 ### Procedure
 
-1. All enabled processes are checked ("pretrial_Tetris", "play_Tetris", "watch_Tetris"). The subject is asked to press the required buttons on the responsebox twice (adjust your settings in [config_paradigm_psychopy].(config_paradigm_psychopy.txt))
+1. All enabled processes are checked ("pretrial_Tetris", "play_Tetris", "watch_Tetris"). The subject is asked to press the required buttons on the responsebox twice (adjust your settings in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
 
 #### "Pre-Trial" Structure (if enabled)
 

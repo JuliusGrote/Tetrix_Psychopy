@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on Juli 15, 2024, at 12:55
+    on November 28, 2024, at 11:11
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -41,16 +41,9 @@ from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
 
-# Change the current working directory to the script's directory
-script_dir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(script_dir)
-
-# ensure that all classes can be imported from this folder
-sys.path.append('PyGame_Tetris_Code')
-
 # import tetris classes/methods
-from game import Game
-from tetris_instance import Tetris_Instance
+from PyGame_Tetris_Code.game import Game
+from PyGame_Tetris_Code.tetris_instance import Tetris_Instance
 
 # import paradigm modules in other files
 from instructions import Instructions
@@ -88,16 +81,19 @@ Inst.set_instructions(
                       Fixation_cross_duration
                       )
 
-# define a function to compare between high and low working memory load and speed / game difficulty
-# define functions that creates a list with shuffled order of "high" and "low" wm_load and speed
-# used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed
-# unfortunately it is less comlicated to define the function here compared to importing it from another module
-
 def comp_wm_load_speed(total_trials, trial_nr):
+    '''
+    Define a function to compare between high and low working memory load and speed / game difficulty.
+    Also creates a list with shuffled order of "high" and "low" wm_load and/or speed.
+    Used to randomize the "high" and "low" "play_Tetris" amount of next block or game speed.
+    Unfortunately it is less comlicated to define the function here compared to importing it from another module.
+    '''
+   
     global wm_load_seq
     global speed_seq
     global high_level
     global low_level
+    
     # create the arrays only on the first trial
     if trial_nr == 0: 
         # halfs the amount of conditions based on total trials
@@ -158,9 +154,11 @@ def comp_wm_load_speed(total_trials, trial_nr):
             game.level.value = high_level
             game.level_for_main.value = high_level
 
-
-# define a method to skip a trial that belongs to either to the "pretrial" or "main_trials" if those are disabled by config
-def skip_if_enabled(part):
+def skip_if_enabled(part):    
+    '''
+    a method to skip a trial that belongs to either to the "pretrial" or "main_trials" if those are disabled by config
+    '''
+    
     if part == "pretrial" and game.pretrial_rounds == None or part == "main_trials" and N_repeats == None:
         # return False to set continueRoutine = False
         return False
@@ -267,7 +265,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='G:\\Meine Ablage\\Studium\\Git_projects\\Tetrix_Psychopy\\Tetrix_PsychoPy.py',
+        originPath='C:\\Users\\Julius\\Meine Ablage\\Studium\\Git_projects\\Tetrix\\Tetrix_Psychopy\\Tetrix_PsychoPy.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='priority'
     )
@@ -665,9 +663,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         #Psychopy uses switched arguments for a vertical and horizontal mirroring compared to "config_paradigm_psychopy.txt"
         warper.changeProjection(None, flipHorizontal = Flip_vertically, flipVertical = Flip_horizontally)
     
-    #create a keyboard listener that collets Trigger by the MR
-    #cannot be defined before the experiment due to globalCLock being defined in run(...)
+    
     def check_for_trigger(key):
+        '''
+        creates a keyboard listener that collets Trigger by the MR.
+        Cannot be defined before the experiment due to globalCLock being defined in run(...)
+        '''
+        
         try:
             if key.char =='q':
                 return False

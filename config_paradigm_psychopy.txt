@@ -36,6 +36,7 @@ Include_explanations = True
 
 #------
 N_repeats = 7
+#------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
 ### The same condition is at max. chosen two times in a row.
@@ -192,7 +193,7 @@ else: 	### Do not change this line of code!
 	Pygame_key_2 = pygame.K_7 # Move Tetris-block left 
 	Pygame_key_3 = pygame.K_8 # Rotate Tetris-block 
 	Pygame_key_4 = pygame.K_9 # Move Tetris-block right
-	Pygame_key_5 = pygame.K_0# Spare key
+	Pygame_key_5 = pygame.K_0 # Spare key
 #------
 
 ### Define which keys to use in Psychopy to use "press_continue" (continue to next routine) in "Tetrix_PsychoPy.psyexp", should be according to the keys used above for pygame!

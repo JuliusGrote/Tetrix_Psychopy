@@ -1,9 +1,42 @@
 import pygame
-from colors import Colors
-from scale import Scale
+from PyGame_Tetris_Code.colors import Colors
+from PyGame_Tetris_Code.scale import Scale
 
-# create a grid class that defines the grid - including important functions - the game is played on 
 class Grid:
+	'''
+	The grid class is responsible for the game grid. It contains all the functions that are used to manipulate the grid.
+
+	Attributes:
+
+		num_rows: int, number of rows in the grid
+		num_cols: int, number of columns in the grid
+		cell_size: int, the size of the cell in the grid
+		grid: list, the grid matrix
+		colors: dict, the colors of the cells in the grid
+		scale: object, the scale class
+
+	Methods:
+
+		print_grid() -> None
+			prints the grid
+		is_inside(row: int, column: int) -> bool
+			checks if a specific cell is inside the grid
+		is_empty(row: int, column: int) -> bool
+			checks if a specific cell is empty
+		is_row_full(row: int) -> bool
+			checks if a specific row is full
+		clear_row(row: int) -> None
+			clears a specific row 
+		move_row_down(row: int, num_rows: int) -> None
+			moves a specific row down 
+		clear_full_rows() -> int
+			clears all full rows (if any) and moves the rows above down
+		reset() -> None
+			resets the grid
+		draw(screen: object) -> None
+			draws the grid on the screen (pygame.rects)
+	'''
+
 	def __init__(self):
 		# pass the the scale class for drawing
 		self.scale = Scale ()

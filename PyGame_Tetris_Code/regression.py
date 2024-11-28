@@ -8,6 +8,28 @@ with open("PyGame_Tetris_Code/config_tetris_game.txt", "r") as c_tetris:
 	exec(config_tetris)
 
 class Regression:
+	'''
+	The regression class is responsible for the logistic regression of the game.speeds of 
+	the game and the determination of the item difficulty of 0.5
+	Attributes:
+		x_range: np.array, the range of game.speeds
+		x_array: multiprocessing.Array, the game.speeds array
+		y_array: multiprocessing.Array, the completion rate array
+		weights: multiprocessing.Array, the weights array
+
+	Methods:
+		speed_formula(x: int) -> float
+			calculates the game.speed value by given formula
+		logistic(x: int, a: float, b: float) -> float
+			returns the logistic function
+		logistic_regression(x_data: np.array, y_data: np.array, weights: np.array) -> tuple
+			performs the logistic regression given the game.speeds, completion rates and weights
+		find_nearest(values: np.array, n: float) -> float
+			finds the nearest value of a value "n" in an array "values"
+		determine_main_level() -> tuple
+			determines the item difficulty of 0.5 (here referred to as JND due to calculation method) and the level closest to it
+	'''
+
 	# define the important arrays for the regression 
 	# similar to the Game() class most arrays here are multiprocessing arrays 
 	# because they are accessed and transformed by multiple processes
@@ -21,9 +43,9 @@ class Regression:
 		return ((Start_speed/1250 - ((x - 1) * Speed_slope)) ** (x - 1) * 1000)	
 	
 	def logistic(self, x, a, b):
-    # in theoy at infinte game.speeds the logistic should apporach 1
+	# in theory at infinte game.speeds the logistic should apporach 1
 	# so the numerator is set to 1 limiting the upper y limit to 1
-	    return 1 / (1 + np.exp(-b*(x-a)))
+		return 1 / (1 + np.exp(-b*(x-a)))
 
 	# function that performs the actual regression using scipy
 	def logistic_regression(self, x_data, y_data, weights):
@@ -31,11 +53,9 @@ class Regression:
 		# return the optimization parameters and covariance
 		return popt, pcov
 
-	# finds the nearest value of a value "n" in an array "values" (here used to determine the level closest to the Jnd)
 	def find_nearest(self, values, n):
 		return min(values, key=lambda x: abs(x - n))
 
-	# main function to determine the JND and the level closest to it
 	def determine_main_level(self):
 		print(f'raw y_array: {self.y_array[:]}')
 		# divide self.y_array by self.weights but without getting a zero error 
@@ -58,7 +78,7 @@ class Regression:
 		# print results
 		print(f'parameters: {popt}, covariance: {pcov}')
 
-		# JND (half maximal value of the function and turning point of the curve) correlates to the "a" parameter of regression function (popt[0]) 
+		# item difficulty of 0.5 (here jnd) correlates to the "a" parameter of regression function (popt[0]) 
 		jnd = popt[0]
 
 		# find the game.speed (of a level) that the calculated jnd is nearest to

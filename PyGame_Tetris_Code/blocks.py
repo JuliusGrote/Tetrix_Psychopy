@@ -1,6 +1,5 @@
-from block import Block
-from position import Position
-
+from PyGame_Tetris_Code.block import Block
+from PyGame_Tetris_Code.position import Position
 
 # define the different blocks as child classes inhereting from the parent "Block" class in "block.py"
 # with a library containing their possible rotation states as positions in a 2x2, 3x3 or 4x4 matrix

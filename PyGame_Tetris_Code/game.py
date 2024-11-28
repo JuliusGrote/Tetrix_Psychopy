@@ -5,9 +5,9 @@ from multiprocessing import Value
 import ctypes
 
 # import classes from the other game files
-from blocks import *
-from grid import Grid
-from regression import Regression
+from PyGame_Tetris_Code.blocks import *
+from PyGame_Tetris_Code.grid import Grid
+from PyGame_Tetris_Code.regression import Regression
 import time
 
 # config file is read and executed
@@ -24,12 +24,82 @@ visual_rand = random.Random()
 random.seed(Block_seed)
 block_rand = random.Random()
 
-# define game class with all relevant game mechanics
+
 class Game:
-	
+	'''
+	define game class with all relevant game mechanics
+
+	Attributes:
+
+		grid: object, the grid class
+		regression: object, the regression class
+		blocks: list, all the blocks in the game
+		current_block: object, the current block
+		next_block: object, the next block
+		next_next_block: object, the next next block
+		next_next_next_block: object, the next next next block
+		game_over: bool, game over state
+		pretrial: bool, pretrial state
+		pretrial_staircase: bool, pretrial staircase state
+		pretrial_rounds: int, pretrial rounds
+		game_over_counter: int, game over counter
+		three_next_blocks: bool, three next blocks state
+		toggle_pretrial: bool, toggle pretrial state
+		toggle_play: bool, toggle play state
+		toggle_watch: bool, toggle watch state
+		pause: bool, pause state
+		visual_control: bool, visual control state
+		level_for_main: float, level for main trials
+		level_for_main_factor: float, level for main trials factor
+		level: int, level
+		score: int, score
+		automatic_restart: bool, automatic restart state
+		accelerate_down: bool, accelerate down state
+		accelerate_type: bool, accelerate type state
+		start_down: float, start down acceleration
+		start_interval: int, start interval
+		down_interval: int, down interval
+		speed: int, speed
+		total_lines_cleared: int, total lines cleared
+
+		
+	Methods:
+
+		calculate_speed() -> None
+			calculate the speed of the game (time interval for block movement)
+		exe_visual_control() -> None
+			perform a random move in the visual control instead of the player
+		update_score(lines_cleared: int, move_down_points: int) -> None
+			update the score of the game
+		update_level() -> None
+			update the level of the game
+		get_random_block() -> object
+			get a random block from the block list
+		rotate() -> None
+			rotate the current block by 90 degrees in clockwise direction
+		move_left() -> None
+			move the current block one cell to the left
+		move_right() -> None
+			move the current block one cell to the right
+		move_down() -> None
+			move the current block one cell down
+		accelerate_downwards() -> None
+			accelerate the down movement of the current block if the accelerate down setting is enabled
+		lock_block() -> None
+			lock the current block in place on the grid
+		reset() -> None
+			reset the game grid and various game variables depending on config
+		block_fits() -> bool
+			check whether the current block fits in the current position
+		block_inside() -> bool
+			check whether the current block is inside the grid
+		draw(screen: object) -> None
+			draw the grid and all the blocks in it and the next blocks on the screen
+	'''
+
 	def __init__(self):
 		
-				# pass imported classes and define block related objects
+		# pass imported classes and define block related objects
 		self.grid = Grid()
 		self.regression = Regression()
 		self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
@@ -41,7 +111,6 @@ class Game:
 				# define game mechanism variables
 				# some variables here are defined as "multiprocessing values" 
 				# since they need to be synchronized between the main process of "Tetris_Psychopy" and all the different Tetris processes!
-				# some variables are defined as class variables ("self.") 
 				# because they are imported and used in "Tetris_psychopy"
 
 		## regression variables 
@@ -76,7 +145,6 @@ class Game:
 		self.speed = Value('i', Start_speed)
 		self.total_lines_cleared = 0
 
-	# set the "pygame.USEREVENTs" for the game loop of "Tetris_Instance()" in "Tetris_Psychopy"
 	def calculate_speed(self):
 		self.speed.value = round(self.regression.speed_formula(self.level.value))
 		# sets USEREVENT according to game.speed for "play_Tetris" and "Visual_control" until game.level 7
@@ -85,7 +153,6 @@ class Game:
 		pygame.time.set_timer(pygame.USEREVENT + 1, round(260 * 8/ self.level.value))
 
 
-	# here the visual control randomizer is defined 
 	def exe_visual_control(self):
 		# define possible moves
 		possible_moves = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -112,8 +179,7 @@ class Game:
 		elif move == 8:
 			self.move_left()
 			self.move_left()
-		
-	# here, score updates are managed		
+	
 	def update_score(self, lines_cleared, move_down_points):
 		# depending on how much lines were cleared increase score
 		if lines_cleared == 1:
@@ -134,7 +200,6 @@ class Game:
 		# depending on how much lines were cleared the level is updated
 		self.update_level()
 
-	# here, the level updates are managed
 	def update_level(self):
 		# works only if the level progression in the main trials or pretrials is enabled depending on the current tetris process
 		if Level_progression_main == True and self.pretrial == False or self.pretrial == True and Level_progression_pre == True:		
@@ -149,7 +214,6 @@ class Game:
 				if self.jnd_regression == True and self.pretrial == True:
 					self.regression.weights[self.level.value - 1] += 1
 
-	# here, a new random block is chosen each time it is needed
 	def get_random_block(self):
 		# this makes sure that a single block cannot be chosen two times in row but all the other blocks need to be chosen first
 		if len(self.blocks) == 0:
@@ -159,29 +223,25 @@ class Game:
 		# remove this block from the block array
 		self.blocks.remove(block)
 		return block
-
-	# rotate the current block clockwise		
+		
 	def rotate(self):
 		self.current_block.rotate()
 		# if the block has no space to move that way undo the move
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.undo_rotation()
-	
-	# move the block one to the left on the grid
+
 	def move_left(self):
 		self.current_block.move(0, -1)
 		# if the block has no space to move that way undo the move
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.move(0, 1)
-
-	# move the block one to the right on the grid		
+	
 	def move_right(self):
 		self.current_block.move(0, 1)
 		# if the has no space to move that way undo the move
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.move(0, -1)
 	
-	# move the block one down on the grid	
 	def move_down(self):
 		self.current_block.move(1, 0)
 		# if the block has no space to move that way undo the move
@@ -190,7 +250,6 @@ class Game:
 			# if the block has reached the bottom of the grid (or lands on top of another block) then lock the block in place
 			self.lock_block()
 			
-	# mediates speed increase of down acceleration
 	def accelerate_downwards(self):
 		if self.start_down != None and time.time() - self.start_down > self.down_interval:
 			# reset time stamp

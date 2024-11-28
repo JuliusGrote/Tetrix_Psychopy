@@ -7,8 +7,8 @@ import ctypes
 import time
 import sys
 # import game classes
-from game import Game
-from colors import Colors
+from PyGame_Tetris_Code.game import Game
+from PyGame_Tetris_Code.colors import Colors
 
 # initialize pygame and game
 game = Game()
@@ -34,6 +34,32 @@ def Tetris_Instance(
                     pygame_key_3,
                     pygame_key_4        
 ):
+    
+    '''
+    This function hosts the game loop and all the game logic. It is the entry point of the game and starts the game loop.
+    Updates the game state and the GUI. It also checks for keyboard input and game over conditions.
+
+    Parameters:
+        window_name: str, name of the window
+        is_control: bool, whether the game is controlled by the AI or not
+        pretrial: bool, whether the game is in pretrial mode or not
+        pause_state: multiprocessing.Value, shared memory variable to control the pause state
+        game_over_counter: multiprocessing.Value, shared memory variable to count the game over events
+        score: multiprocessing.Value, shared memory variable to store the score
+        level: multiprocessing.Value, shared memory variable to store the level
+        speed: multiprocessing.Value, shared memory variable to store the speed
+        level_for_main: multiprocessing.Value, shared memory variable to store the level for the main game
+        three_next_blocks: multiprocessing.Value, shared memory variable to store whether three next blocks are shown or not
+        x_array: multiprocessing.Array, shared memory array to store the x values for the regression - if enabled in config 
+        y_array: multiprocessing.Array, shared memory array to store the y values for the regression
+        weights: multiprocessing.Array, shared memory array to store the weights for the regression 
+        flip_vertically: bool, whether the screen should be flipped vertically or not
+        flip_horizontally: bool, whether the screen should be flipped horizontally or not
+        pygame_key_1: str, pygame key for moving the block down
+        pygame_key_2: str, pygame key for moving the block left
+        pygame_key_3: str, pygame key for rotating the block
+        pygame_key_4: str, pygame key for moving the block right
+    '''
 
     # transfer Tetris_Instance() parameters from parent to child process
     game.visual_control = is_control
@@ -51,9 +77,11 @@ def Tetris_Instance(
     # set gamespeed
     clock = pygame.time.Clock()
     game.calculate_speed()
+
     # define the USEREVENTS
     GAME_UPDATE = pygame.USEREVENT
     VISUAL_CONTROL_CAP = pygame.USEREVENT + 1
+    
     #set "previous" variables to None
     previous_level = None
     previous_three_next_blocks = None
