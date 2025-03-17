@@ -15,7 +15,7 @@ Language = "German"
 ### Default: False
 
 #------
-Exclude_explanations = True
+Exclude_explanations = False
 #------
 
 ## Trial settings
@@ -32,7 +32,7 @@ Exclude_explanations = True
 ### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 
 #------
-N_repeats = 1
+N_repeats = 8
 #------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
@@ -40,7 +40,7 @@ N_repeats = 1
 ### Default: None; if you want to use that function set "Main_trials_seed" to any number.
 
 #------
-Main_trials_seed = 11
+Main_trials_seed = 1
 #------
 
 ### Durations for each conditions in sec.
@@ -51,13 +51,13 @@ Main_trials_seed = 11
 
 
 #------
-Play_Tetris_duration = 6
+Play_Tetris_duration = 30
 
-Watch_Tetris_duration = 5
+Watch_Tetris_duration = 30
 
-Motor_control_duration = 5
+Motor_control_duration = 30
 
-Fixation_cross_duration = 5
+Fixation_cross_duration = 30
 #------
 
 ### Interstimulus Interval Variation
