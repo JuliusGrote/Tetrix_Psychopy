@@ -202,17 +202,23 @@ class Game:
 
 	def update_level(self):
 		# works only if the level progression in the main trials or pretrials is enabled depending on the current tetris process
-		if Level_progression_main == True and self.pretrial == False or self.pretrial == True and Level_progression_pre == True:		
-			if self.total_lines_cleared >= Lines_for_levelup:
-				# add 1 to y_array[old_level] if Jnd_regression is enabled in config
-				if self.jnd_regression == True and self.pretrial == True:
-					self.regression.y_array[self.level.value - 1] += 1
-				# update level
-				self.level.value += 1
-				self.total_lines_cleared = 0
-				# add to weights[new_level] if Jnd_regression is enabled in config
-				if self.jnd_regression == True and self.pretrial == True:
-					self.regression.weights[self.level.value - 1] += 1
+		if Level_progression_main == True and self.pretrial == False or self.pretrial == True and Level_progression_pre == True:
+
+			# if the total lines cleared are below the lines needed for a level up return		
+			if self.total_lines_cleared < Lines_for_levelup:
+				return
+			
+			# add 1 to y_array[old_level] if Jnd_regression is enabled in config
+			if self.jnd_regression == True and self.pretrial == True:
+				self.regression.y_array[self.level.value - 1] += 1
+
+			# update level
+			self.level.value += 1
+			self.total_lines_cleared = 0
+
+			# add to weights[new_level] if Jnd_regression is enabled in config
+			if self.jnd_regression == True and self.pretrial == True:
+				self.regression.weights[self.level.value - 1] += 1
 
 	def get_random_block(self):
 		# this makes sure that a single block cannot be chosen two times in row but all the other blocks need to be chosen first

@@ -10,21 +10,18 @@ Language = "German"
 
 ## Explanation settings
 
-### Should the explanations be included in the experiment? (includes explanation routines in "Tetrix_PsychoPy")
+### Should the explanations be excluded in the experiment? (excludes explanation routines in "Tetrix_PsychoPy")
 ### You might want to disable them for testing or if you want to use Tetrix for a different purpose)
-### Default: True
+### Default: False
 
 #------
-Include_explanations = True
+Exclude_explanations = True
 #------
 
 ## Trial settings
 
 ### How many Pre-Trial rounds should be played or what Pre-Trial design?
 ### --> see "config_tetris_game.txt"
-
-### By default (and recommended), all control conditions are included.
-### If you want to exclude a specific control condition, you can remove its entry in "main_trials.py" (make sure to also exclude routines in "Tetrix_PsychoPy.psyexp" that explain the excluded control condition(s))
 
 ### How often should each (control) condition occur?
 
@@ -35,7 +32,7 @@ Include_explanations = True
 ### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 
 #------
-N_repeats = 7
+N_repeats = 1
 #------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
@@ -48,19 +45,19 @@ Main_trials_seed = 11
 
 ### Durations for each conditions in sec.
 ### It is recommended to keep the durations of the conditions the same (except the baseline), but you can adjust them if you want to.
+### To disable a condition set the duration to "None" or 0 (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 ### Default: 30 (strongly recommended: 20-30, not more than 50)
 ### Baseline/fixation_cross: 15 (half the duration of the other conditions)
 
 
-
 #------
-Play_Tetris_duration = 30
+Play_Tetris_duration = 6
 
-Watch_Tetris_duration = 30
+Watch_Tetris_duration = 5
 
-Motor_control_duration = 30
+Motor_control_duration = 5
 
-Fixation_cross_duration = 15
+Fixation_cross_duration = 5
 #------
 
 ### Interstimulus Interval Variation
@@ -209,7 +206,7 @@ psychopy_key_5 = '0'
 
 ## Define trigger signal
 
-### This only works if your Trigger signal can be converted to a char/letter, i.e. via an according response box!
+### This only works if your Trigger signal can be converted to a character, i.e. via an according response box!
 ### Default: 't'
 
 #------

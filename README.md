@@ -55,13 +55,13 @@ When using Tetrix, please include the following citation:
 
 1. All enabled processes are checked ("pretrial_Tetris", "play_Tetris", "watch_Tetris"). The subject is asked to press the required buttons on the responsebox twice (adjust your settings in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
 
-#### "Pre-Trial" Structure (if enabled)
+#### "Pre-Trials" Structure (if enabled)
 
 2. Instuctions for playing Tetris on how to play the game (for fMRI: with one responsebox using the right hand) follow.
 
 3. To determine how skilled a subject is in playing Tetris, the participant plays 3 rounds of Tetris.The starting level differs based on the level reached in the previous round (staircase design and using default parameters, can be altered in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt)). Afterwards, the level for the actual MRI measurement is calculated based on options in [config_tetris_game](./PyGame_Tetris_Code/config_tetris_game.txt).
 
-4. An optional break of 30sec in between the "pre-trial" and "main-part" (30s is default and can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
+4. An optional break of 30sec in between the "Pre-Trials" and "Main Part" (30s is default and can be altered in [config_paradigm_psychopy](config_paradigm_psychopy.txt)).
 
 #### "Main-Part" Structure (if enabled)
 
@@ -170,7 +170,7 @@ In order to set which eye tracker to use go to: Setting (gear symbol) &rarr; go 
 
 ## Additional Material
 
-In addition to the actual paradigm resources we created instruction material and questionaires. Those are available from our [OSF-Preregistration](https://osf.io/6hzbj/?view_only=f3d734306e2d47c2b9ff41e5da0caf47).
+In addition to the actual paradigm, we created instruction material and questionaires. Those are available from our [OSF-Preregistration](https://osf.io/6hzbj/?view_only=f3d734306e2d47c2b9ff41e5da0caf47).
 
 ## Software Licence
 

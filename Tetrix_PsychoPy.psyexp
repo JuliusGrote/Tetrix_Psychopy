@@ -31,7 +31,7 @@
     <Param val="" valType="str" updates="None" name="backgroundImg"/>
     <Param val="avg" valType="str" updates="None" name="blendMode"/>
     <Param val="float" valType="str" updates="None" name="clockFormat"/>
-    <Param val="{'trigger.t': '31', 'thisRow.t': '30', 'Condition.started': '29', 'Condition.stopped': '28', 'Condition.duration': '27', 'game.score': '26', 'game.level': '24', 'game.speed': '23', 'game.wm_load_condition': '22', 'game.speed_condition': '21', 'Condition.info': '20', 'participant': '19', 'main_trials.thisTrialN': '18', 'main_trials.thisIndex': '17', 'main_trials.thisN': '16', 'main_trials.thisRepN': '15', 'targeted_duration': '14', 'control_condition': '13', 'Images_next_cond': '12', 'notes': '0', 'play_pretrial.started': '-1', 'pretrial.round_t': '-2', 'play_pretrial.stopped': '-3', 'pretrial.score': '-4', 'pretrial.start_level': '-5', 'pretrial.fail_level': '-6', 'pretrial.level_avg': '-7', 'JND': '-8', 'pretrial.game_speeds': '-9', 'pretrial.completion_rate': '-10', 'pretrial.weights': '-11', 'pretrial.optimization_parameters': '-12', 'expName': '-13', 'date': '-14', 'expStart': '-15', 'frameRate': '-16', 'psychopyVersion': '-17'}" valType="dict" updates="None" name="colPriority"/>
+    <Param val="{'trigger.t': '31', 'thisRow.t': '30', 'Condition.started': '29', 'Condition.stopped': '28', 'Condition.duration': '27', 'game.score': '26', 'game.level': '24', 'game.speed': '23', 'game.wm_load_condition': '22', 'game.speed_condition': '21', 'Condition.info': '20', 'participant': '19', 'main_trials.thisTrialN': '18', 'main_trials.thisIndex': '17', 'main_trials.thisN': '16', 'main_trials.thisRepN': '15', 'targeted_duration': '14', 'control_condition': '13', 'images_next_cond': '12', 'notes': '0', 'play_pretrial.started': '-1', 'pretrial.round_t': '-2', 'play_pretrial.stopped': '-3', 'pretrial.score': '-4', 'pretrial.start_level': '-5', 'pretrial.fail_level': '-6', 'pretrial.level_avg': '-7', 'JND': '-8', 'pretrial.game_speeds': '-9', 'pretrial.completion_rate': '-10', 'pretrial.weights': '-11', 'pretrial.optimization_parameters': '-12', 'expName': '-13', 'date': '-14', 'expStart': '-15', 'frameRate': '-16', 'psychopyVersion': '-17'}" valType="dict" updates="None" name="colPriority"/>
     <Param val="-0.6549, -0.6549, -0.0039" valType="color" updates="None" name="color"/>
     <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
     <Param val="100.1.1.1" valType="str" updates="None" name="elAddress"/>
@@ -250,28 +250,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_play_Tetris" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris or Exclude_explanations or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_play" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;)and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_play" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="controller_example" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -384,28 +367,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="start_experiment" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_start" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_start" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="Start" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -550,7 +516,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="check_window_watch" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_watch_Tetris or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -563,7 +529,7 @@
         <Param val="condition_or_wait_timer(&quot;wait&quot;);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="#set Tetris to foreground&amp;#10;Get_on_top(&quot;watch_Tetris&quot;)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -610,7 +576,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="check_window_play" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -621,9 +587,9 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="condition_or_wait_timer(&quot;wait&quot;);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if skip_if_enabled(&quot;main_trials&quot;) == True:&amp;#10;    # set Tetris to foreground&amp;#10;    Get_on_top(&quot;play_Tetris&quot;)&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Get_on_top(&quot;play_Tetris&quot;)&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -670,28 +636,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="show_play" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_check_play" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# skipped if main part should be skipped according to setting in &quot;config_paradigm_psychopy&quot;&amp;#10;continueRoutine = skip_if_enabled(&quot;main_trials&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_check_play" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="check_play" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -730,28 +679,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="show_watch" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_watch_Tetris or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_show_watch" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_show_watch" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="check_watch" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -942,28 +874,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_pretrial" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;pretrial&quot;) or skip_part(&quot;main_trials&quot;) or Exclude_explanations" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_pretrial" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# skips this routine if there are no pretrial rounds set or there are no main trials&amp;#10;continueRoutine = skip_if_enabled(&quot;pretrial&quot;) and skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="if ((game.pretrial_rounds === null)) {&amp;#10;    countinueRoutine = false;&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_pretrial" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="explanation_pretrial" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -1090,8 +1005,8 @@
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="play_pretrial" valType="code" updates="None" name="name"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -1102,14 +1017,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="game.pretrial = true;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# puts preTrial Tetris-Window on top&amp;#10;Get_on_top(&quot;pretrial_Tetris&quot;)&amp;#10;# waits one sec&amp;#10;condition_or_wait_timer(&quot;wait&quot;)&amp;#10;&amp;#10;if skip_if_enabled(&quot;pretrial&quot;) == True:  &amp;#10;    # start Tetris pretrial&amp;#10;    game.toggle_pretrial.value = not game.toggle_pretrial.value&amp;#10;&amp;#10;if skip_if_enabled(&quot;pretrial&quot;) == True:&amp;#10;    # sets initial level tracking variable&amp;#10;    previous_level = game.level.value&amp;#10;    # log initial start_level&amp;#10;    thisExp.addData('Condition.info', 'info_preTrial_start')&amp;#10;    thisExp.nextEntry()&amp;#10;    thisExp.addData('pretrial.start_level', game.level.value)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if not skip_part(&quot;pretrial&quot;):&amp;#10;    # puts preTrial Tetris-Window on top&amp;#10;    Get_on_top(&quot;pretrial_Tetris&quot;)&amp;#10;    # waits one sec&amp;#10;    condition_or_wait_timer(&quot;wait&quot;)&amp;#10;    &amp;#10;    # start Tetris pretrial&amp;#10;    game.toggle_pretrial.value = not game.toggle_pretrial.value&amp;#10;&amp;#10;    # sets initial level tracking variable&amp;#10;    previous_level = game.level.value&amp;#10;    # log initial start_level&amp;#10;    thisExp.addData('play_pretrial.started', globalClock.getTime(format='float'))&amp;#10;    thisExp.addData('Condition.info', 'info_preTrial_start')&amp;#10;    thisExp.nextEntry()&amp;#10;    thisExp.addData('pretrial.start_level', game.level.value)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="if skip_if_enabled(&quot;pretrial&quot;) == True:  &amp;#10;  # keep track of the level when it increases&amp;#10;    if previous_level &lt; game.level.value:&amp;#10;        previous_level = game.level.value&amp;#10;        &amp;#10;    # adds useful parameters to the logfile when the level decreases (only happens when &quot;game over&quot;)&amp;#10;    elif previous_level &gt; game.level.value:    &amp;#10;        thisExp.addData('Condition.info', f'info_preTrial_round_{game.game_over_counter.value}')&amp;#10;        thisExp.addData('pretrial.fail_level', previous_level)&amp;#10;        thisExp.addData('pretrial.score', game.score.value)&amp;#10;        thisExp.addData('pretrial.round_t', globalClock.getTime(format='float'))&amp;#10;        thisExp.nextEntry()&amp;#10;        # adds new start level, except after last &quot;game over &quot;...&amp;#10;        if game.game_over_counter.value != game.pretrial_rounds:&amp;#10;            thisExp.addData('pretrial.start_level', game.level.value)&amp;#10;        # reset previous_level according to new game.level.value&amp;#10;        previous_level = game.level.value&amp;#10;    &amp;#10;# end pretrials if game over counter meets the amount of pretrial rounds set in the config files&amp;#10;if game.game_over_counter.value == game.pretrial_rounds or game.pretrial_rounds == None:&amp;#10;   continueRoutine = False&amp;#10;&amp;#10;#keep track of weights and completion rate if you use jnd regression ans the Pretrial&amp;#10;if game.jnd_regression == True and game.pretrial_rounds != None and frameN % 600 == 0:&amp;#10;    print(f' y_array: {game.regression.y_array[:]}')&amp;#10;    print(f' weights: {game.regression.weights[:]}')&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="&amp;#10;# keep track of the level when it increases&amp;#10;if previous_level &lt; game.level.value:&amp;#10;    previous_level = game.level.value&amp;#10;    &amp;#10;# adds useful parameters to the logfile when the level decreases (only happens when &quot;game over&quot;)&amp;#10;elif previous_level &gt; game.level.value:    &amp;#10;    thisExp.addData('Condition.info', f'info_preTrial_round_{game.game_over_counter.value}')&amp;#10;    thisExp.addData('pretrial.fail_level', previous_level)&amp;#10;    thisExp.addData('pretrial.score', game.score.value)&amp;#10;    thisExp.addData('pretrial.round_t', globalClock.getTime(format='float'))&amp;#10;    thisExp.nextEntry()&amp;#10;    # adds new start level, except after last &quot;game over &quot;...&amp;#10;    if game.game_over_counter.value != game.pretrial_rounds:&amp;#10;        thisExp.addData('pretrial.start_level', game.level.value)&amp;#10;    # reset previous_level according to new game.level.value&amp;#10;    previous_level = game.level.value&amp;#10;    &amp;#10;# end pretrials if game over counter meets the amount of pretrial rounds set in the config files&amp;#10;if game.game_over_counter.value == game.pretrial_rounds or game.pretrial_rounds == None:&amp;#10;   continueRoutine = False&amp;#10;&amp;#10;#keep track of weights and completion rate if you use jnd regression ans the Pretrial&amp;#10;if game.jnd_regression == True and game.pretrial_rounds != None and frameN % 600 == 0:&amp;#10;    print(f' y_array: {game.regression.y_array[:]}')&amp;#10;    print(f' weights: {game.regression.weights[:]}')&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# get back to Psychopy window&amp;#10;Get_on_top(&quot;PsychoPy&quot;)&amp;#10;# adds the achieved level and score to the data file&amp;#10;thisExp.addData('pretrial.score', game.score.value)&amp;#10;thisExp.addData('Condition.info', 'info_preTrial_sum')&amp;#10;&amp;#10;&amp;#10;# execute game.level_for_main.value as defined by &quot;config_tetris_game.txt&quot;&amp;#10;# skip automatically if pretrial_rounds are disabled&amp;#10;if game.jnd_regression == True and game.pretrial_rounds != None:&amp;#10;    thisExp.addData('pretrial.level_avg', game.level_for_main.value)&amp;#10;    # overwrites game.level_for_main.value achieved by averaging with regression results&amp;#10;    game.level_for_main.value, popt, pcov = game.regression.determine_main_level()&amp;#10;    # log regression results&amp;#10;    thisExp.addData('pretrial.game_speeds', game.regression.x_array[:])&amp;#10;    thisExp.addData('JND', game.level_for_main.value)&amp;#10;    thisExp.addData('pretrial.completion_rate', game.regression.y_array[:])&amp;#10;    thisExp.addData('pretrial.weights', game.regression.weights[:])&amp;#10;    thisExp.addData('pretrial.optimization_parameters', popt)&amp;#10;    &amp;#10;else:&amp;#10;    # do not log regression results if &quot;Jnd_regression&quot; is not enabled in config&amp;#10;    thisExp.addData('pretrial.game_speeds', None)&amp;#10;    thisExp.addData('pretrial.level_avg', game.level_for_main.value)&amp;#10;    thisExp.addData('JND', None)&amp;#10;    thisExp.addData('pretrial.completion_rate', None)&amp;#10;    thisExp.addData('pretrial.weights', None)&amp;#10;    thisExp.addData('pretrial.optimization_parameters', None)&amp;#10;    &amp;#10;# skip this step if pretrials are disabled&amp;#10;if game.pretrial_rounds != None:&amp;#10;    # sets new start level for main game (needs to be converted to an int, since this multiprocessing.values type cannot be changed&amp;#10;    game.level_for_main.value = round(game.level_for_main.value * game.level_for_main_factor)&amp;#10;    game.level.value = int(game.level_for_main.value)&amp;#10;&amp;#10;# resets absolut score&amp;#10;game.score.value = 0&amp;#10;&amp;#10;# prints out the value for control purposes&amp;#10;print('\n'.join([&amp;#10;&quot;--------------------&quot;,&amp;#10;f&quot;Main level: {game.level.value}&quot;,&amp;#10;&quot;--------------------&quot;,&amp;#10;&quot;&quot;&amp;#10;]))&amp;#10;&amp;#10;# ends pretrial pygame process&amp;#10;if game.pretrial_rounds != None:&amp;#10;    pretrial_Tetris.terminate()&amp;#10;    pretrial_Tetris.join()&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="# if this routine is skipped the &quot;Begin and End Routine&quot; tabs are still executed&amp;#10;if not skip_part(&quot;pretrial&quot;):&amp;#10;    # get back to Psychopy window&amp;#10;    Get_on_top(&quot;PsychoPy&quot;)&amp;#10;    &amp;#10;    # adds the time stemp, achieved level and score to the data file&amp;#10;    thisExp.addData('play_pretrial.stopped', globalClock.getTime(format='float'))&amp;#10;    thisExp.addData('pretrial.score', game.score.value)&amp;#10;    thisExp.addData('Condition.info', 'info_preTrial_sum')&amp;#10;&amp;#10;    if game.jnd_regression == True:&amp;#10;        thisExp.addData('pretrial.level_avg', game.level_for_main.value)&amp;#10;        # overwrites game.level_for_main.value achieved by averaging with regression results&amp;#10;        game.level_for_main.value, popt, pcov = game.regression.determine_main_level()&amp;#10;        # log regression results&amp;#10;        thisExp.addData('pretrial.game_speeds', game.regression.x_array[:])&amp;#10;        thisExp.addData('JND', game.level_for_main.value)&amp;#10;        thisExp.addData('pretrial.completion_rate', game.regression.y_array[:])&amp;#10;        thisExp.addData('pretrial.weights', game.regression.weights[:])&amp;#10;        thisExp.addData('pretrial.optimization_parameters', popt)&amp;#10;        &amp;#10;    else:&amp;#10;        # do not log regression results if &quot;Jnd_regression&quot; is not enabled in config&amp;#10;        thisExp.addData('pretrial.game_speeds', None)&amp;#10;        thisExp.addData('pretrial.level_avg', game.level_for_main.value)&amp;#10;        thisExp.addData('JND', None)&amp;#10;        thisExp.addData('pretrial.completion_rate', None)&amp;#10;        thisExp.addData('pretrial.weights', None)&amp;#10;        thisExp.addData('pretrial.optimization_parameters', None)&amp;#10;        &amp;#10;    # sets new start level for main game (needs to be converted to an int, since this multiprocessing.values type cannot be changed&amp;#10;    game.level_for_main.value = round(game.level_for_main.value * game.level_for_main_factor)&amp;#10;    game.level.value = int(game.level_for_main.value)&amp;#10;&amp;#10;    # resets absolut score&amp;#10;    game.score.value = 0&amp;#10;&amp;#10;    # prints out the value for control purposes&amp;#10;    print('\n'.join([&amp;#10;    &quot;--------------------&quot;,&amp;#10;    f&quot;Main level: {game.level.value}&quot;,&amp;#10;    &quot;--------------------&quot;,&amp;#10;    &quot;&quot;&amp;#10;    ]))&amp;#10;&amp;#10;    # ends pretrial pygame process&amp;#10;    pretrial_Tetris.terminate()&amp;#10;    pretrial_Tetris.join()" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="Tetris_pretrial" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -1164,28 +1079,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="show_pretrial" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_show_pretrial" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# skips this routine if there are no pretrial rounds set&amp;#10;continueRoutine = skip_if_enabled(&quot;pretrial&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_show_pretrial" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="check_pretrial" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -1224,7 +1122,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="check_for_pretrial" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -1235,9 +1133,9 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# skips this routine if there no pretrial rounds set&amp;#10;if game.pretrial_rounds != None:&amp;#10;    Get_on_top(&quot;pretrial_Tetris&quot;)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Get_on_top(&quot;pretrial_Tetris&quot;)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;pretrial&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -1327,28 +1225,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="intro_main" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;main_trials&quot;) or skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_intro_main" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# skips this routine if there are no pretrial rounds or no main_trials set since it is uncessary to introduce the main part here...&amp;#10;continueRoutine = skip_if_enabled(&quot;pretrial&quot;) and skip_if_enabled(&quot;main_trials&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_intro_main" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="intro_main_text" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -1439,19 +1320,19 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <CodeComponent name="create_processes" plugin="None">
-        <Param val="# import necessary packages and load them&amp;#10;import ctypes&amp;#10;import time&amp;#10;from pynput import keyboard as pynput_keyboard&amp;#10;from multiprocessing import Process, Value&amp;#10;from psychopy.visual.windowwarp import Warper&amp;#10;&amp;#10;# import tetris classes/methods&amp;#10;from PyGame_Tetris_Code.game import Game&amp;#10;from PyGame_Tetris_Code.tetris_instance import Tetris_Instance&amp;#10;&amp;#10;# import paradigm modules in other files&amp;#10;from instructions import Instructions&amp;#10;from utils import *&amp;#10;from main_trials import *&amp;#10;&amp;#10;# get config information&amp;#10;with open(&quot;config_paradigm_psychopy.txt&quot;, &quot;r&quot;) as c_paradigm:&amp;#10;    config_paradigm = c_paradigm.read()&amp;#10;    exec(config_paradigm)&amp;#10;&amp;#10;# initialize Pygame and Game&amp;#10;pygame.init()&amp;#10;game = Game()&amp;#10;&amp;#10;# if N_repeats is None the function produces an error&amp;#10;if N_repeats != None:&amp;#10;    # create the main_trials-order for the main part&amp;#10;    create_trial_list(&amp;#10;                      N_repeats,&amp;#10;                      Main_trials_seed,&amp;#10;                      Motor_control_duration,&amp;#10;                      Watch_Tetris_duration,&amp;#10;                      Fixation_cross_duration&amp;#10;                      )&amp;#10;&amp;#10;# set language according to setting in config file&amp;#10;Inst = Instructions()&amp;#10;Inst.set_instructions(&amp;#10;                      Language,&amp;#10;                      N_repeats,&amp;#10;                      Play_Tetris_duration,&amp;#10;                      Motor_control_duration,&amp;#10;                      Watch_Tetris_duration,&amp;#10;                      Fixation_cross_duration&amp;#10;                      )&amp;#10;&amp;#10;def comp_wm_load_speed(total_trials, trial_nr):&amp;#10;    '''&amp;#10;    Define a function to compare between high and low working memory load and speed / game difficulty.&amp;#10;    Also creates a list with shuffled order of &quot;high&quot; and &quot;low&quot; wm_load and/or speed.&amp;#10;    Used to randomize the &quot;high&quot; and &quot;low&quot; &quot;play_Tetris&quot; amount of next block or game speed.&amp;#10;    Unfortunately it is less comlicated to define the function here compared to importing it from another module.&amp;#10;    '''&amp;#10;   &amp;#10;    global wm_load_seq&amp;#10;    global speed_seq&amp;#10;    global high_level&amp;#10;    global low_level&amp;#10;    &amp;#10;    # create the arrays only on the first trial&amp;#10;    if trial_nr == 0: &amp;#10;        # halfs the amount of conditions based on total trials&amp;#10;        n_per_load = int(total_trials/2)&amp;#10;        # creates a array of random order for each comparison that defines the order of &quot;high&quot; or &quot;low&quot; conditions in the &quot;play_Tetris&quot; parts.&amp;#10;        if Comp_wm_load == True and Comp_speed == False:&amp;#10;            wm_load_low = 'low_load'&amp;#10;            wm_load_high = 'high_load'&amp;#10;            wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load # add equal number of &quot;high&quot; and &quot;low&quot;&amp;#10;            np.random.seed(Load_seed) &amp;#10;            wm_load_seq = shuffle_trials(wm_load_seq)&amp;#10;            print(f'wm_load_seq: {wm_load_seq}')&amp;#10;        elif Comp_speed == True and Comp_wm_load == False:&amp;#10;            speed_low = 'low_speed'&amp;#10;            speed_high = 'high_speed'&amp;#10;            speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load # add equal number of &quot;high&quot; and &quot;low&quot;&amp;#10;            np.random.seed(Speed_seed) &amp;#10;            speed_seq = shuffle_trials(speed_seq)&amp;#10;            print(f'speed_seq: {speed_seq}')&amp;#10;         &amp;#10;        # if both comparison conditions are enabled, in order to get an equal distribution across all 4 different possible combination a tuple array is created.&amp;#10;        elif Comp_speed == True and Comp_wm_load == True:&amp;#10;            combinations = ([('low_load', 'low_speed')] + [('low_load', 'high_speed')] + [('high_load', 'low_speed')] + [('high_load', 'high_speed')]) * int(n_per_load/2) &amp;#10;            &amp;#10;            # shuffle the tuple array into a random order&amp;#10;            np.random.seed(Comp_all_seed) &amp;#10;            combinations = shuffle_trials(combinations)&amp;#10;            &amp;#10;            # unzip the tuple array in to the two part-arrays, which define the condition combinations in the &quot;play_Tetris&quot; parts&amp;#10;            wm_load_seq, speed_seq = zip(*combinations)&amp;#10;            print(f'wm_load_seq: {wm_load_seq} and speed_seq: {speed_seq}')&amp;#10;          # make sure that high_level and low_level are never equal or below 0 (game crash)  &amp;#10;        if Comp_speed == True:&amp;#10;            if abs(Low_level) &gt;= game.level.value and Low_level &lt; 0:&amp;#10;                low_level = 1&amp;#10;            else:&amp;#10;                low_level = game.level.value + Low_level&amp;#10;            if abs(High_level) &gt;= game.level.value and High_level &lt; 0:&amp;#10;                high_level = 1&amp;#10;            else:&amp;#10;                high_level = game.level.value + High_level&amp;#10;        # set this to false and ensure that the array creation is done only once!       &amp;#10;        first_trial = False&amp;#10;     &amp;#10;    # set &quot;high&quot; or &quot;low&quot; for &quot;wm_load&quot; or &quot;speed&quot; in the current trial&amp;#10;    if Comp_wm_load == True:&amp;#10;        print(f'Trial {trial_nr + 1} of {total_trials} - {wm_load_seq[trial_nr]}')&amp;#10;        if wm_load_seq[trial_nr] == 'low_load':&amp;#10;            game.three_next_blocks.value = False&amp;#10;        else:&amp;#10;            game.three_next_blocks.value = True&amp;#10;    if Comp_speed == True:&amp;#10;        print(f'Trial {trial_nr + 1} of {total_trials} - {speed_seq[trial_nr]}')&amp;#10;        if speed_seq[trial_nr] == 'low_speed':&amp;#10;            game.level.value = low_level&amp;#10;            game.level_for_main.value = low_level&amp;#10;        else:&amp;#10;            game.level.value = high_level&amp;#10;            game.level_for_main.value = high_level&amp;#10;&amp;#10;def skip_if_enabled(part):    &amp;#10;    '''&amp;#10;    a method to skip a trial that belongs to either to the &quot;pretrial&quot; or &quot;main_trials&quot; if those are disabled by config&amp;#10;    '''&amp;#10;    &amp;#10;    if part == &quot;pretrial&quot; and game.pretrial_rounds == None or part == &quot;main_trials&quot; and N_repeats == None:&amp;#10;        # return False to set continueRoutine = False&amp;#10;        return False&amp;#10;    else:&amp;#10;        # return False to set continueRoutine = True&amp;#10;        return True" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="# import necessary packages and load them&amp;#10;import ctypes&amp;#10;import time&amp;#10;from pynput import keyboard as pynput_keyboard&amp;#10;from multiprocessing import Process, Value&amp;#10;from psychopy.visual.windowwarp import Warper&amp;#10;&amp;#10;# import tetris classes/methods&amp;#10;from PyGame_Tetris_Code.game import Game&amp;#10;from PyGame_Tetris_Code.tetris_instance import Tetris_Instance&amp;#10;&amp;#10;# import paradigm modules in other files&amp;#10;from instructions import Instructions&amp;#10;from utils import *&amp;#10;from main_trials import *&amp;#10;&amp;#10;# get config information&amp;#10;with open(&quot;config_paradigm_psychopy.txt&quot;, &quot;r&quot;) as c_paradigm:&amp;#10;    config_paradigm = c_paradigm.read()&amp;#10;    exec(config_paradigm)&amp;#10;&amp;#10;# initialize Pygame and Game&amp;#10;pygame.init()&amp;#10;game = Game()&amp;#10;&amp;#10;# if N_repeats is None the function produces an error&amp;#10;if N_repeats != None:&amp;#10;    # create the main_trials-order for the main part&amp;#10;    create_trial_list(&amp;#10;                      N_repeats,&amp;#10;                      Main_trials_seed,&amp;#10;                      Motor_control_duration,&amp;#10;                      Watch_Tetris_duration,&amp;#10;                      Fixation_cross_duration&amp;#10;                      )&amp;#10;&amp;#10;# set language according to setting in config file&amp;#10;Inst = Instructions()&amp;#10;Inst.set_instructions(&amp;#10;                      Language,&amp;#10;                      N_repeats,&amp;#10;                      Play_Tetris_duration,&amp;#10;                      Motor_control_duration,&amp;#10;                      Watch_Tetris_duration,&amp;#10;                      Fixation_cross_duration&amp;#10;                      )&amp;#10;                      &amp;#10;def comp_wm_load_speed(total_trials, trial_nr):&amp;#10;    '''&amp;#10;    Define a function to compare between high and low working memory load and speed / game difficulty.&amp;#10;    Also creates a list with shuffled order of &quot;high&quot; and &quot;low&quot; wm_load and/or speed.&amp;#10;    Used to randomize the &quot;high&quot; and &quot;low&quot; &quot;play_Tetris&quot; amount of next block or game speed.&amp;#10;    Unfortunately it is less complicated to define the function here compared to importing it from another module.&amp;#10;    '''&amp;#10;   &amp;#10;    global wm_load_seq&amp;#10;    global speed_seq&amp;#10;    global high_level&amp;#10;    global low_level&amp;#10;    &amp;#10;    # create the arrays only on the first trial&amp;#10;    if trial_nr == 0: &amp;#10;        # halfs the amount of conditions based on total trials&amp;#10;        n_per_load = int(total_trials/2)&amp;#10;        # creates a array of random order for each comparison that defines the order of &quot;high&quot; or &quot;low&quot; conditions in the &quot;play_Tetris&quot; parts.&amp;#10;        if Comp_wm_load and not Comp_speed:&amp;#10;            wm_load_low = 'low_load'&amp;#10;            wm_load_high = 'high_load'&amp;#10;            wm_load_seq = [wm_load_low]*n_per_load + [wm_load_high]*n_per_load # add equal number of &quot;high&quot; and &quot;low&quot;&amp;#10;            np.random.seed(Load_seed) &amp;#10;            wm_load_seq = shuffle_trials(wm_load_seq)&amp;#10;            print(f'wm_load_seq: {wm_load_seq}')&amp;#10;        elif Comp_speed and not Comp_wm_load:&amp;#10;            speed_low = 'low_speed'&amp;#10;            speed_high = 'high_speed'&amp;#10;            speed_seq = [speed_low]*n_per_load + [speed_high]*n_per_load # add equal number of &quot;high&quot; and &quot;low&quot;&amp;#10;            np.random.seed(Speed_seed) &amp;#10;            speed_seq = shuffle_trials(speed_seq)&amp;#10;            print(f'speed_seq: {speed_seq}')&amp;#10;         &amp;#10;        # if both comparison conditions are enabled, in order to get an equal distribution across all 4 different possible combination a tuple array is created.&amp;#10;        elif Comp_speed and Comp_wm_load:&amp;#10;            combinations = ([('low_load', 'low_speed')] + [('low_load', 'high_speed')] + [('high_load', 'low_speed')] + [('high_load', 'high_speed')]) * int(n_per_load/2) &amp;#10;            &amp;#10;            # shuffle the tuple array into a random order&amp;#10;            np.random.seed(Comp_all_seed) &amp;#10;            combinations = shuffle_trials(combinations)&amp;#10;            &amp;#10;            # unzip the tuple array in to the two part-arrays, which define the condition combinations in the &quot;play_Tetris&quot; parts&amp;#10;            wm_load_seq, speed_seq = zip(*combinations)&amp;#10;            print(f'wm_load_seq: {wm_load_seq} and speed_seq: {speed_seq}')&amp;#10;          # make sure that high_level and low_level are never equal or below 0 (game crash)  &amp;#10;        if Comp_speed:&amp;#10;            if abs(Low_level) &gt;= game.level.value and Low_level &lt; 0:&amp;#10;                low_level = 1&amp;#10;            else:&amp;#10;                low_level = game.level.value + Low_level&amp;#10;            if abs(High_level) &gt;= game.level.value and High_level &lt; 0:&amp;#10;                high_level = 1&amp;#10;            else:&amp;#10;                high_level = game.level.value + High_level&amp;#10;        # set this to false and ensure that the array creation is done only once!       &amp;#10;        first_trial = False&amp;#10;     &amp;#10;    # set &quot;high&quot; or &quot;low&quot; for &quot;wm_load&quot; or &quot;speed&quot; in the current trial&amp;#10;    if Comp_wm_load:&amp;#10;        print(f'Trial {trial_nr + 1} of {total_trials} - {wm_load_seq[trial_nr]}')&amp;#10;        if wm_load_seq[trial_nr] == 'low_load':&amp;#10;            game.three_next_blocks.value = False&amp;#10;        else:&amp;#10;            game.three_next_blocks.value = True&amp;#10;    if Comp_speed:&amp;#10;        print(f'Trial {trial_nr + 1} of {total_trials} - {speed_seq[trial_nr]}')&amp;#10;        if speed_seq[trial_nr] == 'low_speed':&amp;#10;            game.level.value = low_level&amp;#10;            game.level_for_main.value = low_level&amp;#10;        else:&amp;#10;            game.level.value = high_level&amp;#10;            game.level_for_main.value = high_level&amp;#10;&amp;#10;def skip_part(part):    &amp;#10;    '''&amp;#10;    a method to skip a trial that belongs to either to the &quot;pretrial&quot; or &quot;main_trials&quot; if those are disabled by config&amp;#10;    '''&amp;#10;    &amp;#10;    if part == &quot;pretrial&quot; and not game.pretrial_rounds or part == &quot;main_trials&quot; and not N_repeats:&amp;#10;        # return False to set continueRoutine = False&amp;#10;        return True&amp;#10;    else:&amp;#10;        # return False to set continueRoutine = True&amp;#10;        return False&amp;#10;        &amp;#10;def should_skip(duration):&amp;#10;    '''&amp;#10;    create a helper function that returns True if the the duration of the a condition is set to 0 or None   &amp;#10;    '''&amp;#10;    &amp;#10;    return duration == 0 or duration is None" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="pretrial_Tetris = new Process({&quot;target&quot;: Tetris_Instance, &quot;args&quot;: [&quot;pretrial_Tetris&quot;, false, true, game.toggle_pretrial, game.toggle_fullpretrial, game.game_over_counter, game.score, game.level]});&amp;#10;pretrial_Tetris.start();&amp;#10;new ctypes.windll.user32.ShowCursor(false);&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="#checks whether display orientation is altered (defined in &quot;config_paradigm_psychopy.txt&quot;)&amp;#10;if Flip_vertically == True or Flip_horizontally == True:&amp;#10;    &amp;#10;    #warping function provided by psychopy.visual.windowwarper&amp;#10;    #cannot be done &quot;Before  experiment&quot; due to win being defined at the end of &quot;Before experiment&quot;&amp;#10;    warper = Warper(win)&amp;#10;    &amp;#10;    #even if warping function is set warper needs to be updated before changes apply to the display&amp;#10;    #Psychopy uses switched arguments for a vertical and horizontal mirroring compared to &quot;config_paradigm_psychopy.txt&quot;&amp;#10;    warper.changeProjection(None, flipHorizontal = Flip_vertically, flipVertical = Flip_horizontally)&amp;#10;&amp;#10;&amp;#10;def check_for_trigger(key):&amp;#10;    '''&amp;#10;    creates a keyboard listener that collets Trigger by the MR.&amp;#10;    Cannot be defined before the experiment due to globalCLock being defined in run(...)&amp;#10;    '''&amp;#10;    &amp;#10;    try:&amp;#10;        if key.char =='q':&amp;#10;            return False&amp;#10;        if key.char == Trigger:&amp;#10;            thisExp.addData('trigger.t', globalClock.getTime(format='float'))&amp;#10;            thisExp.nextEntry()&amp;#10;    except AttributeError: &amp;#10;        pass" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="#checks whether display orientation is altered (defined in &quot;config_paradigm_psychopy.txt&quot;)&amp;#10;if Flip_vertically or Flip_horizontally:&amp;#10;    &amp;#10;    #warping function provided by psychopy.visual.windowwarper&amp;#10;    #cannot be done &quot;Before  experiment&quot; due to win being defined at the end of &quot;Before experiment&quot;&amp;#10;    warper = Warper(win)&amp;#10;    &amp;#10;    #even if warping function is set warper needs to be updated before changes apply to the display&amp;#10;    #Psychopy uses switched arguments for a vertical and horizontal mirroring compared to &quot;config_paradigm_psychopy.txt&quot;&amp;#10;    warper.changeProjection(None, flipHorizontal = Flip_vertically, flipVertical = Flip_horizontally)&amp;#10;   &amp;#10;# Set skip flags for all conditions&amp;#10;skip_play_Tetris = should_skip(Play_Tetris_duration)&amp;#10;skip_watch_Tetris = should_skip(Watch_Tetris_duration)&amp;#10;skip_motor_control = should_skip(Motor_control_duration)&amp;#10;skip_fixation_cross = should_skip(Fixation_cross_duration)&amp;#10;&amp;#10;# set main_trial repeats to 0 if its disabled in config&amp;#10;if skip_part(&quot;main_trials&quot;):&amp;#10;    n_repeats = 0&amp;#10;&amp;#10;# or set it to 1 if (meaning PsychoPy goes once through the &quot;main_trials.csv&quot; list) N_repeats is not None in config&amp;#10;else:&amp;#10;    n_repeats = 1&amp;#10;&amp;#10;def check_for_trigger(key):&amp;#10;    '''&amp;#10;    creates a keyboard listener that collets Trigger by the MR.&amp;#10;    Cannot be defined before the experiment due to globalCLock being defined in run(...)&amp;#10;    '''&amp;#10;    &amp;#10;    try:&amp;#10;        if key.char =='q':&amp;#10;            return False&amp;#10;        if key.char == Trigger:&amp;#10;            thisExp.addData('trigger.t', globalClock.getTime(format='float'))&amp;#10;            thisExp.nextEntry()&amp;#10;    except AttributeError: &amp;#10;        pass" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# creates a seperate process for the Pretrial rounds so that the experiment can continue but only if there are pretrial rounds set&amp;#10;if skip_if_enabled(&quot;pretrial&quot;) == True:    &amp;#10;    pretrial_Tetris = Process(target=Tetris_Instance, args=(&amp;#10;                              &quot;pretrial_Tetris&quot;,&amp;#10;                              False,&amp;#10;                              True,&amp;#10;                              game.toggle_pretrial,&amp;#10;                              game.game_over_counter,&amp;#10;                              game.score,&amp;#10;                              game.level,&amp;#10;                              game.speed,&amp;#10;                              game.level_for_main,&amp;#10;                              game.three_next_blocks,&amp;#10;                              game.regression.x_array,&amp;#10;                              game.regression.y_array,&amp;#10;                              game.regression.weights,&amp;#10;                              Flip_horizontally,&amp;#10;                              Flip_vertically,&amp;#10;                              Pygame_key_1,&amp;#10;                              Pygame_key_2,&amp;#10;                              Pygame_key_3,&amp;#10;                              Pygame_key_4,&amp;#10;                              ))&amp;#10;    pretrial_Tetris.start()&amp;#10;&amp;#10;#creates a seperate process for the Game so that the experiment can continue&amp;#10;if skip_if_enabled(&quot;main_trials&quot;) == True:&amp;#10;    play_Tetris = Process(target=Tetris_Instance, args=(&amp;#10;                          &quot;play_Tetris&quot;,&amp;#10;                          False,&amp;#10;                          False,&amp;#10;                          game.toggle_play,&amp;#10;                          game.game_over_counter,&amp;#10;                          game.score,&amp;#10;                          game.level,&amp;#10;                          game.speed,&amp;#10;                          game.level_for_main,&amp;#10;                          game.three_next_blocks,&amp;#10;                          game.regression.x_array,&amp;#10;                          game.regression.y_array,&amp;#10;                          game.regression.weights,&amp;#10;                          Flip_horizontally,&amp;#10;                          Flip_vertically,&amp;#10;                          Pygame_key_1,&amp;#10;                          Pygame_key_2,&amp;#10;                          Pygame_key_3,&amp;#10;                          Pygame_key_4,&amp;#10;                          ))&amp;#10;    play_Tetris.start()&amp;#10;# create a window for the controll visual_control condition&amp;#10;    watch_Tetris = Process(target=Tetris_Instance, args=(&amp;#10;                           &quot;watch_Tetris&quot;,&amp;#10;                           True,&amp;#10;                           False,&amp;#10;                           game.toggle_watch,&amp;#10;                           game.game_over_counter,&amp;#10;                           game.score,&amp;#10;                           game.level,&amp;#10;                           game.speed,&amp;#10;                           game.level_for_main,&amp;#10;                           game.three_next_blocks,&amp;#10;                           game.regression.x_array,&amp;#10;                           game.regression.y_array,&amp;#10;                           game.regression.weights,&amp;#10;                           Flip_horizontally,&amp;#10;                           Flip_vertically,&amp;#10;                           Pygame_key_1,&amp;#10;                           Pygame_key_2,&amp;#10;                           Pygame_key_3,&amp;#10;                           Pygame_key_4,&amp;#10;                           ))&amp;#10;    watch_Tetris.start()&amp;#10;&amp;#10;# start keyboard listener&amp;#10;log_trigger = pynput_keyboard.Listener(on_press=check_for_trigger)&amp;#10;log_trigger.start()&amp;#10;&amp;#10;&amp;#10;# hides cursor that appears automatically after processes are created&amp;#10;ctypes.windll.user32.ShowCursor(False)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# creates a seperate process for the Pretrial rounds so that the experiment can continue but only if there are pretrial rounds set&amp;#10;if not skip_part(&quot;pretrial&quot;):    &amp;#10;    pretrial_Tetris = Process(target=Tetris_Instance, args=(&amp;#10;                              &quot;pretrial_Tetris&quot;,&amp;#10;                              False,&amp;#10;                              True,&amp;#10;                              game.toggle_pretrial,&amp;#10;                              game.game_over_counter,&amp;#10;                              game.score,&amp;#10;                              game.level,&amp;#10;                              game.speed,&amp;#10;                              game.level_for_main,&amp;#10;                              game.three_next_blocks,&amp;#10;                              game.regression.x_array,&amp;#10;                              game.regression.y_array,&amp;#10;                              game.regression.weights,&amp;#10;                              Flip_horizontally,&amp;#10;                              Flip_vertically,&amp;#10;                              Pygame_key_1,&amp;#10;                              Pygame_key_2,&amp;#10;                              Pygame_key_3,&amp;#10;                              Pygame_key_4,&amp;#10;                              ))&amp;#10;    pretrial_Tetris.start()&amp;#10;&amp;#10;#creates a seperate process for the Game so that the experiment can continue&amp;#10;if not skip_part(&quot;main_trials&quot;):  &amp;#10;    if not skip_play_Tetris:&amp;#10;        play_Tetris = Process(target=Tetris_Instance, args=(&amp;#10;                              &quot;play_Tetris&quot;,&amp;#10;                              False,&amp;#10;                              False,&amp;#10;                              game.toggle_play,&amp;#10;                              game.game_over_counter,&amp;#10;                              game.score,&amp;#10;                              game.level,&amp;#10;                              game.speed,&amp;#10;                              game.level_for_main,&amp;#10;                              game.three_next_blocks,&amp;#10;                              game.regression.x_array,&amp;#10;                              game.regression.y_array,&amp;#10;                              game.regression.weights,&amp;#10;                              Flip_horizontally,&amp;#10;                              Flip_vertically,&amp;#10;                              Pygame_key_1,&amp;#10;                              Pygame_key_2,&amp;#10;                              Pygame_key_3,&amp;#10;                              Pygame_key_4,&amp;#10;                              ))&amp;#10;        play_Tetris.start()&amp;#10;# create a window for the controll visual_control condition&amp;#10;    if not skip_watch_Tetris:&amp;#10;        watch_Tetris = Process(target=Tetris_Instance, args=(&amp;#10;                               &quot;watch_Tetris&quot;,&amp;#10;                               True,&amp;#10;                               False,&amp;#10;                               game.toggle_watch,&amp;#10;                               game.game_over_counter,&amp;#10;                               game.score,&amp;#10;                               game.level,&amp;#10;                               game.speed,&amp;#10;                               game.level_for_main,&amp;#10;                               game.three_next_blocks,&amp;#10;                               game.regression.x_array,&amp;#10;                               game.regression.y_array,&amp;#10;                               game.regression.weights,&amp;#10;                               Flip_horizontally,&amp;#10;                               Flip_vertically,&amp;#10;                               Pygame_key_1,&amp;#10;                               Pygame_key_2,&amp;#10;                               Pygame_key_3,&amp;#10;                               Pygame_key_4,&amp;#10;                               ))&amp;#10;        watch_Tetris.start()&amp;#10;&amp;#10;# start keyboard listener&amp;#10;log_trigger = pynput_keyboard.Listener(on_press=check_for_trigger)&amp;#10;log_trigger.start()&amp;#10;&amp;#10;&amp;#10;# hides cursor that appears automatically after processes are created&amp;#10;ctypes.windll.user32.ShowCursor(False)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# ensures that this condition starts properly&amp;#10;if is_window_open(&quot;pretrial_Tetris&quot;) == True:&amp;#10;    continueRoutine = skip_if_enabled(&quot;main_trials&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# ensures that this condition starts properly&amp;#10;if is_window_open(&quot;pretrial_Tetris&quot;):&amp;#10;    continueRoutine = not skip_part(&quot;main_trials&quot;) # end routine if last main_trials are disabled and pretrial_Tetris window is created" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="# Terminate game and watch process&amp;#10;if skip_if_enabled(&quot;main_trials&quot;) == True:&amp;#10;    play_Tetris.terminate()&amp;#10;    watch_Tetris.terminate()&amp;#10;log_trigger.stop()" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="# Terminate game and watch process&amp;#10;if not skip_part(&quot;main_trials&quot;):&amp;#10;    if not skip_play_Tetris:&amp;#10;        play_Tetris.terminate()&amp;#10;    if not skip_watch_Tetris:&amp;#10;        watch_Tetris.terminate()&amp;#10;      &amp;#10;log_trigger.stop()" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="Get_on_top(&quot;PsychoPy&quot;)&amp;#10;print('\n'.join([&amp;#10;    &quot;--------------------&quot;,&amp;#10;    &quot;Processes:&quot;,&amp;#10;    f&quot;pretrial_Tetris loaded and paused (state: {game.toggle_pretrial.value})&quot;,&amp;#10;    f&quot;play_Tetris loaded and paused (state: {game.toggle_play.value})&quot;,&amp;#10;    f&quot;watch_Tetris loaded and paused (state: {game.toggle_watch.value})&quot;,&amp;#10;    &quot;--------------------&quot;,&amp;#10;    &quot;&quot;&amp;#10;]))" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="Get_on_top(&quot;PsychoPy&quot;)&amp;#10;print(&quot;---------------------------\nProcesses:&quot;)&amp;#10;if is_window_open(&quot;pretrial_Tetris&quot;):&amp;#10;    print(f&quot;pretrial_Tetris loaded and paused (state: {game.toggle_pretrial.value})&quot;)&amp;#10;if is_window_open(&quot;play_Tetris&quot;):&amp;#10;    print(f&quot;play_Tetris loaded and paused (state: {game.toggle_play.value})&quot;)&amp;#10;if is_window_open(&quot;watch_Tetris&quot;):&amp;#10;    print(f&quot;watch_Tetris loaded and paused (state: {game.toggle_watch.value})&quot;)&amp;#10;print(&quot;---------------------------&quot;)" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="create_processes" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -1493,7 +1374,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="wait_for_trigger" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -1504,9 +1385,9 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# only adds first trigger data if main trials are enabled in &quot;config_paradigm_psychopy&quot;&amp;#10;if skip_if_enabled(&quot;main_trials&quot;) == True:&amp;#10;    thisExp.addData('Condition.info', 'first_trigger')" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if not skip_part(&quot;main_trials&quot;):&amp;#10;    # adds the first trigger with special tag&amp;#10;    thisExp.addData('Condition.info', 'first_trigger')" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# additionally checks whether main_trials are enabled at all&amp;#10;continueRoutine = skip_if_enabled(&quot;main_trials&quot;)&amp;#10;&amp;#10;# waits for a keyboard input (that is the trigger signal from the MRI) as defined in the &quot;config_paradigm_psychopy&quot;&amp;#10;if defaultKeyboard.getKeys(keyList=[Trigger]):&amp;#10;    continueRoutine = False&amp;#10;    &amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# waits for a keyboard input (that is the trigger signal from the MRI) as defined in the &quot;config_paradigm_psychopy&quot;&amp;#10;if defaultKeyboard.getKeys(keyList=[Trigger]):&amp;#10;    continueRoutine = False&amp;#10;    &amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -1553,7 +1434,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="check_response_box" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -1566,7 +1447,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="create_dummi_screen_responsecheck()&amp;#10;&amp;#10;# variables for responsebox check that are displayed on screen&amp;#10;x_1 = &quot;-&quot;&amp;#10;x_2 = &quot;-&quot;&amp;#10;x_3 = &quot;-&quot;&amp;#10;x_4 = &quot;-&quot;&amp;#10;x_5 = &quot;-&quot;&amp;#10;x_1_1 =  &quot;-&quot;&amp;#10;x_2_2 =  &quot;-&quot;&amp;#10;x_3_3 =  &quot;-&quot;&amp;#10;x_4_4 =  &quot;-&quot;&amp;#10;x_5_5 =  &quot;-&quot;&amp;#10;all_checked = False" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;)&amp;#10;&amp;#10;# checks keys and updated variables accordingly&amp;#10;for event in pygame.event.get():&amp;#10;    if event.type == pygame.KEYDOWN:&amp;#10;        if event.key == Pygame_key_1:&amp;#10;            if x_1 == '-':&amp;#10;                x_1 = '1'&amp;#10;            elif x_1 == '1':&amp;#10;                x_1_1 = '1'&amp;#10;        if event.key == Pygame_key_2:&amp;#10;            if x_2 == '-':&amp;#10;                x_2 = '2'&amp;#10;            elif x_2 == '2':&amp;#10;                x_2_2 = '2'&amp;#10;        if event.key == Pygame_key_3:&amp;#10;            if x_3 == '-':&amp;#10;                x_3 = '3'&amp;#10;            elif x_3 == '3':&amp;#10;                x_3_3 = '3'&amp;#10;        if event.key == Pygame_key_4:&amp;#10;            if x_4 == '-':&amp;#10;                x_4 = '4'&amp;#10;            elif x_4 == '4':&amp;#10;                x_4_4 = '4'&amp;#10;        if event.key == Pygame_key_5:&amp;#10;            if x_5 == '-':&amp;#10;                x_5 = '5'&amp;#10;            elif x_5 == '5':&amp;#10;                x_5_5 = '5'&amp;#10;if x_1_1 == &quot;1&quot; and x_2_2 == &quot;2&quot; and x_3_3 == &quot;3&quot; and x_4_4 == &quot;4&quot; and x_5_5 == &quot;5&quot;:&amp;#10;    all_checked = True    " valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# checks keys and updated variables accordingly&amp;#10;for event in pygame.event.get():&amp;#10;    if event.type == pygame.KEYDOWN:&amp;#10;        if event.key == Pygame_key_1:&amp;#10;            if x_1 == '-':&amp;#10;                x_1 = '1'&amp;#10;            elif x_1 == '1':&amp;#10;                x_1_1 = '1'&amp;#10;        if event.key == Pygame_key_2:&amp;#10;            if x_2 == '-':&amp;#10;                x_2 = '2'&amp;#10;            elif x_2 == '2':&amp;#10;                x_2_2 = '2'&amp;#10;        if event.key == Pygame_key_3:&amp;#10;            if x_3 == '-':&amp;#10;                x_3 = '3'&amp;#10;            elif x_3 == '3':&amp;#10;                x_3_3 = '3'&amp;#10;        if event.key == Pygame_key_4:&amp;#10;            if x_4 == '-':&amp;#10;                x_4 = '4'&amp;#10;            elif x_4 == '4':&amp;#10;                x_4_4 = '4'&amp;#10;        if event.key == Pygame_key_5:&amp;#10;            if x_5 == '-':&amp;#10;                x_5 = '5'&amp;#10;            elif x_5 == '5':&amp;#10;                x_5_5 = '5'&amp;#10;if x_1_1 == &quot;1&quot; and x_2_2 == &quot;2&quot; and x_3_3 == &quot;3&quot; and x_4_4 == &quot;4&quot; and x_5_5 == &quot;5&quot;:&amp;#10;    all_checked = True    " valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -1789,7 +1670,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="wait_10sec_for_Trigger" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -1800,9 +1681,9 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# creates coutdown&amp;#10;timer_wait_for_trigger = core.CountdownTimer(10)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if not skip_part(&quot;main_trials&quot;):&amp;#10;    # creates coutdown&amp;#10;    timer_wait_for_trigger = core.CountdownTimer(10)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# additionally checks whether main_trials are enabled at all&amp;#10;continueRoutine = skip_if_enabled(&quot;main_trials&quot;)&amp;#10;&amp;#10;# use a while loop to do nothing until the time runs out but can be interuptes by trigger (trigger signal determined by &quot;config_paradigm_psychopy.txt&quot;)&amp;#10;if timer_wait_for_trigger.getTime() &lt;= 0:&amp;#10;    continueRoutine = False # exit the loop  &amp;#10;# reset timer&amp;#10;elif defaultKeyboard.getKeys(keyList=[Trigger]):&amp;#10;   timer_wait_for_trigger.reset()&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# use a while loop to do nothing until the time runs out but can be interuptes by trigger (trigger signal determined by &quot;config_paradigm_psychopy.txt&quot;)&amp;#10;if timer_wait_for_trigger.getTime() &lt;= 0:&amp;#10;    continueRoutine = False # exit the loop  &amp;#10;# reset timer&amp;#10;elif defaultKeyboard.getKeys(keyList=[Trigger]):&amp;#10;   timer_wait_for_trigger.reset()&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -1892,28 +1773,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_tetris_1" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="Exclude_explanations" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explanations_1" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explanations_1" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="explain_game_mechanics_1" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -2000,28 +1864,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_watch_Tetris" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_watch_Tetris or Exclude_explanations or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_watch" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_watch" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="watch_example" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -2134,28 +1981,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_fixation_cross" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_fixation_cross or Exclude_explanations or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_cross" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_cross" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="baseline_example" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -2268,28 +2098,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_motor_control" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_motor_control or Exclude_explanations or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_motor" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_motor" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="motorcontrol_example" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -2402,7 +2215,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="show_play_tetris" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -2447,7 +2260,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="tetris_condition" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -2458,14 +2271,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="import * as subprocess from 'subprocess';&amp;#10;directory = &quot;Py_Game_Tetris_edited&quot;;&amp;#10;script = &quot;main.py&quot;;&amp;#10;os.chdir(directory);&amp;#10;subprocess.call([&quot;python&quot;, script]);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# sets &quot;high&quot; or &quot;low&quot; &quot;speed&quot; or &quot;wm_load&quot; if enabled in config&amp;#10;comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)&amp;#10;    &amp;#10;# bring Tetris to foreground&amp;#10;Get_on_top(&quot;play_Tetris&quot;)&amp;#10;&amp;#10;# wait one sec&amp;#10;condition_or_wait_timer(&quot;wait&quot;)&amp;#10;&amp;#10;# Tetris resumes here&amp;#10;game.toggle_play.value = not game.toggle_play.value&amp;#10;&amp;#10;# collect start time for logging&amp;#10;condition_started = globalClock.getTime(format='float')&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if not (skip_part(&quot;main_trials&quot;) and skip_play_Tetris):  &amp;#10;    # sets &quot;high&quot; or &quot;low&quot; &quot;speed&quot; or &quot;wm_load&quot; if enabled in config&amp;#10;    comp_wm_load_speed(main_trials.nTotal, main_trials.thisN)&amp;#10;        &amp;#10;    # bring Tetris to foreground&amp;#10;    Get_on_top(&quot;play_Tetris&quot;)&amp;#10;&amp;#10;    # wait one sec&amp;#10;    condition_or_wait_timer(&quot;wait&quot;)&amp;#10;&amp;#10;    # Tetris resumes here&amp;#10;    game.toggle_play.value = not game.toggle_play.value&amp;#10;&amp;#10;    # collect start time for logging&amp;#10;    condition_started = globalClock.getTime(format='float')&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# get offset of the condition&amp;#10;condition_stopped = globalClock.getTime(format='float')&amp;#10;&amp;#10;#pauses Tetris&amp;#10;game.toggle_play.value = not game.toggle_play.value&amp;#10;&amp;#10;# waits one seconds&amp;#10;condition_or_wait_timer(&quot;wait&quot;)&amp;#10;# if the control condition is &quot;watch_Tetris&quot;: sets Tetris window to background&amp;#10;Get_on_top(&quot;PsychoPy&quot;)&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="if not (skip_part(&quot;main_trials&quot;) and skip_play_Tetris):&amp;#10;    # get offset of the condition&amp;#10;    condition_stopped = globalClock.getTime(format='float')&amp;#10;&amp;#10;    #pauses Tetris&amp;#10;    game.toggle_play.value = not game.toggle_play.value&amp;#10;&amp;#10;    # waits one seconds&amp;#10;    condition_or_wait_timer(&quot;wait&quot;)&amp;#10;    # if the control condition is &quot;watch_Tetris&quot;: sets Tetris window to background&amp;#10;    Get_on_top(&quot;PsychoPy&quot;)&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="execute_play_Tetris" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -2496,49 +2309,6 @@
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
     </Routine>
-    <Routine name="condition_ended">
-      <RoutineSettingsComponent name="condition_ended" plugin="None">
-        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
-        <Param val="" valType="str" updates="None" name="backgroundImg"/>
-        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
-        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
-        <Param val="" valType="str" updates="constant" name="desc"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="condition_ended" valType="code" updates="None" name="name"/>
-        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
-      </RoutineSettingsComponent>
-      <TextComponent name="condition_ended_text" plugin="None">
-        <Param val="white" valType="color" updates="constant" name="color"/>
-        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
-        <Param val="1" valType="num" updates="constant" name="contrast"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="None" valType="str" updates="constant" name="flip"/>
-        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
-        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="condition_ended_text" valType="code" updates="None" name="name"/>
-        <Param val="" valType="num" updates="set every frame" name="opacity"/>
-        <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
-        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0" valType="code" updates="None" name="startVal"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="1" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="$Inst.font_condition_ended" valType="str" updates="constant" name="text"/>
-        <Param val="from exp settings" valType="str" updates="None" name="units"/>
-        <Param val="" valType="code" updates="None" name="validator"/>
-        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
-      </TextComponent>
-    </Routine>
     <Routine name="random_control_condition">
       <RoutineSettingsComponent name="random_control_condition" plugin="None">
         <Param val="none" valType="str" updates="None" name="backgroundFit"/>
@@ -2555,7 +2325,7 @@
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="execute_codition" plugin="None">
+      <CodeComponent name="execute_condition" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
@@ -2570,7 +2340,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
         <Param val="# resets opacity&amp;#10;press_shape.setOpacity(0)&amp;#10;press_button.setOpacity(0)&amp;#10;# get offset of the condition&amp;#10;condition_stopped = globalClock.getTime(format='float')&amp;#10;&amp;#10;# if the control condition is &quot;watch_Tetris&quot;: pauses Tetris&amp;#10;if control_condition == &quot;watch_Tetris&quot;:&amp;#10;    # watch_Tetris pauses here&amp;#10;    game.toggle_watch.value = not game.toggle_watch.value&amp;#10;    &amp;#10;# waits one seconds&amp;#10;condition_or_wait_timer(&quot;wait&quot;)&amp;#10;# if the control condition is &quot;watch_Tetris&quot;: sets Tetris window to background&amp;#10;Get_on_top(&quot;PsychoPy&quot;)&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="execute_codition" valType="code" updates="None" name="name"/>
+        <Param val="execute_condition" valType="code" updates="None" name="name"/>
       </CodeComponent>
       <PolygonComponent name="press_shape" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
@@ -2594,7 +2364,7 @@
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
         <Param val="0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="$control_duration" valType="code" updates="constant" name="stopVal"/>
+        <Param val="$targeted_duration" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
@@ -2619,9 +2389,9 @@
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
         <Param val="0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="$control_duration" valType="code" updates="constant" name="stopVal"/>
+        <Param val="$targeted_duration" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="+" valType="str" updates="set every repeat" name="text"/>
+        <Param val="+" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
@@ -2648,7 +2418,7 @@
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
         <Param val="0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="$control_duration" valType="code" updates="constant" name="stopVal"/>
+        <Param val="$targeted_duration" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
         <Param val="128" valType="num" updates="constant" name="texture resolution"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
@@ -2666,28 +2436,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_basic_structure" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="Exclude_explanations or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_basic_structure" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_basic_structure" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="controller_example_1" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -2707,8 +2460,8 @@
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="(0.2, 0.2)" valType="list" updates="constant" name="size"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="not skip_play_Tetris" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
@@ -2735,8 +2488,8 @@
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="(0.2, 0.2)" valType="list" updates="constant" name="size"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="not skip_watch_Tetris" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
@@ -2763,8 +2516,8 @@
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="(0.2, 0.2)" valType="list" updates="constant" name="size"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="not skip_motor_control" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
@@ -2791,8 +2544,8 @@
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="(0.2, 0.2)" valType="list" updates="constant" name="size"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="not skip_fixation_cross" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
@@ -2884,28 +2637,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="wait_1s_pretrial" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_wait_pretrial" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# skips this routine if there are no pretrial rounds set&amp;#10;skip_if_enabled(&quot;pretrial&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_wait_pretrial" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="fix_wait_pretrial" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -2944,28 +2680,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="intro_how_to_play" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="Exclude_explanations" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explanations" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explanations" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="text_how_to_play" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -3050,28 +2769,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="start_pretrial" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_start_pretrial" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# skips this routine if there are no pretrial rounds set&amp;#10;continueRoutine = skip_if_enabled(&quot;pretrial&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_start_pretrial" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="text_start_pretrial" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -3130,28 +2832,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="intro_structure" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="Exclude_explanations or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_intro" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_intro" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="text_intro_structure" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -3236,28 +2921,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_staircase" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;pretrial&quot;) or Exclude_explanations or not game.pretrial_staircase" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_staircase" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# skips this routine if there are no pretrial rounds set or the staircase method is not enabled&amp;#10;continueRoutine = skip_if_enabled(&quot;pretrial&quot;) and game.pretrial_staircase and Include_explanations&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="if (((game.pretrial_rounds === null) || (game.pretrial_staircase === false))) {&amp;#10;    continueRoutine = false;&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_staircase" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <TextComponent name="text_explain_staircase" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -3342,28 +3010,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_comp_load" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris or Exclude_explanations or skip_part(&quot;main_trials&quot;) or not Comp_wm_load" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_comp_load" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="&amp;#10;    &amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# additionally checks whether main_trials are enabled at all and skips this routine if there no pretrial rounds set&amp;#10;continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Comp_wm_load and Include_explanations&amp;#10;    &amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_comp_load" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="controller_example_2" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -3476,28 +3127,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_comp_speed" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris or Exclude_explanations or skip_part(&quot;main_trials&quot;) or not Comp_speed" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_comp_speed" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="#additionally checks whether main_trials are enabled at all or skips this routine if there no pretrial rounds set&amp;#10;continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Comp_speed and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_comp_speed" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="controller_example_3" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -3610,28 +3244,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_trials" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="any([skip_play_Tetris, skip_watch_Tetris, skip_motor_control, skip_fixation_cross]) or Exclude_explanations or skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explain_trials" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explain_trials" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="img_explain_trials" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -3744,7 +3361,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="three_seconds_timer" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;main_trials&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -3755,14 +3372,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# creates coutdown&amp;#10;three_sec_timer = core.CountdownTimer(3)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if not skip_part(&quot;main_trials&quot;):&amp;#10;    # creates coutdown&amp;#10;    three_sec_timer = core.CountdownTimer(3)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# additionally checks whether main_trials are enabled at all&amp;#10;continueRoutine = skip_if_enabled(&quot;main_trials&quot;)&amp;#10;&amp;#10;&amp;#10;&amp;#10;&amp;#10;# lets timer run out&amp;#10;if three_sec_timer.getTime() &lt;= 0:&amp;#10;    # exits routine&amp;#10;    continueRoutine = False&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# lets timer run out&amp;#10;if three_sec_timer.getTime() &lt;= 0:&amp;#10;    # exits routine&amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="#if pretrials are disabled set the restart level/game.level_for_main.value to the Start_level from &quot;config_tetris_game&quot;&amp;#10;if skip_if_enabled(&quot;pretrial&quot;) == False:&amp;#10;    game.level_for_main.value = game.level.value&amp;#10;    print(f'Restart Level set to {game.level_for_main.value}')&amp;#10;    &amp;#10;# set main_trial repeats to 0 if its disabled in config&amp;#10;if skip_if_enabled(&quot;main_trials&quot;) == False:&amp;#10;    n_repeats = 0&amp;#10;&amp;#10;# or set it to 1 if N_repeats is not None in config&amp;#10;else:&amp;#10;    n_repeats = 1" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="#if pretrials are disabled set the restart level/game.level_for_main.value to the Start_level from &quot;config_tetris_game&quot;&amp;#10;if skip_part(&quot;pretrial&quot;) and not skip_part(&quot;main_trials&quot;):&amp;#10;    game.level_for_main.value = game.level.value&amp;#10;    print(f'Restart Level set to {game.level_for_main.value}')&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_three_sec_timer" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -3804,7 +3421,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="pause_n_sec" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_part(&quot;main_trials&quot;) or skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -3815,9 +3432,9 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# creates coutdown&amp;#10;pause_timer = core.CountdownTimer(Pause_sec)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if not (skip_part(&quot;main_trials&quot;) or skip_part(&quot;pretrial&quot;)):&amp;#10;    # creates coutdown&amp;#10;    pause_timer = core.CountdownTimer(Pause_sec)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# additionally checks whether main_trial or/and pretrial is enabled&amp;#10;continueRoutine = skip_if_enabled(&quot;main_trials&quot;) and skip_if_enabled(&quot;pretrial&quot;)&amp;#10;&amp;#10;# lets timer run out&amp;#10;if pause_timer.getTime() &lt;= 0:&amp;#10;    # exits routine&amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# lets timer run out&amp;#10;if pause_timer.getTime() &lt;= 0:&amp;#10;    # exits routine&amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -3890,7 +3507,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="wait_ISI_after_play_tetris" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="skip_play_Tetris" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -3908,7 +3525,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="psychoJS.experiment.nextEntry();&amp;#10;psychoJS.experiment.addData(&quot;Condition.started&quot;, condition_started);&amp;#10;psychoJS.experiment.addData(&quot;Condition.stopped&quot;, condition_stopped);&amp;#10;psychoJS.experiment.addData(&quot;Condition.duration&quot;, (condition_stopped - condition_started));&amp;#10;psychoJS.experiment.addData(&quot;Condition.indicate&quot;, `absolute_time_${condition}`);&amp;#10;if ((condition === &quot;play_Tetris&quot;)) {&amp;#10;    psychoJS.experiment.addData(&quot;game.score&quot;, game.score.value);&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# logs on-, offsets and condition duration, etc. in one row (in the data file .csv) for later processing&amp;#10;thisExp.addData('Condition.started', condition_started)&amp;#10;thisExp.addData('Condition.stopped', condition_stopped)&amp;#10;thisExp.addData('targeted.duration', Play_Tetris_duration)&amp;#10;thisExp.addData('Condition.duration', condition_stopped - condition_started)&amp;#10;thisExp.addData('Condition.info', 'info_play_Tetris')&amp;#10;thisExp.addData('game.score', game.score.value)&amp;#10;thisExp.addData('game.score', game.score.value)&amp;#10;thisExp.addData('game.level', game.level.value)&amp;#10;thisExp.addData('game.speed', game.speed.value)&amp;#10;if Comp_wm_load == True:&amp;#10;    thisExp.addData('game.wm_load_condition', wm_load_seq[main_trials.thisN])&amp;#10;else: &amp;#10;    thisExp.addData('game.wm_load_condition', None)&amp;#10;if Comp_speed == True:&amp;#10;    thisExp.addData('game.speed_condition', speed_seq[main_trials.thisN])&amp;#10;else:&amp;#10;    thisExp.addData('game.speed_condition', None)&amp;#10;&amp;#10;thisExp.nextEntry()" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="if not skip_part(&quot;main_trials&quot;) and not skip_play_Tetris:&amp;#10;    # logs on-, offsets and condition duration, etc. in one row (in the data file .csv) for later processing&amp;#10;    thisExp.addData('Condition.started', condition_started)&amp;#10;    thisExp.addData('Condition.stopped', condition_stopped)&amp;#10;    thisExp.addData('Condition.duration', condition_stopped - condition_started)&amp;#10;    thisExp.addData('Condition.info', 'info_play_Tetris')&amp;#10;    thisExp.addData('game.score', game.score.value)&amp;#10;    thisExp.addData('game.score', game.score.value)&amp;#10;    thisExp.addData('game.level', game.level.value)&amp;#10;    thisExp.addData('game.speed', game.speed.value)&amp;#10;    if Comp_wm_load:&amp;#10;        thisExp.addData('game.wm_load_condition', wm_load_seq[main_trials.thisN])&amp;#10;    else: &amp;#10;        thisExp.addData('game.wm_load_condition', None)&amp;#10;    if Comp_speed:&amp;#10;        thisExp.addData('game.speed_condition', speed_seq[main_trials.thisN])&amp;#10;    else:&amp;#10;        thisExp.addData('game.speed_condition', None)&amp;#10;&amp;#10;    thisExp.nextEntry()" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="add_data_play_Tetris" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -3968,7 +3585,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="psychoJS.experiment.nextEntry();&amp;#10;psychoJS.experiment.addData(&quot;Condition.started&quot;, condition_started);&amp;#10;psychoJS.experiment.addData(&quot;Condition.stopped&quot;, condition_stopped);&amp;#10;psychoJS.experiment.addData(&quot;Condition.duration&quot;, (condition_stopped - condition_started));&amp;#10;psychoJS.experiment.addData(&quot;Condition.indicate&quot;, `absolute_time_${condition}`);&amp;#10;if ((condition === &quot;play_Tetris&quot;)) {&amp;#10;    psychoJS.experiment.addData(&quot;game.score&quot;, game.score.value);&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# logs on and offsets and condition duration into one line for later processing&amp;#10;thisExp.addData('Condition.started', condition_started)&amp;#10;thisExp.addData('Condition.stopped', condition_stopped)&amp;#10;thisExp.addData('targeted.duration', control_duration)&amp;#10;thisExp.addData('Condition.duration', condition_stopped - condition_started)&amp;#10;thisExp.addData('Condition.info', f'info_{control_condition}')&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="# logs on and offsets and condition duration into one line for later processing&amp;#10;thisExp.addData('Condition.started', condition_started)&amp;#10;thisExp.addData('Condition.stopped', condition_stopped)&amp;#10;thisExp.addData('Condition.duration', condition_stopped - condition_started)&amp;#10;thisExp.addData('Condition.info', f'info_{control_condition}')&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="add_data_control" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -4010,28 +3627,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_tetris_4" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="Exclude_explanations or skip_play_Tetris and skip_part(&quot;pretrial&quot;)" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explanations_4" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explanations_4" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="explain_controls" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -4051,8 +3651,8 @@
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="(1.25, 0.8)" valType="list" updates="constant" name="size"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="condition" valType="str" updates="None" name="startType"/>
-        <Param val="Include_explanations" valType="code" updates="None" name="startVal"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
@@ -4144,28 +3744,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_tetris_2" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="Exclude_explanations" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explanations_2" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explanations_2" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="explain_game_mechanics_2" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -4252,28 +3835,11 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="explain_tetris_3" valType="code" updates="None" name="name"/>
         <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="Exclude_explanations" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="skip_explanations_3" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="continueRoutine = Include_explanations" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="skip_explanations_3" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <ImageComponent name="explain_game_mechanics_3" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
@@ -4349,6 +3915,135 @@
         <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
       </KeyboardComponent>
     </Routine>
+    <Routine name="condition_ended_control">
+      <RoutineSettingsComponent name="condition_ended_control" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="condition_ended_control" valType="code" updates="None" name="name"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="condition_ended_text" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="condition_ended_text" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="set every frame" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="1" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$Inst.font_condition_ended" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="condition_ended_play">
+      <RoutineSettingsComponent name="condition_ended_play" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="condition_ended_play" valType="code" updates="None" name="name"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="skip_play_Tetris" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="condtion_ended_text_1" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="condtion_ended_text_1" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="set every frame" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="1" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$Inst.font_condition_ended" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="wait_1s_play_Tetris">
+      <RoutineSettingsComponent name="wait_1s_play_Tetris" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="wait_1s_play_Tetris" valType="code" updates="None" name="name"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="skip_play_Tetris" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="fix_main" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="fix_main" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="1" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="+" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
   </Routines>
   <Flow>
     <Routine name="load_processes"/>
@@ -4386,13 +4081,12 @@
     <Routine name="explain_trials"/>
     <Routine name="start_experiment"/>
     <Routine name="wait_1s"/>
-    <Routine name="wait_1s"/>
     <Routine name="wait_for_trigger"/>
     <Routine name="wait_1s"/>
     <Routine name="three_seconds_timer"/>
     <LoopInitiator loopType="TrialHandler" name="main_trials">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
-      <Param name="conditions" updates="None" val="[]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('control_condition', 'motor_control'), ('images_next_cond', 'Images/button.png'), ('targeted_duration', 5)]), OrderedDict([('control_condition', 'fixation_cross'), ('images_next_cond', 'Images/crosshair.png'), ('targeted_duration', 5)]), OrderedDict([('control_condition', 'watch_Tetris'), ('images_next_cond', 'Images/eye.png'), ('targeted_duration', 5)])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="main_trials.csv" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
@@ -4402,14 +4096,14 @@
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>
     <Routine name="show_play_tetris"/>
-    <Routine name="wait_1s"/>
+    <Routine name="wait_1s_play_Tetris"/>
     <Routine name="tetris_condition"/>
-    <Routine name="condition_ended"/>
+    <Routine name="condition_ended_play"/>
     <Routine name="wait_ISI_after_play_tetris"/>
     <Routine name="show_next_control"/>
     <Routine name="wait_1s"/>
     <Routine name="random_control_condition"/>
-    <Routine name="condition_ended"/>
+    <Routine name="condition_ended_control"/>
     <Routine name="wait_ISI_after_control"/>
     <LoopTerminator name="main_trials"/>
     <Routine name="wait_10sec_for_Trigger"/>
