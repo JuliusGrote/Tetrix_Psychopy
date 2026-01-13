@@ -15,8 +15,9 @@ Language = "German"
 ### Default: False
 
 #------
-Exclude_explanations = False
+Exclude_explanations = True
 #------
+
 
 ## Trial settings
 
@@ -32,7 +33,7 @@ Exclude_explanations = False
 ### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 
 #------
-N_repeats = 8
+N_repeats = 10
 #------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
@@ -57,7 +58,7 @@ Watch_Tetris_duration = 30
 
 Motor_control_duration = 30
 
-Fixation_cross_duration = 30
+Fixation_cross_duration = 15
 #------
 
 ### Interstimulus Interval Variation
@@ -90,7 +91,7 @@ ISI_lower = -1.0
 ISI_upper = 1.0
 #------
 
-### Pause 
+## Pause 
 
 ### Should there be a pause between the "pretrial" and "main_trials" of "Pause_sec" seconds?
 ### Default: 30, If you do not want to use that option set it to "None".
@@ -99,7 +100,26 @@ ISI_upper = 1.0
 Pause_sec = 30
 #------
 
-### Control condition settings
+## Control condition settings
+
+## Replay
+
+### Should the visual control condition be an exact replay of the movements performed during the play tetris block? (config_tetris_game.txt)
+### If True, the visual control will replay the recorded movements. If False, it uses the random logic.
+### Default: False
+
+#------
+Replay_movements = False
+#------
+
+### Should blocks stack in the visual control condition?
+### If True, blocks will stack at the bottom. If False, they will disappear when reaching the bottom.
+### Usually, stacking should only be used when "Replay_movements = True".
+### Default: False
+
+#------
+Stack_in_visual_control = False
+#------
 
 ### Toggle rhythmic shape during "motor_control", frequency based on "game.speed"
 
@@ -114,7 +134,7 @@ Show_motor_rhythm = True
 Motor_symbol = "button"
 #------
 
-### Play_Tetris settings
+## Play_Tetris settings
 
 ### Would you like to compare "high_load" working memory load (wm_load) against "low_load" working memory load (one "NEXT" Tetris-block  vs. three "NEXT" Tetris-block s)? 
 ### In each "play_Tetris" condition it is randomly chosen whether "wm_load" is "high_load" or "low_load"!

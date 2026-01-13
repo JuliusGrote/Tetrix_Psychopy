@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.1),
-    on März 17, 2025, at 15:45
+    on Januar 13, 2026, at 12:29
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -37,6 +37,7 @@ from psychopy.hardware import keyboard
 # import necessary packages and load them
 import ctypes
 import time
+import json, csv
 from pynput import keyboard as pynput_keyboard
 from multiprocessing import Process, Value
 from psychopy.visual.windowwarp import Warper
@@ -273,7 +274,7 @@ def setupData(expInfo, dataDir=None):
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
         originPath='C:\\Users\\Julius\\Meine Ablage\\Studium\\Git_projects\\Tetrix\\Tetrix_Psychopy\\Tetrix_PsychoPy.py',
-        savePickle=True, saveWideText=True,
+        savePickle=False, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='priority'
     )
     thisExp.setPriority('trigger.t', 31)
@@ -418,7 +419,7 @@ def setupDevices(expInfo, thisExp, win):
     ioSession = '1'
     if 'session' in expInfo:
         ioSession = str(expInfo['session'])
-    ioServer = io.launchHubServer(window=win, experiment_code='Tetrix_PsychoPy', session_code=ioSession, datastore_name=thisExp.dataFileName, **ioConfig)
+    ioServer = io.launchHubServer(window=win, **ioConfig)
     # store ioServer object in the device manager
     deviceManager.ioServer = ioServer
     
@@ -1529,6 +1530,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                                   Pygame_key_2,
                                   Pygame_key_3,
                                   Pygame_key_4,
+                                  Replay_movements,
+                                  Stack_in_visual_control,
                                   ))
         pretrial_Tetris.start()
     
@@ -1555,6 +1558,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                                   Pygame_key_2,
                                   Pygame_key_3,
                                   Pygame_key_4,
+                                  Replay_movements,
+                                  Stack_in_visual_control,
                                   ))
             play_Tetris.start()
     # create a window for the controll visual_control condition
@@ -1579,6 +1584,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                                    Pygame_key_2,
                                    Pygame_key_3,
                                    Pygame_key_4,
+                                   Replay_movements,
+                                   Stack_in_visual_control,
                                    ))
             watch_Tetris.start()
     
@@ -6726,6 +6733,39 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             else:
                 thisExp.addData('game.speed_condition', None)
         
+        
+            # Read and save replay data to experiment log
+            if os.path.exists("replay_data.json"):
+                with open("replay_data.json", "r") as f:
+                    replay_data = json.load(f)
+                           
+                # Save detailed data to separate CSV
+                replay_filename = f"Data/{expInfo['participant']}_{expName}_replay_detailed.csv"
+                file_exists = os.path.isfile(replay_filename)
+                try:
+                    with open(replay_filename, 'a', newline='') as csvfile:
+                        fieldnames = ['participant', 'trial_n', 'block', 'action', 'time', 'score', 'level']
+                        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                        
+                        if not file_exists:
+                            writer.writeheader()
+                        
+                        # Log Moves
+                        for move in replay_data.get('moves', []):
+                                writer.writerow({
+                                'participant': expInfo['participant'],
+                                'trial_n': main_trials.thisN,
+                                'block': move.get('block', ''),
+                                'action': move.get('action'),
+                                'time': move.get('abs_time', move.get('time')),
+                                'score': move.get('score', ''),
+                                'level': move.get('level', '')
+                            })
+                except PermissionError:
+                    print(f"Error: Could not write to '{filename}'. Is the file open in another program?")
+                except IOError as e:
+                    print(f"File Error: Failed to write to '{filename}'. Details: {e}")          
+        
             thisExp.nextEntry()
         # the Routine "wait_ISI_after_play_tetris" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
@@ -7512,7 +7552,6 @@ def saveData(thisExp):
     filename = thisExp.dataFileName
     # these shouldn't be strictly necessary (should auto-save)
     thisExp.saveAsWideText(filename + '.csv', delim='comma')
-    thisExp.saveAsPickle(filename)
 
 
 def endExperiment(thisExp, win=None):

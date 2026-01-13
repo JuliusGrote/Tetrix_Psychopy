@@ -105,10 +105,12 @@ class Grid:
 				self.grid[row][column] = 0
 
 	# draws the grid on the screen with "pygame.rect"s
-	def draw(self, screen):
+	def draw(self, screen, draw_blocks=True):
 		for row in range(self.num_rows):
 			for column in range(self.num_cols):
 				cell_value = self.grid[row][column]
+				if not draw_blocks and cell_value != 0:
+					cell_value = 0
 				cell_rect = pygame.Rect(column * self.cell_size + 22 * self.scale.scale_factor + self.scale.x_displacement, row * self.cell_size + 20 * self.scale.scale_factor,
 				self.cell_size - 1, self.cell_size - 1)
 				# colors are according to block id (i.e. tiles occupied of the o block are "yellow") or "dark_grey" if no block-tile occupies that cell

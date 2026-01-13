@@ -1,4 +1,8 @@
 control_condition,images_next_cond,targeted_duration
-motor_control,Images/button.png,5
-fixation_cross,Images/crosshair.png,5
-watch_Tetris,Images/eye.png,5
+watch_Tetris,Images/eye.png,30
+watch_Tetris,Images/eye.png,30
+watch_Tetris,Images/eye.png,30
+watch_Tetris,Images/eye.png,30
+watch_Tetris,Images/eye.png,30
+watch_Tetris,Images/eye.png,30
+watch_Tetris,Images/eye.png,30
