@@ -12,6 +12,30 @@ from PyGame_Tetris_Code.colors import Colors
 
 game = Game()
 
+def cleanup_game_data():
+    """Clean up game data when process ends or pauses.
+    
+    When pausing: Only save recordings from non-visual-control processes (play_Tetris).
+    When quitting: Save recordings AND delete replay file for visual control with replay.
+    """
+    if game.is_recording and not game.visual_control:
+        # play_Tetris: save recording when pausing or quitting
+        game.save_recording()
+
+def cleanup_on_quit():
+    """Final cleanup when process terminates (QUIT/ESCAPE).
+    
+    Deletes replay file if this is a visual control process with replay enabled.
+    """
+    if game.visual_control and game.replay_enabled:
+        try:
+            os.remove("replay_data.json")
+        except OSError:
+            pass
+    elif game.is_recording and not game.visual_control:
+        game.save_recording()
+
+
 def Tetris_Instance(
                     window_name,
                     is_control,
@@ -33,7 +57,8 @@ def Tetris_Instance(
                     pygame_key_3,
                     pygame_key_4,
                     replay_movements=False,
-                    stack_in_visual_control=True
+                    stack_in_visual_control=True,
+                    recording_condition='pretrial'
 ):
     
     '''
@@ -68,6 +93,7 @@ def Tetris_Instance(
     # If the argument is passed, it overrides the config_tetris_game setting (which is defaulted to False/undefined)
     game.replay_enabled = replay_movements
     game.stack_in_visual_control = stack_in_visual_control
+    game.recording_condition = recording_condition
 
     # transfer Tetris_Instance() parameters from parent to child process
     game.visual_control = is_control
@@ -107,14 +133,14 @@ def Tetris_Instance(
     score_rect = pygame.Rect(346  * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 70  * game.grid.scale.scale_factor, 170  * game.grid.scale.scale_factor, 60  * game.grid.scale.scale_factor)
    
     # Replay actions
+    _down_replay = lambda: game.move_down(score_action=True)
     replay_actions = {
         'left': game.move_left,
         'right': game.move_right,
         'rotate': game.rotate,
-        'down': lambda: game.move_down(score_action=True),
-        'gravity': game.move_down,
         'reset': lambda: (setattr(game, 'game_over', False), game.reset())
     }
+    replay_actions.update({k: _down_replay for k in ('down', 'down_hold', 'down_drop', 'gravity')})
 
     # Input actions (key -> (method, name))
     # Note: 'down' (pygame_key_1) has special logic so it is handled separately
@@ -124,29 +150,33 @@ def Tetris_Instance(
         pygame_key_4: (game.move_right, 'right')
     }
 
-    # game loop 
-    # be catious when changing code in here!
+    # Be cautious when changing code in here!
+
     while True:
         
         now = time.time()
         dt = now - last_time
         last_time = now
 
-        # Preload replay data if valid and paused to avoid graphic glitches at start of replay
-        if game.pause == True and game.visual_control == True and game.replay_enabled and not game.is_replaying:
-            if game.init_replay(): 
+        # Preload replay state while paused so the grid is updated before foregrounding
+        if game.visual_control and game.replay_enabled and game.pause:
+            if game.init_replay():
                 game.is_replaying = True
+                replay_time = 0
 
         for event in pygame.event.get():
             new_pause_state = pause_state.value
             
             # Detect Pause State Change
             if game.pause != new_pause_state:
-                if new_pause_state == False: # Unpausing (Start of Block)
-                    if game.visual_control == False:
+                if not new_pause_state: # Unpausing (Start of Block)
+                    last_time = time.time() # Reset frame delta tracker
+                    dt = 0 # Reset current frame delta to avoid jump
+                    
+                    if not game.visual_control:
                         game.init_recording()
-                        start_time = time.time()
-                    elif game.visual_control == True and game.replay_enabled:
+                        start_time = game.recording_start_time
+                    elif game.visual_control and game.replay_enabled:
                         # if not already preloaded try to load
                         if not game.is_replaying:
                             if game.init_replay():
@@ -154,50 +184,21 @@ def Tetris_Instance(
                         
                         if game.is_replaying:
                              replay_time = 0 
-                        else:
-                             game.is_replaying = False
-                elif new_pause_state == True: # Pausing (End of Block)
-                     
-                     if (game.visual_control == False or (game.visual_control == True and not game.replay_enabled)) and game.is_recording:
-                         game.save_recording()
-                     
-                     elif game.visual_control == True and game.replay_enabled:
-                         game.is_replaying = False
-                         try:
-                            if os.path.exists("replay_data.json"): os.remove("replay_data.json")
-                         except:
-                             pass
+                elif new_pause_state: # Pausing (End of Block)
+                     cleanup_game_data()
             
             game.pause = new_pause_state
       
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: 
-                    if game.visual_control == True and game.replay_enabled:
-                        try:
-                            if os.path.exists("replay_data.json"): os.remove("replay_data.json")
-                        except:
-                            pass
-                    elif (game.visual_control == False or (game.visual_control == True and not game.replay_enabled)) and game.is_recording:
-                         game.save_recording()
-                    pygame.quit()
-                    sys.exit()
-            
-            if event.type == pygame.QUIT:
-                 if game.visual_control == True and game.replay_enabled:
-                    try:
-                        if os.path.exists("replay_data.json"): os.remove("replay_data.json")
-                    except:
-                        pass
-                 elif (game.visual_control == False or (game.visual_control == True and not game.replay_enabled)) and game.is_recording:
-                     game.save_recording()
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                 cleanup_on_quit()
                  pygame.quit()
                  sys.exit()
 
             if game.pause == False:  
                 # Failsafe: Ensure recording starts if game started immediately without unpausing
                 if game.visual_control == False and not game.is_recording:
-                     start_time = time.time()
                      game.init_recording()
+                     start_time = game.recording_start_time
 
                 if game.visual_control == True and not game.is_replaying:
                     if event.type == GAME_UPDATE and game.level.value <= 6: 
@@ -250,15 +251,7 @@ def Tetris_Instance(
                     break
 
                                     
-                # restart automatically or with a keypress depending on config
-                if event.type == GAME_UPDATE and game.game_over == True:
 
-                    if event.type == pygame.KEYDOWN or game.automatic_restart == True:
-                        game.game_over = False
-                        game.reset()
-                        if game.is_recording:
-                            current_time = time.time() - start_time if start_time else 0
-                            game.record_move(current_time, 'reset')
                         
         if game.accelerate_down == True and game.pause == False and game.game_over == False:
             game.accelerate_downwards()

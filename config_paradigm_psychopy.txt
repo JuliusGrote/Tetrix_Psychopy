@@ -33,7 +33,7 @@ Exclude_explanations = True
 ### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 
 #------
-N_repeats = 10
+N_repeats = 1
 #------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
@@ -52,13 +52,13 @@ Main_trials_seed = 1
 
 
 #------
-Play_Tetris_duration = 30
+Play_Tetris_duration = 15
 
-Watch_Tetris_duration = 30
+Watch_Tetris_duration = 15
 
-Motor_control_duration = 30
+Motor_control_duration = 15
 
-Fixation_cross_duration = 15
+Fixation_cross_duration = None
 #------
 
 ### Interstimulus Interval Variation
@@ -109,7 +109,7 @@ Pause_sec = 30
 ### Default: False
 
 #------
-Replay_movements = False
+Replay_movements = True
 #------
 
 ### Should blocks stack in the visual control condition?
@@ -127,12 +127,37 @@ Stack_in_visual_control = False
 Show_motor_rhythm = True
 #------
 
+### Should the motor control condition use the replay of player input from the last trial to indicate when to press?
+### If True, the visual replay (showing tetris blocks) will be displayed during the motor control phase.
+### If False, rhythm is based on the main trial level.
+### Default: True
+
+#------
+Replay_indication_motor = True
+#------
+
+### Mode of rhythmic shape: "exact" (replay exact timing from last trial) or "average" (replay average frequency)
+### Only works if "Replay_indication_motor = True", otherwise the motor control rhythm is based on "game.speed".
+### Default: "exact"
+
+#------
+Motor_control_mode = "average"
+#------
+
 ### Which symbol should be displayed (choose either "button" -  this is the icon from the instructions - or "shape")
 ### If you want "Motor_symbol = shape", you can adjust which shape in the "press_shape" stimulus in the "random_control_condition" routine in "Tetrix_PsychoPy.psyexp".
 
 #------
 Motor_symbol = "button"
 #------
+
+### what should be the minimum temporal gap between each motor control signals/visual stimulus (in sec.)?
+### Default: 0.1 sec.
+
+#------
+Min_gap = 0.1
+#------
+
 
 ## Play_Tetris settings
 
@@ -260,4 +285,18 @@ Flip_horizontally = False
 
 #------
 Eye_tracking = False
+#------
+
+
+## Logfile
+
+### Which columns of the generated .csv logfile should be excluded?
+### By default PsychoPy includes a lot of columns that are not relevant for Tetrix
+### Edit the list as you see fit!
+
+#------
+Drop_columns = [
+    'main_trials.thisIndex', 'main_trials.thisRepN', 'main_trials.thisTrialN', # trial related indexing
+    'date', 'control_condition', 'images_next_cond', 'notes' # redundant info
+]
 #------

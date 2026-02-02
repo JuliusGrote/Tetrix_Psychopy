@@ -67,7 +67,6 @@ class Game:
 		replay_move_index: int, index of the current move in the replay
 		is_recording: bool, whether the game is currently recording moves
 		is_replaying: bool, whether the game is currently replaying moves
-		last_replay_file: str, filename of the last replay file
 		stack_in_visual_control: bool, whether blocks stack in visual control mode (even if invisible)
 
 		
@@ -120,18 +119,18 @@ class Game:
 	def __init__(self):
 
 		# Replay attributes
-		try:
-			self.replay_enabled = Replay_movements
-		except NameError:
-			self.replay_enabled = False
+		
+		self.replay_enabled = False # Default, overridden by tetris_instance
 		self.recorded_blocks = []
 		self.recorded_moves = []
 		self.replay_block_index = 0
 		self.replay_move_index = 0
 		self.is_recording = False
 		self.is_replaying = False
-		self.last_replay_file = "replay_data.pkl"
+		self.last_replay_saved_at = 0.0
+		self.last_replay_mtime = 0.0
 		self.stack_in_visual_control = True # Default, overridden by tetris_instance
+		self.recording_condition = 'pretrial' # Default condition for recording, set by tetris_instance
 		
 		self.grid = Grid()
 		self.regression = Regression()
@@ -191,7 +190,9 @@ class Game:
 		# choose a random move (each move has differents weights/likelihoods)
 		move = visual_rand.choices(possible_moves, weights = ([5 + self.level.value * 6, 5, 5, (20 - self.level.value * 2) / 4 , (19 - self.level.value * 2) / 5, 6, 3, 3])) [0]
 		
-		curr_t = time.time() - self.recording_start_time if self.is_recording else 0
+		# Don't record moves during random visual control (only during replay)
+		if self.is_recording and not self.replay_enabled:
+			return
 		
 		actions = {
 			# move 1 is just passing time/do nothing
@@ -210,12 +211,12 @@ class Game:
 				
 		
 		# this is only performed when down acceleration is enabled
-		elif move == 5 and self.accelerate_down == True:
+		elif move == 5 and self.accelerate_down:
 			self.start_down = time.time()
 	
 	def update_score(self, lines_cleared, move_down_points):
 		# logic to prevent score updating in random visual control (to not affect main trial score)
-		if self.visual_control == True and not self.replay_enabled:
+		if self.visual_control and not self.replay_enabled:
 			return
 
 		cleared_points_map = {
@@ -226,29 +227,29 @@ class Game:
 		}
 
 		if lines_cleared in cleared_points_map:
-			if self.visual_control == False: # Only update total lines cleared for actual player
+			if not self.visual_control: # Only update total lines cleared for actual player
 				self.total_lines_cleared += lines_cleared
 			self.score.value += (cleared_points_map[lines_cleared] * self.level.value)
 
-		if self.pause == False:
+		if not self.pause:
 			# add move down points
 			self.score.value += move_down_points
 		self.update_level()
 
 	def update_level(self):
 		# works only if the level progression in the main trials or pretrials is enabled depending on the current tetris process
-		if (Level_progression_main == True and self.pretrial == False) or (self.pretrial == True and Level_progression_pre == True):
+		if (Level_progression_main and not self.pretrial) or (self.pretrial and Level_progression_pre):
 
 			if self.total_lines_cleared < Lines_for_levelup:
 				return
 			
-			if self.jnd_regression == True and self.pretrial == True:
+			if self.jnd_regression and self.pretrial:
 				self.regression.y_array[self.level.value - 1] += 1
 
 			self.level.value += 1
 			self.total_lines_cleared = 0
 
-			if self.jnd_regression == True and self.pretrial == True:
+			if self.jnd_regression and self.pretrial:
 				self.regression.weights[self.level.value - 1] += 1
 
 	def get_random_block(self):
@@ -275,31 +276,31 @@ class Game:
 	def rotate(self):
 		self.current_block.rotate()
 		# if the block has no space to move that way undo the move
-		if self.block_inside() == False or self.block_fits() == False:
+		if not self.block_inside() or not self.block_fits():
 			self.current_block.undo_rotation()
 
 	def move_left(self):
 		self.current_block.move(0, -1)
 		# if the block has no space to move that way undo the move
-		if self.block_inside() == False or self.block_fits() == False:
+		if not self.block_inside() or not self.block_fits():
 			self.current_block.move(0, 1)
 	
 	def move_right(self):
 		self.current_block.move(0, 1)
 		# if the has no space to move that way undo the move
-		if self.block_inside() == False or self.block_fits() == False:
+		if not self.block_inside() or not self.block_fits():
 			self.current_block.move(0, -1)
 	
 	def move_down(self, score_action=False):
 		self.current_block.move(1, 0)
 		# if the block has no space to move that way undo the move
-		if self.block_inside() == False or self.block_fits() == False:
+		if not self.block_inside() or not self.block_fits():
 			self.current_block.move(-1, 0)
 			# if the block has reached the bottom of the grid (or lands on top of another block) then lock the block in place
 			self.lock_block(score_action)
 			
 	def accelerate_downwards(self):
-		if self.start_down != None and time.time() - self.start_down > self.down_interval:
+		if self.start_down and time.time() - self.start_down > self.down_interval:
 			# reset time stamp
 			self.start_down = time.time()
 			# only if time interval is above the cutoff is the time interval further decreased (adjustable in config)
@@ -307,13 +308,15 @@ class Game:
 				self.down_interval *= Down_factor	
 			self.move_down()
 			if self.is_recording:
-				self.record_move(time.time() - self.recording_start_time, 'down')
+				# Record with acceleration type if accelerate_down is enabled
+				action = f'down_{self.accelerate_type}' if self.accelerate_down else 'down'
+				self.record_move(time.time() - self.recording_start_time, action)
 
 	# lock block in place
 	def lock_block(self, score_action=False):
 		# resets down acceleration if enabled 
 		# In replay,there is no have start_down set, ergo trust the score_action flag from the recorder
-		if self.accelerate_down == True and (self.start_down != None or (self.is_replaying and score_action)):
+		if self.accelerate_down and (self.start_down or (self.is_replaying and score_action)):
 			# adds score points if down accelaration was used to lock block
 			self.update_score(0, Lock_score * self.level.value)
 			# reset interval and start_down
@@ -329,11 +332,11 @@ class Game:
 		# in the visual control ("watch_Tetris" in Tetris_Psychopy) the grid is reset so that blocks do not stack
 		# Condition based on config setting Stack_in_visual_control
 		# If replay is enabled, do not reset logic/physics even if stack should be hidden visually
-		if self.visual_control == True and not self.stack_in_visual_control and not self.replay_enabled:
+		if self.visual_control and not self.stack_in_visual_control and not self.replay_enabled:
 			self.grid.reset()
 
 		# get new a block and update next blocks
-		if self.three_next_blocks.value == False:
+		if not self.three_next_blocks.value:
 			self.current_block = self.next_block
 			self.next_block = self.get_random_block()
 		else:
@@ -352,7 +355,7 @@ class Game:
 
 		# if the locked block does not fit in the current position
 		# that means it overlaps with another already locked block and the game is lost
-		if self.block_fits() == False:
+		if not self.block_fits():
 			self.game_over = True
 
 	# manages reset mechanics after "game_over"
@@ -370,20 +373,20 @@ class Game:
 		# check for score keeping
 		# Skip reset if in Visual Control (random mode) unless pretrial config prevents it? 
 		# Note: visual_control property might be None during __init__, but reset() is called again later?
-		if (Keep_score_pre == False and self.pretrial == True) or (Keep_score_main == False and self.pretrial == False and self.visual_control == False):
+		if (not Keep_score_pre and self.pretrial) or (not Keep_score_main and not self.pretrial and not self.visual_control):
 			self.score.value = 0
 
 		# during pretrials additional mechanics are called
-		if self.pretrial == True:
+		if self.pretrial:
 			# add level to the mean level reached in the pretrials
 			# if "Jnd_regression" is enabled in "config_tetris_game" "game.level_for_main.value" will be overwritten at the end of the routine "play_pretrial" in "Tetris_Psychopy"
 			self.level_for_main.value += 1/self.pretrial_rounds * self.level.value
 			# increase the game over counter by one
 			self.game_over_counter.value += 1
 			# if the staircase design is enabled the new level is set here
-			if self.pretrial_staircase == True:
+			if self.pretrial_staircase:
 				# if you set a "Restart_round" in the config then the level is reset to "Start_level" every "Restart_round" rounds here
-				if Restart_round != None and self.game_over_counter.value % Restart_round == 0:
+				if Restart_round and self.game_over_counter.value % Restart_round == 0:
 					self.level.value = Start_level
 				else:					
 					# do not reset the level to "Start_level" but multiply by "Stair_factor" defined in config
@@ -394,7 +397,7 @@ class Game:
 				self.level.value = Start_level
 				
 			# add a weight to the new level if "Jnd_regression" is enabled
-			if self.jnd_regression == True and self.game_over_counter.value != self.pretrial_rounds:
+			if self.jnd_regression and self.game_over_counter.value != self.pretrial_rounds:
 					self.regression.weights[self.level.value - 1] += 1
 				
 		# restart level for "main_trials" ("level_for_main" is set in "Tetris_psychopy")		
@@ -407,7 +410,7 @@ class Game:
 		for tile in tiles:
 			# the necessary tiles must be empty (0) to "return True" 
 			# meaning that the current block does not occupy the tile of another already locked block
-			if self.grid.is_empty(tile.row, tile.column) == False:
+			if not self.grid.is_empty(tile.row, tile.column):
 				return False
 		return True
 	
@@ -416,7 +419,7 @@ class Game:
 		tiles = self.current_block.get_cell_positions()
 		for tile in tiles:
 			# all tiles of the block must be inside the grid in order to "return True" (the block is inside the grid)
-			if self.grid.is_inside(tile.row, tile.column) == False:
+			if not self.grid.is_inside(tile.row, tile.column):
 				return False
 		return True
 
@@ -427,16 +430,16 @@ class Game:
 		# draw the grid 
 		# If stack disabled in visual control, hide blocks visually but keep logic if needed
 		draw_blocks = True
-		if self.visual_control == True and not self.stack_in_visual_control:
+		if self.visual_control and not self.stack_in_visual_control:
 			draw_blocks = False
 			
 		self.grid.draw(screen, draw_blocks=draw_blocks)
 		# draw the current block at a specific position based on screen size
 		self.current_block.draw(screen, 22 * self.grid.scale.scale_factor + self.grid.scale.x_displacement,  20 * self.grid.scale.scale_factor )
 		# for the visual control window, check whether the "Hide_next_visual" is enabled in config and do not draw the next blocks if so
-		if Hide_next_visual == False and self.visual_control == True or self.visual_control == False:
+		if not Hide_next_visual and self.visual_control or not self.visual_control:
 			# if "three_next_blocks" setting is disabled draw only one next block
-			if self.three_next_blocks.value == False:
+			if not self.three_next_blocks.value:
 				# for the I block define a different position since it is a 4x4 matrix compared to the other 3x3 matrix blocks
 				if self.next_block.id == 3:
 					self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 305 * self.grid.scale.scale_factor)
@@ -502,6 +505,7 @@ class Game:
 		if not self.is_recording: return
 		try:
 			data = {
+				'saved_at': time.time(),
 				'initial_state': getattr(self, 'initial_state', None),
 				'blocks': self.recorded_blocks,
 				'moves': self.recorded_moves
@@ -513,14 +517,35 @@ class Game:
 
 	def init_replay(self):
 		if not self.replay_enabled: return False
+		
+		# Check for file existence
 		if not os.path.exists("replay_data.json"): 
-			print(f"Replay file not found at {os.path.abspath('replay_data.json')}")
+			if self.last_replay_mtime != 0.0:
+				# File disappeared, reset (though we don't clear state)
+				self.last_replay_mtime = 0.0
 			return False 
 		
+		# Check modification time to avoid reading/parsing identical file
+		try:
+			mtime = os.path.getmtime("replay_data.json")
+		except OSError:
+			return False
+
+		# If file is same or older than last loaded, skip
+		if mtime <= self.last_replay_mtime:
+			return False
+
 		try:
 			with open("replay_data.json", "r") as f:
 				data = json.load(f)
 			
+			# Update mtime tracker immediately
+			self.last_replay_mtime = mtime
+			
+			saved_at = data.get('saved_at', 0.0)
+			if saved_at and saved_at <= self.last_replay_saved_at:
+				return False
+			self.last_replay_saved_at = saved_at
 			self.recorded_blocks = data.get('blocks', [])
 			self.recorded_moves = data.get('moves', [])
 			initial_state = data.get('initial_state', None)
@@ -595,6 +620,10 @@ class Game:
 				'abs_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
 				'action': action,
 				'block': block_type,
+				'position_x': self.current_block.column_offset,
+				'position_y': self.current_block.row_offset,
 				'score': self.score.value,
-				'level': self.level.value
+				'level': self.level.value,
+				'game_over_count': self.game_over_counter.value,
+				'condition': self.recording_condition
 			})
