@@ -22,6 +22,7 @@ def cleanup_game_data():
         # play_Tetris: save recording when pausing or quitting
         game.save_recording()
 
+
 def cleanup_on_quit():
     """Final cleanup when process terminates (QUIT/ESCAPE).
     
@@ -57,8 +58,7 @@ def Tetris_Instance(
                     pygame_key_3,
                     pygame_key_4,
                     replay_movements=False,
-                    stack_in_visual_control=True,
-                    recording_condition='pretrial'
+                    stack_in_visual_control=True,                    
 ):
     
     '''
@@ -93,7 +93,7 @@ def Tetris_Instance(
     # If the argument is passed, it overrides the config_tetris_game setting (which is defaulted to False/undefined)
     game.replay_enabled = replay_movements
     game.stack_in_visual_control = stack_in_visual_control
-    game.recording_condition = recording_condition
+    game.recording_condition = window_name
 
     # transfer Tetris_Instance() parameters from parent to child process
     game.visual_control = is_control
@@ -115,6 +115,7 @@ def Tetris_Instance(
     replay_time = 0
     last_time = time.time()
     
+
     GAME_UPDATE = pygame.USEREVENT
     VISUAL_CONTROL_CAP = pygame.USEREVENT + 1
     
@@ -140,7 +141,7 @@ def Tetris_Instance(
         'rotate': game.rotate,
         'reset': lambda: (setattr(game, 'game_over', False), game.reset())
     }
-    replay_actions.update({k: _down_replay for k in ('down', 'down_hold', 'down_drop', 'gravity')})
+    replay_actions.update({k: _down_replay for k in ('down', 'down_hold', 'down_drop', 'gravity', 'gravity_hold')})
 
     # Input actions (key -> (method, name))
     # Note: 'down' (pygame_key_1) has special logic so it is handled separately
@@ -149,9 +150,8 @@ def Tetris_Instance(
         pygame_key_3: (game.rotate, 'rotate'),
         pygame_key_4: (game.move_right, 'right')
     }
-
+  
     # Be cautious when changing code in here!
-
     while True:
         
         now = time.time()
@@ -173,8 +173,10 @@ def Tetris_Instance(
                     last_time = time.time() # Reset frame delta tracker
                     dt = 0 # Reset current frame delta to avoid jump
                     
-                    if not game.visual_control:
+                    if not game.visual_control and not game.is_recording:
                         game.init_recording()
+                        if start_time is None:
+                            game.record_move(0.0, 'spawn')
                         start_time = game.recording_start_time
                     elif game.visual_control and game.replay_enabled:
                         # if not already preloaded try to load
@@ -196,25 +198,26 @@ def Tetris_Instance(
 
             if game.pause == False:  
                 # Failsafe: Ensure recording starts if game started immediately without unpausing
-                if game.visual_control == False and not game.is_recording:
+                if not game.visual_control and not game.is_recording:
                      game.init_recording()
                      start_time = game.recording_start_time
 
-                if game.visual_control == True and not game.is_replaying:
+                if game.visual_control and not game.is_replaying:
                     if event.type == GAME_UPDATE and game.level.value <= 6: 
                         game.exe_visual_control()
                     if  event.type == VISUAL_CONTROL_CAP and game.level.value >= 6:
                         game.exe_visual_control()
                    
                 # checks for keyboard input to play the game and for game over
-                if event.type == pygame.KEYDOWN and game.visual_control == False:
+                if event.type == pygame.KEYDOWN and not game.visual_control:
                     current_time = time.time() - start_time if start_time else 0
                     
-                    if game.game_over == True:
+                    if game.game_over:
                         game.game_over = False
                         game.reset()
+                        game.record_move(current_time, 'reset')
                     
-                    elif game.game_over == False:
+                    else:
                         if event.key in key_actions:
                             method, name = key_actions[event.key]
                             method()
@@ -224,18 +227,26 @@ def Tetris_Instance(
                         elif event.key == pygame_key_1:
                             game.move_down()
                             if game.is_recording: game.record_move(current_time, 'down')
-                            if game.accelerate_down == True and game.start_down is None:
+                            if game.accelerate_down and not game.start_down:
+
                                 game.start_down = time.time()
                         
-                if event.type == GAME_UPDATE and game.game_over == False and not game.is_replaying:
+                if event.type == GAME_UPDATE and not game.game_over and not game.is_replaying:
                     game.move_down()
                     if game.is_recording:
-                         current_time = time.time() - start_time if start_time else 0
-                         game.record_move(current_time, 'gravity')
+                        current_time = time.time() - start_time if start_time else 0
+                        if game.start_down is None:
+                            game.record_move(current_time, 'gravity')
+                        else:
+                            game.record_move(current_time, 'gravity_hold')
+                        
 
-            if game.accelerate_down == True and game.accelerate_type == "hold" and event.type == pygame.KEYUP and event.key == pygame_key_1:                    
+            if game.accelerate_down and game.accelerate_type == "hold" and event.type == pygame.KEYUP and event.key == pygame_key_1:                    
                  # resets parameter so the acceleration starts from the same speed each time
-                 game.start_down = None                       
+                 game.start_down = None                     
+
+        if game.accelerate_down and not game.pause and not game.game_over:
+            game.accelerate_downwards()
 
         # Replay logic moved here to access updated pause state
         if game.is_replaying and not game.pause:
@@ -249,13 +260,7 @@ def Tetris_Instance(
                     game.replay_move_index += 1
                 else:
                     break
-
-                                    
-
                         
-        if game.accelerate_down == True and game.pause == False and game.game_over == False:
-            game.accelerate_downwards()
-
         score_value_surface = title_font.render(str(game.score.value), True, Colors.white)
         level_value_surface = title_font.render(str(game.level.value), True, Colors.white)
                 
@@ -279,7 +284,7 @@ def Tetris_Instance(
         screen.blit(level_surface, (426 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         screen.blit(level_value_surface, (518 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 590 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor, 20 * game.grid.scale.scale_factor))
         
-        if game.game_over == True:
+        if game.game_over:
             screen.blit(game_over_surface, (340 * game.grid.scale.scale_factor + game.grid.scale.x_displacement, 540 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor, 50 * game.grid.scale.scale_factor))
         
         pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
@@ -288,10 +293,12 @@ def Tetris_Instance(
         game.draw(screen)
         
         # if the disply needs to be flipped vertically this function does it
-        if flip_vertically == True or flip_horizontally == True:
+        if flip_vertically or flip_horizontally:
             original_surf = pygame.display.get_surface() # collect all different surfaces on the screen to a new one
             flipped_surface = pygame.transform.flip(original_surf, flip_vertically, flip_horizontally)
             screen.blit(flipped_surface, dest=(0, 0))
-            
-        pygame.display.update()
+        
+        
+        pygame.display.flip()
+        
         clock.tick(60)

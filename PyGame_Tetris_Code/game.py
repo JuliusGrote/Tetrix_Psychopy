@@ -130,7 +130,7 @@ class Game:
 		self.last_replay_saved_at = 0.0
 		self.last_replay_mtime = 0.0
 		self.stack_in_visual_control = True # Default, overridden by tetris_instance
-		self.recording_condition = 'pretrial' # Default condition for recording, set by tetris_instance
+		self.recording_condition = None # set by tetris_instance
 		
 		self.grid = Grid()
 		self.regression = Regression()
@@ -216,7 +216,7 @@ class Game:
 	
 	def update_score(self, lines_cleared, move_down_points):
 		# logic to prevent score updating in random visual control (to not affect main trial score)
-		if self.visual_control and not self.replay_enabled:
+		if self.visual_control and not self.replay_enabled or self.pause:
 			return
 
 		cleared_points_map = {
@@ -238,19 +238,19 @@ class Game:
 
 	def update_level(self):
 		# works only if the level progression in the main trials or pretrials is enabled depending on the current tetris process
-		if (Level_progression_main and not self.pretrial) or (self.pretrial and Level_progression_pre):
-
-			if self.total_lines_cleared < Lines_for_levelup:
-				return
+		if (not Level_progression_main and not self.pretrial) or (self.pretrial and not Level_progression_pre):
+			return
+		if self.total_lines_cleared < Lines_for_levelup:
+			return
 			
-			if self.jnd_regression and self.pretrial:
-				self.regression.y_array[self.level.value - 1] += 1
+		if self.jnd_regression and self.pretrial:
+			self.regression.y_array[self.level.value - 1] += 1
 
-			self.level.value += 1
-			self.total_lines_cleared = 0
+		self.level.value += 1
+		self.total_lines_cleared = 0
 
-			if self.jnd_regression and self.pretrial:
-				self.regression.weights[self.level.value - 1] += 1
+		if self.jnd_regression and self.pretrial:
+			self.regression.weights[self.level.value - 1] += 1
 
 	def get_random_block(self):
 		# logic to handle replay of blocks
@@ -279,25 +279,26 @@ class Game:
 		if not self.block_inside() or not self.block_fits():
 			self.current_block.undo_rotation()
 
-	def move_left(self):
-		self.current_block.move(0, -1)
-		# if the block has no space to move that way undo the move
+	def _try_move(self, row_delta, col_delta, on_blocked_callback=None):
+		"""Attempt to move current block by (row_delta, col_delta). Undo if blocked."""
+		self.current_block.move(row_delta, col_delta)
 		if not self.block_inside() or not self.block_fits():
-			self.current_block.move(0, 1)
+			self.current_block.move(-row_delta, -col_delta)
+			if on_blocked_callback:
+				on_blocked_callback()
+			return False
+		return True
+
+	def move_left(self):
+		self._try_move(0, -1)
 	
 	def move_right(self):
-		self.current_block.move(0, 1)
-		# if the has no space to move that way undo the move
-		if not self.block_inside() or not self.block_fits():
-			self.current_block.move(0, -1)
+		self._try_move(0, 1)
 	
 	def move_down(self, score_action=False):
-		self.current_block.move(1, 0)
-		# if the block has no space to move that way undo the move
-		if not self.block_inside() or not self.block_fits():
-			self.current_block.move(-1, 0)
-			# if the block has reached the bottom of the grid (or lands on top of another block) then lock the block in place
+		def on_blocked():
 			self.lock_block(score_action)
+		self._try_move(1, 0, on_blocked_callback=on_blocked)
 			
 	def accelerate_downwards(self):
 		if self.start_down and time.time() - self.start_down > self.down_interval:
@@ -307,15 +308,26 @@ class Game:
 			if self.down_interval > Cutoff_down:
 				self.down_interval *= Down_factor	
 			self.move_down()
-			if self.is_recording:
-				# Record with acceleration type if accelerate_down is enabled
-				action = f'down_{self.accelerate_type}' if self.accelerate_down else 'down'
-				self.record_move(time.time() - self.recording_start_time, action)
+
+			if not self.is_recording: # only if recording
+				return
+
+			if self.recorded_moves[-1]['action'] == 'down': #overwrite last action to show 
+				self.recorded_moves[-1]['action'] = f'down_{self.accelerate_type}'
+
+			# Record with acceleration type if accelerate_down is enabled
+			action = f'down_{self.accelerate_type}'
+			self.record_move(time.time() - self.recording_start_time, action)
+
+			if [self.recorded_moves[-2]['action'], self.recorded_moves[-1]['action']] == ['spawn', f'down_{self.accelerate_type}']: # safeguard, switch entries if swapped
+				self.recorded_moves[-2]['action'] = f'down_{self.accelerate_type}'
+				self.recorded_moves[-1]['action'] = 'spawn'
+
 
 	# lock block in place
 	def lock_block(self, score_action=False):
 		# resets down acceleration if enabled 
-		# In replay,there is no have start_down set, ergo trust the score_action flag from the recorder
+		# In replay, there is no have start_down set, so use the score_action flag from the recorder
 		if self.accelerate_down and (self.start_down or (self.is_replaying and score_action)):
 			# adds score points if down accelaration was used to lock block
 			self.update_score(0, Lock_score * self.level.value)
@@ -331,7 +343,7 @@ class Game:
 			
 		# in the visual control ("watch_Tetris" in Tetris_Psychopy) the grid is reset so that blocks do not stack
 		# Condition based on config setting Stack_in_visual_control
-		# If replay is enabled, do not reset logic/physics even if stack should be hidden visually
+		# If replay is enabled, logic/physics is not reset even if stack should be hidden visually
 		if self.visual_control and not self.stack_in_visual_control and not self.replay_enabled:
 			self.grid.reset()
 
@@ -423,6 +435,18 @@ class Game:
 				return False
 		return True
 
+	def _get_next_block_position(self, block_id, y_base, is_single_next_block=False):
+		x_base = 283 if block_id in (3, 4) else 296
+		if block_id == 3:  # I-block
+			# Single next block: y at 305; three next blocks: y at 270 + offset
+			y_offset = 305 if is_single_next_block else (y_base + 17)
+		else:  # O-block and others
+			y_offset = y_base
+		
+		x = x_base * self.grid.scale.scale_factor + self.grid.scale.x_displacement
+		y = y_offset * self.grid.scale.scale_factor
+		return x, y
+
 	# draw grid and all the blocks in it and the next blocks
 	def draw(self, screen):
 		# define a y-shift for the position of the other next blocks compared to the first "next" block
@@ -440,37 +464,14 @@ class Game:
 		if not Hide_next_visual and self.visual_control or not self.visual_control:
 			# if "three_next_blocks" setting is disabled draw only one next block
 			if not self.three_next_blocks.value:
-				# for the I block define a different position since it is a 4x4 matrix compared to the other 3x3 matrix blocks
-				if self.next_block.id == 3:
-					self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 305 * self.grid.scale.scale_factor)
-				# for the o block define a different position since it is a 2x2 matrix compared to the other 3x3 matrix blocks
-				elif self.next_block.id == 4:
-					self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 288 * self.grid.scale.scale_factor)
-				# all other blocks are defined as 3x3 matrices so they can be drawn at the same position on the screen
-				else:
-					self.next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 288 * self.grid.scale.scale_factor)
-
+				x, y = self._get_next_block_position(self.next_block.id, 288)
+				self.next_block.draw(screen, x, y)
 			# if the "three_next_blocks" is enabled draw the three next blocks 
 			# shift the position of the second and third next block by multiplications of "three_next_blocks_y_shift" - all other aspects stay the same
 			else:
-				if self.next_block.id == 3:
-					self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 270 * self.grid.scale.scale_factor)
-				elif self.next_block.id == 4:
-					self.next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 253 * self.grid.scale.scale_factor)
-				else:
-					self.next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, 253 * self.grid.scale.scale_factor)
-				if self.next_next_block.id == 3:
-				    self.next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (270 + three_next_blocks_y_shift) * self.grid.scale.scale_factor)
-				elif self.next_next_block.id == 4:
-					self.next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift) * self.grid.scale.scale_factor)
-				else:
-					self.next_next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift) * self.grid.scale.scale_factor)
-				if self.next_next_next_block.id == 3:
-				    self.next_next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (270 + three_next_blocks_y_shift* 2) * self.grid.scale.scale_factor)
-				elif self.next_next_next_block.id == 4:
-					self.next_next_next_block.draw(screen, 283 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift * 2) * self.grid.scale.scale_factor)
-				else:
-					self.next_next_next_block.draw(screen, 296 * self.grid.scale.scale_factor + self.grid.scale.x_displacement, (253 + three_next_blocks_y_shift * 2) * self.grid.scale.scale_factor)
+				for block, y_base in [(self.next_block, 253), (self.next_next_block, 253 + three_next_blocks_y_shift), (self.next_next_next_block, 253 + three_next_blocks_y_shift * 2)]:
+					x, y = self._get_next_block_position(block.id, y_base)
+					block.draw(screen, x, y)
 
 	def init_recording(self):
 		self.is_recording = True
@@ -497,12 +498,11 @@ class Game:
 		# Record initial blocks types anyway for robustness
 		for b in [self.current_block, self.next_block, self.next_next_block, self.next_next_next_block]:
 			self.recorded_blocks.append(type(b).__name__)
-			
-		# Log the spawn of the initial block so it appears in the CSV at t=0
-		self.record_move(0.0, 'spawn')
 
 	def save_recording(self):
 		if not self.is_recording: return
+		self.is_recording = False
+		
 		try:
 			data = {
 				'saved_at': time.time(),
@@ -550,26 +550,16 @@ class Game:
 			self.recorded_moves = data.get('moves', [])
 			initial_state = data.get('initial_state', None)
 			
-			if not self.recorded_blocks and not initial_state: return False
+			if not initial_state: return False
 			
 			self.is_replaying = True
 			self.replay_block_index = 0
 			self.replay_move_index = 0
 			
-			# If full initial state, restore it
-			if initial_state:
-				self.restore_state(initial_state)
-			
-			# Fallback for old data: manually reconstruct from block list
-			elif len(self.recorded_blocks) >= 4:
-				self.reset()
-				self.current_block = self.unserialize_block(self.recorded_blocks[0])
-				self.next_block = self.unserialize_block(self.recorded_blocks[1])
-				self.next_next_block = self.unserialize_block(self.recorded_blocks[2])
-				self.next_next_next_block = self.unserialize_block(self.recorded_blocks[3])
-				self.replay_block_index = 4
-				
+			#full initial state
+			self.restore_state(initial_state)
 			return True
+		
 		except Exception as e:
 			print(f"Error initializing replay: {e}")
 			return False
@@ -579,8 +569,8 @@ class Game:
 		self.grid.grid = state['grid']
 		
 		# Restore Level/Score
-		self.score.value = state['score']
-		self.level.value = state['level']
+		#self.score.value = state['score']
+		#self.level.value = state['level']
 		self.speed.value = state['speed']
 		
 		# Restore Blocks
@@ -605,15 +595,12 @@ class Game:
 		try:
 			return globals()[name]()
 		except:
-			return IBlock() 
+			return IBlock()
 
 
 	def record_move(self, elapsed_time, action):
 		if self.is_recording:
-			try:
-				block_type = type(self.current_block).__name__
-			except:
-				block_type = "Unknown"
+			block_type = type(self.current_block).__name__
 			
 			self.recorded_moves.append({
 				'time': elapsed_time, 

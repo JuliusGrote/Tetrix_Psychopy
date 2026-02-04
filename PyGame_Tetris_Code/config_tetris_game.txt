@@ -12,7 +12,7 @@
 ### Default: >= 3 (normal) <-> >= 6 (regression, the more values the more precise the regression...)
 
 #------
-Pretrial_rounds = None
+Pretrial_rounds = 3
 #------
 
 ### Pretrial design: Staircase or Normal
@@ -119,17 +119,11 @@ Start_speed = 1000
 Speed_slope = 0.007 
 #------
 
-### Should a seed for the randomizer be used to generate:
-### Movements of visual control (watch_Tetris) so that the movements are the same for each participant/each time running the experiment?
-### This mechanic is only in place if "Replay_movements = True" in "config_paradigm_psychopy.txt".
-### Default: None; if you want to use that function set "visual_seed" to any number.
-#------
-Visual_seed = 1
-#------
 
 ## Should a seed for the randomizer be used to generate:
 
 ### 1. Movements of visual control (watch_Tetris) so that the movements are the same for each participant/each time running the experiment? 
+### This mechanic is only in place if "Replay_movements = False" in "config_paradigm_psychopy.txt".
 ### Default: None; if you want to use that function set "visual_seed" to any number.
 
 #------

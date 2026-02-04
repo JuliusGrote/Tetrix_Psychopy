@@ -33,7 +33,7 @@ Exclude_explanations = True
 ### If you only want to use the pretrials (e.g. for behavioral experiments) and no "main_trials" set this to "N_repeats = None" (explanatory routines in "Tetrix_PsychoPy.psyexp" are disabled accordingly)
 
 #------
-N_repeats = 1
+N_repeats = 7
 #------
 
 ### Do you want to use a random seed for the "main_trials" so that the random choice of "control_conditions" is the same for each participant/each time running the experiment? 
@@ -41,7 +41,7 @@ N_repeats = 1
 ### Default: None; if you want to use that function set "Main_trials_seed" to any number.
 
 #------
-Main_trials_seed = 1
+Main_trials_seed = 3
 #------
 
 ### Durations for each conditions in sec.
@@ -52,13 +52,13 @@ Main_trials_seed = 1
 
 
 #------
-Play_Tetris_duration = 15
+Play_Tetris_duration = 30
 
-Watch_Tetris_duration = 15
+Watch_Tetris_duration = 30
 
-Motor_control_duration = 15
+Motor_control_duration = 30
 
-Fixation_cross_duration = None
+Fixation_cross_duration = 15
 #------
 
 ### Interstimulus Interval Variation
@@ -138,7 +138,7 @@ Replay_indication_motor = True
 
 ### Mode of rhythmic shape: "exact" (replay exact timing from last trial) or "average" (replay average frequency)
 ### Only works if "Replay_indication_motor = True", otherwise the motor control rhythm is based on "game.speed".
-### Default: "exact"
+### Default: "average"
 
 #------
 Motor_control_mode = "average"
@@ -156,6 +156,15 @@ Motor_symbol = "button"
 
 #------
 Min_gap = 0.1
+#------
+
+### what should be the minimum display duration for the press_shape/button when visible (in sec.)?
+### for a non-hold keypress this will be the standard display duration of each visual stimulus.
+### This ensures the visual stimulus is displayed for at least this duration during motor control condition.
+### Default: 0.15 sec.
+
+#------
+Min_display_duration = 0.1
 #------
 
 
