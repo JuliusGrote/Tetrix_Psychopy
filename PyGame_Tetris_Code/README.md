@@ -35,7 +35,10 @@ Defined by [config_tetris_game](config_tetris_game.txt)
 
 2. [tetris_instance.py](tetris_instance.py) is the main file to run the game. It contains the main loop of the game, the game window and player input handling.
 
-3. [game.py](game.py) contains the game mechanics such as moving the blocks, score, difficulty, game reset...; Code of [config_tetris_game.txt](config_tetris_game.txt) is executed here.
+3. [game.py](game.py) contains the game mechanics such as moving the blocks, score, difficulty, game reset, and handles the logic for **gameplay recording and replay**. Code of [config_tetris_game.txt](config_tetris_game.txt) is executed here.
+	*   **Recording**: Captures initial game state and subsequent moves to an internal JSON format.
+	*   **Replay**: Restores the game state and executes moves from the recording.
+
 
 4. [grid.py](grid.py) contains information about how the grid, in which the blocks/Tetrominoes move, is built.
 
