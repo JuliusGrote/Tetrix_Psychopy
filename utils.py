@@ -136,23 +136,26 @@ def calculate_motor_replay_times(mode, accelerate_type, targeted_duration, min_d
                     t_diff -= total_dur
 
         elif mode == 'average':
-            # get fraction of down holds & the rest
-            down_hold_fraction = len([m for m in r_keypresses_motor if m['action'] == 'down_hold']) / len(r_keypresses_motor)
-            other_fraction = 1 - down_hold_fraction
+            if len(r_keypresses_motor) > 0:
+                # get fraction of down holds & the rest
+                down_hold_fraction = len([m for m in r_keypresses_motor if m['action'] == 'down_hold']) / len(r_keypresses_motor)
+                other_fraction = 1 - down_hold_fraction
 
-            avg_interval = total_dur / len(r_keypresses_motor)
+                avg_interval = total_dur / len(r_keypresses_motor)
 
-            hold_dur = mean([m['duration'] for m in r_keypresses_motor if m['action'] == 'down_hold']) if down_hold_fraction > 0 else 0
+                hold_dur = mean([m['duration'] for m in r_keypresses_motor if m['action'] == 'down_hold']) if down_hold_fraction > 0 else 0
 
-            weighted_flash_dur = (flash_dur * other_fraction) + (hold_dur * down_hold_fraction)
-            motor_replay_times = []
+                weighted_flash_dur = (flash_dur * other_fraction) + (hold_dur * down_hold_fraction)
+                motor_replay_times = []
 
-            current_time = 0.0
-            while current_time < targeted_duration:
-                start_time = current_time
-                end_time = start_time + weighted_flash_dur
-                motor_replay_times.append({'start_time': start_time, 'end_time': end_time})
-                current_time += avg_interval
+                current_time = 0.0
+                while current_time < targeted_duration:
+                    start_time = current_time
+                    end_time = start_time + weighted_flash_dur
+                    motor_replay_times.append({'start_time': start_time, 'end_time': end_time})
+                    current_time += avg_interval
+            else:
+                motor_replay_times = []
         
 
 
