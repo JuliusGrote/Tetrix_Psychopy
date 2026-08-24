@@ -6,7 +6,7 @@ This is a PsychoPy implementation of the Tetris game designed to run as an fMRI 
 
 When using Tetrix, please include the following citation:
 
-**Grote, J., Hamm, A.-M., Stocker, J. E., Jansen, A., & Kessler, H. (2024, July 12). Tetrix: A novel paradigm for investigating cognitive functions associated with the computer game Tetris. Retrieved from osf.io/6hzbj**
+**Grote, J., Stocker, J.E., Sommer, J. et al. Tetrix: A novel Tetris-based paradigm for neuroimaging research and clinical applications. Behav Res 58, 279 (2026). https://doi.org/10.3758/s13428-026-03150-6**
 
 ## Getting Started
 
